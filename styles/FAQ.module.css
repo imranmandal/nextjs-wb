@@ -1,0 +1,27 @@
+.fa_question {
+  padding: 1em 0;
+  border-bottom: 1px solid #d5dbdb;
+}
+
+.fa_question:last-child {
+  border-bottom: 0px;
+}
+
+.title {
+  display: flex;
+  cursor: pointer;
+}
+
+.title i {
+  height: fit-content;
+  color: #e11c74;
+  margin-right: 10px;
+}
+
+.para {
+  border-left: 0.5rem solid #e5e8e8;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  line-height: 1.5em;
+  color: #595d5e;
+}

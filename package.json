@@ -2,14 +2,35 @@
   "name": "wb-web",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.20",
+    "@hookform/resolvers": "^2.5.2",
+    "axios": "^0.21.1",
+    "bootstrap": "^5.0.1",
+    "compressorjs": "^1.0.7",
+    "cookie": "^0.4.1",
+    "firebase": "^8.6.5",
+    "graphql": "^15.5.0",
+    "jwt-decode": "^3.1.2",
     "next": "10.2.3",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.8.2",
+    "react-icons": "^4.2.0",
+    "react-step-wizard": "^5.3.6",
+    "react-toastify": "^7.0.4",
+    "styled-components": "^5.3.0",
+    "toastify": "^2.0.1",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.12.0"
   }
 }

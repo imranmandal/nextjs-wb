@@ -1,0 +1,202 @@
+.container {
+  padding-top: 4%;
+  padding-right: 15%;
+  padding-left: 15%;
+  padding-bottom: 7%;
+  text-transform: capitalize;
+  overflow-y: hidden;
+}
+
+.container input,
+.container select {
+  border-color: #e11c74;
+}
+
+.container input::placeholder {
+  text-transform: capitalize;
+  color: grey;
+}
+
+.gender_grp {
+  width: 100%;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gender_grp input {
+  margin-top: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.btn_grp {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  margin: 1rem;
+}
+
+.stepCount {
+  padding: 0 1rem;
+  font-size: 1.3rem;
+  font-weight: lighter;
+  color: darkgrey;
+}
+
+.suggestion {
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: 0 0 30px #acacac;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.suggestion p {
+  margin: 0.8rem;
+  padding: 3px 0.5rem;
+  border-bottom: 1px solid #dddada;
+  cursor: pointer;
+}
+
+/*  ------------ Form 4 ------------- */
+
+/* -- Hide input field */
+.profilePic,
+.verification {
+  display: none;
+}
+
+.profilePreview {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  background-color: #d5dbdb;
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 1rem auto;
+}
+
+.profilePreview {
+  display: inline-block;
+  background: -moz-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, rgba(0, 0, 0, 0.65)),
+    color-stop(100%, rgba(0, 0, 0, 0))
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  ); /* IE10+ */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  ); /* W3C */
+  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); IE6-9 */
+}
+
+.profilePreview img {
+  position: relative;
+  z-index: -1;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.profilePicIcon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  font-size: 2rem;
+  color: #e11c74;
+}
+
+.attachLabelContainer {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  margin: auto 1rem;
+}
+
+.attachLabelContainer .attachDocLabel {
+  display: flex;
+}
+
+.attachLabelContainer .attachDocLabel label {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+  background-color: #d5dbdb;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.attachDocLabelIcon {
+  font-size: 25px;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #e11c74;
+}
+
+.attachDocLabel .fileName {
+  text-transform: none;
+}
+
+.removeFileBtn {
+  background-color: #d5dbdb;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  margin-left: 0.5rem;
+  height: 30px;
+  width: 30px;
+
+  /* font-size: 1.3rem; */
+}
+
+/* ---------- Form 5 --------- */
+
+.check {
+  font-size: 5rem;
+  color: #e11c74;
+  margin: 1.5rem;
+}
+
+.form5_field_content {
+  min-height: 40vh;
+  max-height: fit-content;
+  padding: 7%;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 5%;
+  }
+}

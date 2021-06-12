@@ -1,0 +1,134 @@
+.sign_up {
+  position: relative;
+}
+
+.sign_up p {
+  text-align: center;
+}
+
+.body {
+  margin: auto;
+}
+
+.logo {
+  width: 200px;
+  margin: auto;
+}
+
+/* profile creation */
+.logo_lg {
+  width: 300px;
+  margin: 7% auto auto;
+}
+
+.profileCreation {
+  height: max-content;
+  overflow-y: hidden;
+}
+/* ------------- */
+
+.phoneImg {
+  height: 350px;
+  width: 180px;
+}
+
+.phoneImg img {
+  border-radius: 17px;
+}
+
+.filler1,
+.filler2,
+.filler3,
+.leftCornerFiller {
+  position: absolute;
+}
+
+.filler1 {
+  height: 80px;
+  width: 80px;
+  left: 0;
+  bottom: 10px;
+}
+
+.filler2 {
+  height: 70px;
+  width: 70px;
+  right: 10px;
+  bottom: 0;
+}
+
+.filler3 {
+  height: 70px;
+  width: 70px;
+  left: 30%;
+  bottom: 0;
+}
+
+.leftCornerFiller {
+  height: 250px;
+  width: 300px;
+  left: -5%;
+  bottom: 0%;
+}
+
+.form1 {
+  padding: 0 10%;
+}
+
+.form1_form {
+  background: rgb(225 28 116 / 32%);
+  border-radius: 5px;
+}
+
+.form1,
+.btn_grp,
+.input_grp {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.btn_grp {
+  margin: 1rem;
+}
+
+@media (max-width: 768px) {
+  /* .body {
+    max-width: 540px;
+  } */
+
+  .logo_lg {
+    width: 200px;
+  }
+
+  .form1 {
+    max-width: 540px;
+    display: flex;
+    padding: 5% 0;
+    margin: auto;
+    flex-direction: column-reverse;
+  }
+
+  .form1_form form {
+    padding: 0;
+  }
+
+  .phoneImg {
+    width: 95px;
+  }
+
+  .phoneImg img {
+    z-index: 1;
+    height: 180px;
+    width: 92.5px;
+    margin: auto;
+  }
+
+  .filler1 {
+    left: -50px;
+  }
+
+  .filler2 {
+    right: -40px;
+  }
+}
