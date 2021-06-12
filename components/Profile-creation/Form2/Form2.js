@@ -80,8 +80,8 @@ function Form2(props) {
     motherTongue: register("motherTongue"),
     religion: register("religion"),
     height: register("height"),
-    // disability: register("disability"),
-    // disease: register("disease"),
+    disability: register("disability"),
+    disease: register("disease"),
     diet: register("diet"),
     smoke: register("smoke"),
     city: register("city"),
@@ -132,7 +132,7 @@ function Form2(props) {
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
 
-  const submit = () => {
+  const submit = (d) => {
     const uid = parseJwt(userToken);
     submitForm(data, uid, props, saveFirstPage);
   };
@@ -306,10 +306,12 @@ function Form2(props) {
               label="disability *"
               name="disability"
               value={data.disability}
+              data={data}
               setData={setData}
-              // customRegister={customRegister}
+              setValue={setValue}
+              // refs={register}
               options={Disability}
-              // errors={errors}
+              errors={errors}
             />
             {/* <Select
               label="major diseases *"
@@ -318,17 +320,18 @@ function Form2(props) {
               options={MajorDisease}
               selected={data.disease}
               setSelected={setData}
-              customRegister={customRegister}
               errors={errors}
             /> */}
             <MultipleSelect
               label="major diseases *"
               name="disease"
               value={data.disease}
+              data={data}
               setData={setData}
-              // customRegister={customRegister}
+              setValue={setValue}
+              // refs={register}
               options={MajorDisease}
-              // errors={errors}
+              errors={errors}
             />
           </div>
 

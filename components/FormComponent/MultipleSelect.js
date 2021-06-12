@@ -6,16 +6,16 @@ import { replaceUnderScore } from "../SignUp/Data&Funct";
 const MultipleSelect = ({
   name,
   value,
+  data,
   setData,
   label,
   options,
-  // customRegister,
-  // errors,
+  setValue, // React-Hook-Form hook
+  refs,
+  errors,
 }) => {
   const [displayOptions, setDisplayOptions] = useState(false);
-  const [showErrors, setShowErrors] = useState(false);
-
-  const error = "Required";
+  // const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
     if (value?.length > 0) {
@@ -28,6 +28,14 @@ const MultipleSelect = ({
       document.getElementById(name + "-selected").innerHTML = "Select";
     }
   }, [value]);
+
+  // useEffect(() => {
+  //   if (data[name]) {
+  //     setValue([name], value);
+  //   } else {
+  //     setValue([name], null);
+  //   }
+  // }, [data[name]]);
 
   // useEffect(() => {
   //   if (errors) {
@@ -43,7 +51,6 @@ const MultipleSelect = ({
     const { checked } = e.target;
     const value = e.target.getAttribute("data-value");
 
-    console.log(name);
     if (checked) {
       if (value !== "NONE") {
         setData((prevValue) => ({
@@ -63,6 +70,7 @@ const MultipleSelect = ({
       }
     }
     if (!checked) {
+      // setValue([name], null);
       setData((prevValue) => ({
         ...prevValue,
         [name]: [
@@ -72,6 +80,8 @@ const MultipleSelect = ({
         ],
       }));
     }
+
+    setValue(name, value, true);
   };
 
   const handleClick = (e) => {
@@ -87,7 +97,7 @@ const MultipleSelect = ({
           <label className="my-auto" htmlFor={name + "-selected"}>
             {label}
           </label>
-          <p className="error-message">{showErrors ? error : ""}</p>
+          <p className="error-message">{errors && errors[name]?.message}</p>
         </div>
         <Select onClick={handleClick}>
           <p id={name + "-selected"} className="m-0"></p>
@@ -127,6 +137,7 @@ const MultipleSelect = ({
           </div>
         </div>
       </div>
+      {/* <input type="text" ref={refs} /> */}
     </>
   );
 };

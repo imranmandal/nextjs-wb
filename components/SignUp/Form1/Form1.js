@@ -77,26 +77,26 @@ function Form1(props) {
   // const form1ContentH1Style = accessToken ? { fontSize: "2rem" } : null;
 
   // ---- SUBMIT
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     // submitForm1(props, login);
 
     const { email, phone, otp, password, phoneAuthToken, userSource } = data;
 
     props.setPageLoading(true);
 
-    // login({
-    //   email,
-    //   phone,
-    //   otp,
-    //   password,
-    //   phoneAuthToken,
-    //   userSource,
-    //   props,
-    // })
-    //   .then(() => {
-    //     props.setPageLoading(false);
-    //   })
-    //   .catch(() => props.setPageLoading(false));
+    login({
+      email,
+      phone,
+      otp,
+      password,
+      phoneAuthToken,
+      userSource,
+      props,
+    })
+      .then(() => {
+        props.setPageLoading(false);
+      })
+      .catch(() => props.setPageLoading(false));
     // props.nextStep();
   };
 
