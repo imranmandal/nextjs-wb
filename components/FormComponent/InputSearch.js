@@ -16,7 +16,7 @@ const InputGql = (props) => {
     setValue,
     errors,
   } = props;
-  // console.log(QUERY_NAME);
+
   const suggestionRef = useRef();
   const [display, setDisplay] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -52,8 +52,6 @@ const InputGql = (props) => {
     const value = e.target.getAttribute("data-value");
     const innerText = e.target.innerHTML;
 
-    // console.log(value, innerText, name);
-
     setData((prevVal) => ({
       ...prevVal,
       [name]: {
@@ -62,14 +60,10 @@ const InputGql = (props) => {
       },
     }));
 
-    // setData((prevVal) => ({ ...prevVal, [name]: innerText }));
-
     setDisplay(false);
-    customRegister
-      ? setValue(name, innerText, {
-          shouldValidate: true,
-        })
-      : null;
+    setValue(name, innerText, {
+      shouldValidate: true,
+    });
   };
 
   const handleScroll = (e) => {
@@ -127,35 +121,18 @@ const InputGql = (props) => {
             <label htmlFor={name}>{label}</label>
             <p className="error-message">{errors && errors[name]?.message}</p>
           </div>
-          {customRegister ? (
-            <input
-              className="form-control w-100"
-              type="text"
-              name={name}
-              onChange={(e) => {
-                handleChange(e);
-                customRegister[name].onChange(e);
-              }}
-              ref={customRegister[name].ref}
-              // onChange={handleChange}
-              onClick={handleClick}
-              id={name}
-              placeholder={placeholder}
-              autoComplete="new-off"
-            />
-          ) : (
-            <input
-              className="form-control w-100"
-              type="text"
-              name={name}
-              onChange={handleChange}
-              value={value.name}
-              onClick={handleClick}
-              id={name}
-              placeholder={placeholder}
-              autoComplete="new-off"
-            />
-          )}
+
+          <input
+            className="form-control w-100"
+            type="text"
+            name={name}
+            onChange={handleChange}
+            value={value.name}
+            onClick={handleClick}
+            id={name}
+            placeholder={placeholder}
+            autoComplete="new-off"
+          />
 
           {display ? (
             <div className="inputSearchResult shadow-lg rounded position-relative">

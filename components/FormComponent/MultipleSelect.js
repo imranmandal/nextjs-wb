@@ -6,16 +6,13 @@ import { replaceUnderScore } from "../SignUp/Data&Funct";
 const MultipleSelect = ({
   name,
   value,
-  data,
   setData,
   label,
   options,
   setValue, // React-Hook-Form hook
-  refs,
   errors,
 }) => {
   const [displayOptions, setDisplayOptions] = useState(false);
-  // const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
     if (value?.length > 0) {
@@ -24,28 +21,13 @@ const MultipleSelect = ({
       const sliced = joined.length > 35 ? joined.slice(0, 35) + " ..." : joined;
       document.getElementById(name + "-selected").innerHTML =
         sliced.toLocaleLowerCase();
+
+      setValue(name, value.join(" "), true);
     } else {
       document.getElementById(name + "-selected").innerHTML = "Select";
+      setValue(name, "", true);
     }
   }, [value]);
-
-  // useEffect(() => {
-  //   if (data[name]) {
-  //     setValue([name], value);
-  //   } else {
-  //     setValue([name], null);
-  //   }
-  // }, [data[name]]);
-
-  // useEffect(() => {
-  //   if (errors) {
-  //     if (value?.length <= 0) {
-  //       setShowErrors(true);
-  //     } else {
-  //       setShowErrors(false);
-  //     }
-  //   }
-  // });
 
   const handleChange = (e) => {
     const { checked } = e.target;
@@ -70,7 +52,6 @@ const MultipleSelect = ({
       }
     }
     if (!checked) {
-      // setValue([name], null);
       setData((prevValue) => ({
         ...prevValue,
         [name]: [
@@ -80,8 +61,6 @@ const MultipleSelect = ({
         ],
       }));
     }
-
-    setValue(name, value, true);
   };
 
   const handleClick = (e) => {

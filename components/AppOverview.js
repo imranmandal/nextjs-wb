@@ -31,7 +31,7 @@ const AppOverview = () => {
           {/* 
           <Image
             className={styles.img}
-            src="/images/phone1.png"
+            src="/Images/phone1.png"
             alt="phone-screen"
             width={300}
             height={500}
@@ -39,13 +39,13 @@ const AppOverview = () => {
 
           <div className={styles.img}>
             <Image
-              src="/images/phone1.png"
+              src="/Images/phone1.png"
               alt="phone"
               layout="fill"
               objectFit="contain"
             />
           </div>
-          {/* <img src="/images/phone1.png" alt="phoneScreen" /> */}
+          {/* <img src="/Images/phone1.png" alt="phoneScreen" /> */}
           {/* <img className="fillers filler1" src={filler1} alt="branches" /> */}
         </div>
 
@@ -60,7 +60,7 @@ const AppOverview = () => {
 
           <div className={styles.img}>
             <Image
-              src="/images/phone2.png"
+              src="/Images/phone2.png"
               alt="phone"
               layout="fill"
               objectFit="contain"
@@ -80,7 +80,7 @@ const AppOverview = () => {
 
           <div className={styles.img}>
             <Image
-              src="/images/phone3.png"
+              src="/Images/phone3.png"
               alt="phone"
               layout="fill"
               objectFit="contain"
@@ -100,7 +100,7 @@ const AppOverview = () => {
 
           <div className={styles.img}>
             <Image
-              src="/images/phone4.png"
+              src="/Images/phone4.png"
               alt="phone"
               layout="fill"
               objectFit="contain"

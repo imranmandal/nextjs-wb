@@ -25,3 +25,12 @@
   text-decoration: none;
   color: #687980;
 }
+
+@media (max-width: 768px) {
+  .sub_contact_container {
+    grid-template-columns: 1fr;
+  }
+  .sub_contact:first-child {
+    margin-bottom: 0;
+  }
+}

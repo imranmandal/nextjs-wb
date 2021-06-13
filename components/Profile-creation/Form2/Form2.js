@@ -60,16 +60,25 @@ function Form2(props) {
     setValue,
   } = useForm({
     resolver: yupResolver(form2Schema),
+    mode: "onTouched ",
   });
 
+  // ---- SET MAX AGE
+
   useEffect(() => {
-    if (errors) {
-      console.log(errors[Object.keys(errors)[0]]);
-      // if () {
-      //   toast.error("Please fill all the required fields.");
-      // }
+    if (data.gender.maleSelected) {
+      return setMaxAge(21);
     }
-  }, [errors]);
+    return setMaxAge(18);
+  }, [data.gender.maleSelected]);
+
+  useEffect(() => {
+    const today = new Date();
+    const dd = (today.getDate() < 10 ? "0" : "") + today.getDate();
+    const MM = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
+    setMaxDate(`${today.getFullYear() - maxAge}` + "-" + `${MM}` + "-" + dd);
+  }, [maxAge]);
+  // ---- MAX AGE END
 
   const customRegister = {
     managedBy: register("managedBy"),
@@ -112,27 +121,10 @@ function Form2(props) {
     setData((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
-  // ---- SET MAX AGE
-
-  useEffect(() => {
-    if (data.gender.maleSelected) {
-      return setMaxAge(21);
-    }
-    return setMaxAge(18);
-  }, [data.gender.maleSelected]);
-
-  useEffect(() => {
-    const today = new Date();
-    const dd = (today.getDate() < 10 ? "0" : "") + today.getDate();
-    const MM = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
-    setMaxDate(`${today.getFullYear() - maxAge}` + "-" + `${MM}` + "-" + dd);
-  }, [maxAge]);
-  // ---- MAX AGE END
-
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
 
-  const submit = (d) => {
+  const submit = () => {
     const uid = parseJwt(userToken);
     submitForm(data, uid, props, saveFirstPage);
   };
@@ -233,6 +225,7 @@ function Form2(props) {
               </div>
               <input
                 type="date"
+                id="dob"
                 name="dob"
                 className="form-control w-100"
                 placeholder="dd/mm/yyyy"
@@ -292,16 +285,6 @@ function Form2(props) {
           </div>
 
           <div className="form2-field-group d-flex flex-md-row flex-column">
-            {/* <Select
-              label="disability *"
-              name="disability"
-              placeholder=" "
-              options={Disability}
-              selected={data.disability}
-              setSelected={setData}
-              customRegister={customRegister}
-              errors={errors}
-            /> */}
             <MultipleSelect
               label="disability *"
               name="disability"
@@ -313,15 +296,7 @@ function Form2(props) {
               options={Disability}
               errors={errors}
             />
-            {/* <Select
-              label="major diseases *"
-              name="disease"
-              placeholder=" "
-              options={MajorDisease}
-              selected={data.disease}
-              setSelected={setData}
-              errors={errors}
-            /> */}
+
             <MultipleSelect
               label="major diseases *"
               name="disease"

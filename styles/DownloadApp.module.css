@@ -1,0 +1,18 @@
+.download_app_section {
+  padding: 0;
+  color: #fff;
+  background: linear-gradient(180deg, rgb(246 162 182), rgb(225 28 116)),
+    linear-gradient(
+      180deg,
+      rgba(225, 28, 116, 0.4588235294117647),
+      rgb(225 30 117)
+    );
+}
+
+.download_app_section h1 {
+  font-size: 2.5rem;
+}
+
+.download_app_section img {
+  height: 70px;
+}

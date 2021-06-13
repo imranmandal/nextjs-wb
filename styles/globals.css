@@ -53,3 +53,9 @@ li {
   margin: auto 0;
   /* position: absolute; */
 }
+
+@media (max-width: 768px) {
+  .page {
+    padding: 5% 10%;
+  }
+}

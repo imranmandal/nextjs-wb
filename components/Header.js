@@ -18,7 +18,7 @@ function Header() {
             <a>
               <img
                 className={styles.logo}
-                src="/images/wouldbee1.png"
+                src="/Images/wouldbee1.png"
                 alt="Wouldbee"
               />
             </a>

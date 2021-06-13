@@ -71,6 +71,10 @@
 
 /* ------------copyright */
 
+.footer_top {
+  text-transform: capitalize;
+}
+
 .footer_bottom {
   text-align: center;
 }
@@ -93,4 +97,16 @@
 
 .middot {
   margin: auto 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .footer_top div {
+    text-align: center;
+    border-bottom: 3px solid #fff;
+    margin-bottom: 1rem;
+  }
+
+  .social {
+    margin: auto auto 1rem;
+  }
 }

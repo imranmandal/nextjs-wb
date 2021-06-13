@@ -4,6 +4,7 @@ import Header from "./Header";
 import { useRouter } from "next/router";
 import styles from "@/styles/Layout.module.css";
 import Welcome from "./Welcome";
+import DownloadApp from "./DownloadAppSection";
 
 const Layout = ({
   title,
@@ -38,6 +39,7 @@ const Layout = ({
 
       <div className={styles.container}>{children}</div>
 
+      {router.pathname === "/" && <DownloadApp />}
       <Footer />
     </>
   );

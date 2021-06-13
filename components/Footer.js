@@ -19,7 +19,7 @@ function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className="footer-top text-capitalize row">
+      <div className={styles.footer_top}>
         <div className="col-md-3">
           <h5>would bee</h5>
           <ul className={styles.ul}>
