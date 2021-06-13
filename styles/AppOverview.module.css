@@ -4,7 +4,8 @@
   margin: 0;
   padding: 7% 15%;
   background-color: #fff;
-  /* position: relative; */
+  position: relative;
+  overflow: hidden;
 }
 
 .para1,
@@ -24,11 +25,15 @@
   color: #aab7b8;
 }
 
-.img {
+.phone {
   position: absolute;
   top: -75%;
   height: 350px;
   width: 180px;
+  z-index: 1;
+}
+
+.phone img {
   border-radius: 15px;
 }
 
@@ -53,6 +58,66 @@
   margin-left: auto;
 }
 
+/* ------- FILLERS */
+
+.rightCornerFiller,
+.leftCornerFiller,
+.filler1,
+.filler2,
+.filler3,
+.filler4,
+.filler5,
+.filler6 {
+  position: absolute;
+  opacity: 0.9;
+  height: 300px;
+  width: 300px;
+}
+
+.rightCornerFiller {
+  height: 370px;
+  top: -100px;
+  right: -100px;
+}
+
+.leftCornerFiller {
+  height: 370px;
+  bottom: -100px;
+  left: -100px;
+}
+
+.filler1 {
+  top: -50%;
+  left: -10%;
+}
+
+.filler2 {
+  top: -50%;
+  right: -10%;
+}
+
+.filler3 {
+  top: -50%;
+  left: -10%;
+}
+
+.filler4 {
+  top: -50%;
+  right: -10%;
+}
+
+.filler5 {
+  height: 80px;
+  top: 27%;
+  left: 58%;
+}
+
+.filler6 {
+  height: 90px;
+  top: 63%;
+  right: 40%;
+}
+
 @media (max-width: 1200px) and (min-width: 1100px) {
   .para1 .content,
   .para3 .content {
@@ -65,10 +130,20 @@
     margin-right: 25%;
     margin-left: auto;
   }
+
+  .filler1,
+  .filler3 {
+    left: -13%;
+    height: 250px;
+  }
+  .filler2,
+  .filler4 {
+    height: 300px;
+  }
 }
 
 @media (max-width: 1100px) {
-  .img {
+  .phone {
     width: 150px;
   }
 
@@ -87,6 +162,17 @@
     margin-right: 23%;
     margin-left: auto;
   }
+
+  .filler1,
+  .filler3 {
+    left: -13%;
+    height: 250px;
+  }
+  .filler2,
+  .filler4 {
+    right: -13%;
+    height: 300px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -100,6 +186,17 @@
   .para4 .content {
     margin-right: 25%;
     margin-left: auto;
+  }
+
+  .filler1,
+  .filler3 {
+    left: -15%;
+    height: 250px;
+  }
+  .filler2,
+  .filler4 {
+    right: -16%;
+    height: 300px;
   }
 }
 
@@ -116,7 +213,6 @@
   .para2,
   .para3,
   .para4 {
-    position: static;
     display: grid;
     margin: 7rem 0;
     min-height: 140px;
@@ -126,17 +222,44 @@
     position: static;
     text-align: center;
     margin: auto !important;
-
     width: auto;
-    /* transform: scale(1.5); */
   }
 
-  .img {
+  .phone {
     position: relative;
     top: 0;
     margin: auto !important;
     width: 210px;
     height: 400px;
-    /* transform: scale(1.5); */
+  }
+
+  .rightCornerFiller,
+  .leftCornerFiller {
+    height: 150px;
+  }
+
+  .rightCornerFiller {
+    top: -50px;
+  }
+
+  .leftCornerFiller {
+    bottom: -50px;
+    left: -120px;
+  }
+
+  .filler1,
+  .filler2,
+  .filler3,
+  .filler4 {
+    top: 30%;
+    right: 0;
+    left: 50%;
+    height: 400px;
+    transform: translate(-50%, 0);
+  }
+
+  .filler5,
+  .filler6 {
+    display: none;
   }
 }

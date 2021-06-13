@@ -3,8 +3,8 @@
   background: #e11c74;
   color: #fff;
   font-size: 120%;
-  margin-top: auto;
-  margin-bottom: 0px;
+  margin: 0;
+  border: none;
   width: 100%;
 }
 
@@ -73,6 +73,7 @@
 
 .footer_top {
   text-transform: capitalize;
+  display: flex;
 }
 
 .footer_bottom {
