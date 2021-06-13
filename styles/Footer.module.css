@@ -101,6 +101,10 @@
 }
 
 @media (max-width: 768px) {
+  .footer_top {
+    flex-direction: column;
+  }
+
   .footer_top div {
     text-align: center;
     border-bottom: 3px solid #fff;
