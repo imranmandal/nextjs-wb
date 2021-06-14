@@ -2,7 +2,17 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { API_URL, NEXT_URL } from "@/config/index";
 
-const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
+const Profile = ({
+  title,
+  ogTitle,
+  ogImage,
+  ogDescription,
+  id,
+  lastName,
+  city,
+  state,
+  country,
+}) => {
   useEffect(() => console.log(id));
 
   return (
@@ -19,16 +29,16 @@ const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
         <meta property="og:locale" content="en_US" />
         <meta
           property="og:image"
-          content={`${NEXT_URL}/Images/wouldbee1.png`}
+          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
         />
         {/* <meta property="og:image" content="https://example.com/ogp.jpg" /> */}
         <meta
           property="og:image:secure_url"
-          content={`${NEXT_URL}/Images/wouldbee1.png`}
+          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
         />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:width" content="400" />
-        <meta property="og:image:height" content="300" />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="450" />
         <meta
           property="og:image:alt"
           content="A shiny red apple with a bite taken out"
@@ -39,8 +49,15 @@ const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
           href="https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png"
         />
       </Head>
-      <h1>{id}</h1>
-      <p>{city}</p>
+      <div className="d-flex justify-content-around mx-auto">
+        <div className="page my-5 py-5 text-center bg-light shadow-lg rounded w-50">
+          <h1>{id}</h1>
+          <h3>{lastName}</h3>
+          <p>{city}</p>
+          <p>{state}</p>
+          <p>{country}</p>
+        </div>
+      </div>
     </>
   );
 };
@@ -83,7 +100,10 @@ export async function getServerSideProps({ params: { id } }) {
   return {
     props: {
       id: data.id,
+      lastName: data.lastName,
       city: data.city,
+      state: data.state,
+      country: data.country,
     },
   };
 }
