@@ -32,7 +32,7 @@ Profile.defaultProps = {
   ogTitle: "Open Graph Meta Tags: Everything You Need to Know",
 
   ogImage:
-    "https://ahrefs.com/blog/wp-content/uploads/2020/01/fb-open-graph-1.jpg",
+    "https://sa-wb-test.s3.ap-south-1.amazonaws.com/46b35cf2-40d9-4bfc-aeb8-181fd6f67d30_picture_1623516425422-1.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5YKYKQ4AZUWIQODB%2F20210614%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20210614T095457Z&X-Amz-Expires=30&X-Amz-Signature=465e691393242063880d7a40bdab3678fe5133f87e6fa2aa9b756eb9df13c62e&X-Amz-SignedHeaders=host",
   ogDescription:
     "Learn about 13 features that set Ahrefs apart from the competition.",
 };
