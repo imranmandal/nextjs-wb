@@ -33,7 +33,7 @@ Profile.defaultProps = {
   ogTitle: "Open Graph Meta Tags: Everything You Need to Know",
 
   ogImage:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgolBdeaXdt7hZ4G28YiA8shOCg4jkBg08uA&usqp=CAU",
+    "https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png",
   ogDescription:
     "Learn about 13 features that set Ahrefs apart from the competition.",
 };
