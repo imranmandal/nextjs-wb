@@ -7,6 +7,7 @@ const Profile = ({
   ogTitle,
   ogImage,
   ogDescription,
+  uid,
   id,
   lastName,
   city,
@@ -22,7 +23,7 @@ const Profile = ({
         <meta property="og:title" content={ogTitle} />
         <meta
           property="og:url"
-          content={`https://wouldbee.vercel.app/profiles/${id}`}
+          content={`https://wouldbee.vercel.app/profiles/${uid}`}
         />
         <meta property="og:type" content="website" />
         <meta property="og:description" content={ogDescription} />
@@ -99,6 +100,7 @@ export async function getServerSideProps({ params: { id } }) {
 
   return {
     props: {
+      uid: id,
       id: data.id,
       lastName: data.lastName,
       city: data.city,
