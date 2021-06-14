@@ -15,13 +15,13 @@ const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
           property="og:url"
           content={`https://wouldbee.vercel.app/profiles/${id}`}
         />
-        <meta
-          property="og:image"
-          content="https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png"
-        />
+        <meta property="og:image" content="/Images/wouldbee1.png" />
         <meta property="og:type" content="profile" />
         <meta property="og:description" content={ogDescription} />
-        <link rel="image_src" href={ogImage} />
+        <link
+          rel="image_src"
+          href="https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png"
+        />
       </Head>
       <h1>{id}</h1>
       <p>{city}</p>
