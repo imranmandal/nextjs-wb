@@ -35,11 +35,9 @@ export default async (req, res) => {
           path: "/",
         })
       );
-      console.log(data);
 
       res.status(200).json({ user: data.user });
     } else {
-      console.log(data);
       res.status(data.statusCode).json({
         message: data.message,
       });

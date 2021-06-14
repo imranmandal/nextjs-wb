@@ -63,12 +63,7 @@ const AppOverview = () => {
           </div>
 
           <div className={styles.phone}>
-            <Image
-              src="/Images/phone1.png"
-              alt="phone"
-              layout="fill"
-              objectFit="contain"
-            />
+            <Image src={phone1} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler1}>
             <Image
@@ -78,8 +73,6 @@ const AppOverview = () => {
               objectFit="contain"
             />
           </div>
-          {/* <img src="/Images/phone1.png" alt="phoneScreen" /> */}
-          {/* <img src={filler1} alt="branches" /> */}
         </div>
 
         <div className={styles.para2}>
@@ -92,12 +85,7 @@ const AppOverview = () => {
           </div>
 
           <div className={styles.phone}>
-            <Image
-              src="/Images/phone2.png"
-              alt="phone"
-              layout="fill"
-              objectFit="contain"
-            />
+            <Image src={phone2} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler2}>
             <Image
@@ -118,12 +106,7 @@ const AppOverview = () => {
           </div>
 
           <div className={styles.phone}>
-            <Image
-              src="/Images/phone3.png"
-              alt="phone"
-              layout="fill"
-              objectFit="contain"
-            />
+            <Image src={phone3} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler3}>
             <Image
@@ -144,12 +127,7 @@ const AppOverview = () => {
           </div>
 
           <div className={styles.phone}>
-            <Image
-              src="/Images/phone4.png"
-              alt="phone"
-              layout="fill"
-              objectFit="contain"
-            />
+            <Image src={phone4} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler4}>
             <Image
@@ -158,7 +136,6 @@ const AppOverview = () => {
               layout="fill"
               objectFit="contain"
             />
-            {/* <img src={filler4} alt="branches" /> */}
           </div>
         </div>
       </section>

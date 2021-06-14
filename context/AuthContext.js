@@ -59,7 +59,6 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       setUserToken(null);
-      checkUserLoggedIn();
       router.push("/");
     }
   };

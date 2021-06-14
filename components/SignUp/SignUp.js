@@ -34,18 +34,12 @@ const SignUpForm = (props) => {
               />
             </div>
             <div className={styles.filler1}>
-              <Image
-                // className="position-absolute modal-filler1"
-                src="/Images/filler5.png"
-                alt="filler"
-                layout="fill"
-              />
+              <Image src="/Images/filler5.png" alt="filler" layout="fill" />
             </div>
             <div className={styles.filler2}>
               <Image src="/Images/filler5.png" alt="filler" layout="fill" />
             </div>
 
-            {/* <img className="position-absolute" src={filler1} alt="filler" /> */}
             <p className="text-secondary">{props.msg || defaultMsg}</p>
           </div>
 

@@ -37,31 +37,35 @@ function Header() {
               {!userToken ? (
                 <>
                   <li>
-                    <a
-                      onClick={() => {
-                        setShowSignUp(true);
-                      }}
-                      className="nav-link text-dark bg-light rounded-pill shadow-lg"
-                      aria-current="page"
-                    >
-                      Sign Up
-                    </a>
+                    <Link href="#" scroll={false}>
+                      <a
+                        onClick={() => {
+                          setShowSignUp(true);
+                        }}
+                        className="nav-link text-dark bg-light rounded-pill shadow-lg"
+                        aria-current="page"
+                      >
+                        Sign Up
+                      </a>
+                    </Link>
                   </li>
                 </>
               ) : (
                 <li>
-                  <a
-                    className="nav-link text-dark bg-light rounded-pill shadow-lg"
-                    onClick={(e) => {
-                      e.preventDefault();
+                  <Link href="#" scroll={false}>
+                    <a
+                      className="nav-link text-dark bg-light rounded-pill shadow-lg"
+                      onClick={(e) => {
+                        e.preventDefault();
 
-                      // Logout
-                      logout();
-                    }}
-                    aria-current="page"
-                  >
-                    Logout
-                  </a>
+                        // Logout
+                        logout();
+                      }}
+                      aria-current="page"
+                    >
+                      Logout
+                    </a>
+                  </Link>
                 </li>
               )}
             </ul>

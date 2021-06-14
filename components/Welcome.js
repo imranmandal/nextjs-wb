@@ -14,7 +14,7 @@ function Welcome({ showVideo, showImage, vdoPath, imgPath }) {
         {showImage && (
           <div className={styles.bgWrap}>
             <Image
-              src={imgPath}
+              src={imgPath || "/Images/bg-landscape-desktop.jpg"}
               layout="fill"
               objectFit="cover"
               quality={100}
@@ -55,9 +55,9 @@ function Welcome({ showVideo, showImage, vdoPath, imgPath }) {
   );
 }
 
-export default Welcome;
-
 Welcome.defaultProps = {
   showImage: true,
   imgPath: "/Images/bg-landscape-desktop.jpg",
 };
+
+export default Welcome;
