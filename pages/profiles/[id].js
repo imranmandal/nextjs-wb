@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect } from "react";
-import { API_URL } from "@/config/index";
+import { API_URL, NEXT_URL } from "@/config/index";
 
 const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
   useEffect(() => console.log(id));
@@ -9,15 +9,19 @@ const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
     <>
       <Head>
         <title>{title}</title>
-        <meta property="og:locale" content="en_US" />
         <meta property="og:title" content={ogTitle} />
         <meta
           property="og:url"
           content={`https://wouldbee.vercel.app/profiles/${id}`}
         />
-        <meta property="og:image" content="/Images/wouldbee1.png" />
-        <meta property="og:type" content="profile" />
+        <meta property="og:type" content="website" />
         <meta property="og:description" content={ogDescription} />
+        <meta property="og:locale" content="en_US" />
+        <meta
+          property="og:image"
+          content={`${NEXT_URL}/Images/wouldbee1.png`}
+        />
+        <meta property="og:site_name" content="Wouldbee.com" />
         <link
           rel="image_src"
           href="https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png"
