@@ -18,6 +18,7 @@ const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
         <meta property="og:image" content={ogImage} />
         <meta property="og:type" content="profile" />
         <meta property="og:description" content={ogDescription} />
+        <link rel="image_src" href={ogImage} />
       </Head>
       <h1>{id}</h1>
       <p>{city}</p>
