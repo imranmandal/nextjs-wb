@@ -20,7 +20,7 @@ const Profile = ({
     <>
       <Head>
         <title>{title}</title>
-        <meta property="og:title" content={lastName || ogTitle} />
+        <meta property="og:title" content={id + " " + lastName || ogTitle} />
         <meta
           property="og:url"
           content={`https://wouldbee.vercel.app/profiles/${uid}`}
@@ -31,12 +31,12 @@ const Profile = ({
         <meta
           property="og:image"
           itemProp="image"
-          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
 
         <meta
           property="og:image:secure_url"
-          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="256" />
@@ -48,7 +48,7 @@ const Profile = ({
         <meta property="og:site_name" content="Wouldbee.com" />
         <link
           rel="image_src"
-          href={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          href={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
       </Head>
       <div className="d-flex justify-content-around mx-auto">
