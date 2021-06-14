@@ -31,9 +31,18 @@ const Profile = ({
         <meta
           property="og:image"
           itemProp="image"
+          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+        />
+        <meta
+          property="og:image"
+          itemProp="image"
           content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
 
+        <meta
+          property="og:image:secure_url"
+          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+        />
         <meta
           property="og:image:secure_url"
           content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
