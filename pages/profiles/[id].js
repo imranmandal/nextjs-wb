@@ -11,11 +11,11 @@ const Profile = ({ title, ogTitle, ogImage, ogDescription, id, city }) => {
         <title>{title}</title>
         <meta property="og:locale" content="en_US" />
         <meta property="og:title" content={ogTitle} />
-        <meta property="og:url" content={ogImage} />
         <meta
-          property="og:image"
+          property="og:url"
           content={`https://wouldbee.vercel.app/profiles/${id}`}
         />
+        <meta property="og:image" content={ogImage} />
         <meta property="og:type" content="profile" />
         <meta property="og:description" content={ogDescription} />
       </Head>
