@@ -1,3 +1,5 @@
+export const gender = ["Male", "female"];
+
 export const MaritalStatus = [
   "NEVER_MARRIED",
   "DIVORCED",
@@ -124,16 +126,69 @@ export const DietaryChoice = [
 
 // export const Drink AND Smoke = Boolean
 
-export const Degree = [
-  "LESS_THAN_HIGH_SCHOOL",
-  "HIGH_SCHOOL",
-  "ASSOCIATES_DEGREE",
-  "TRADE_SCHOOL",
-  "DIPLOMA",
-  "UNDER_GRADUATE",
-  "BACHELORS",
-  "MASTERS",
-  "DOCTORATE",
+export const Degrees = [
+  // Engineering/Design
+  "B_dot_Arch",
+  "B_dot_Des",
+  "B_dot_E_slash_B_dot_Tech",
+  "B_dot_Pharma",
+  "M_dot_Arch",
+  "M_dot_Des",
+  "M_dot_E_slash_B_dot_Tech",
+  "M_dot_Pharma",
+  "MS_openbr_Engineering_closebr",
+  //Computers
+  "B_dot_IT",
+  "BCA",
+  "MCA_slash_PGDCA",
+  // Finance/Commerce
+  "B_dot_Com",
+  "CA",
+  "CFA",
+  "CS",
+  "ICWA",
+  "M_dot_Com",
+  //Management
+  "BBA",
+  "BHM",
+  "MBA_slash_PGDM",
+  // Medicine
+  "BAMS",
+  "BDS",
+  "BHMS",
+  "BPT",
+  "BVSc",
+  "DM",
+  "MBBS",
+  "MCh",
+  "MD",
+  "MDS",
+  "MPT",
+  "MS_openbr_Medicine_closebr",
+  //Law
+  "BL_slash_LLB",
+  "ML_slash_LLM",
+  //Arts/Science
+  "B_dot_A",
+  "B_dot_Ed",
+  "B_dot_Sc",
+  "BFA",
+  "BJMC",
+  "M_dot_A",
+  "M_dot_Ed",
+  "M_dot_Sc",
+  "MFA",
+  "MJMC",
+  "MSW",
+  // Doctorate
+  "M_dot_Phil",
+  "Ph_dot_D",
+  // Non Graduate
+  "High_School",
+  "Trade_School",
+  "Diploma",
+  //Others
+  "Other",
 ];
 
 export const TypeOfIdProof = [
@@ -291,13 +346,3 @@ export const ProfileManagedBy = [
   "FRIEND",
   "RELATIVE",
 ];
-// export const
-// export const
-// export const
-
-//     income: "",
-//     profilePic: "",
-//     bio: "",
-//     verificationDocName: "",
-//     verificationDocFile: "",
-//     userSource: "",

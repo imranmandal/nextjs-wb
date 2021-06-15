@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import styles from "@/styles/Form.module.css";
-import { replaceUnderScore } from "../SignUp/Data&Funct";
+import { convertedValue, replaceUnderScore } from "./FormFunctions";
+import ComponentWrapper from "./ComponentWrapper";
 
 const MultipleSelect = ({
   name,
@@ -15,10 +16,17 @@ const MultipleSelect = ({
   const [displayOptions, setDisplayOptions] = useState(false);
 
   useEffect(() => {
+    var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+    var wordLength =
+      width > 768 ? Math.floor(width / 30) : Math.floor(width / 10);
+
     if (value?.length > 0) {
       const selected = value.map((val) => replaceUnderScore(val));
       const joined = selected.join(", ");
-      const sliced = joined.length > 35 ? joined.slice(0, 35) + " ..." : joined;
+      const sliced =
+        joined.length > wordLength
+          ? joined.slice(0, wordLength) + " ..."
+          : joined;
       document.getElementById(name + "-selected").innerHTML =
         sliced.toLocaleLowerCase();
 
@@ -29,6 +37,7 @@ const MultipleSelect = ({
     }
   }, [value]);
 
+  // -------- HANDLE CHANGE
   const handleChange = (e) => {
     const { checked } = e.target;
     const value = e.target.getAttribute("data-value");
@@ -71,52 +80,54 @@ const MultipleSelect = ({
 
   return (
     <>
-      <div className="d-flex flex-column p-3 w-100">
-        <div className="d-flex justify-content-between">
-          <label className="my-auto" htmlFor={name + "-selected"}>
-            {label}
-          </label>
-          <p className="error-message">{errors && errors[name]?.message}</p>
-        </div>
-        <Select onClick={handleClick}>
-          <p id={name + "-selected"} className="m-0"></p>
-        </Select>
-        <div className="position-relative shadow-lg rounded w-100">
-          <div className={styles.suggestion}>
-            {displayOptions ? (
-              <>
-                <Button onClick={handleClick}>Done</Button>
-                {options.map((option, index) => {
-                  return (
-                    <div key={index} className="d-flex p-3">
-                      <input
-                        id={option + name}
-                        type="checkbox"
-                        name={option + "-s"}
-                        data-value={option}
-                        onChange={handleChange}
-                        className="my-auto"
-                        checked={
-                          value?.length > 0 && value.includes(option)
-                            ? true
-                            : false
-                        }
-                      />{" "}
-                      <label
-                        className="w-100 my-auto mx-2"
-                        htmlFor={option + name}
-                      >
-                        {replaceUnderScore(option).toLocaleLowerCase()}
-                      </label>
-                    </div>
-                  );
-                })}
-              </>
-            ) : null}
+      <ComponentWrapper setDisplayOptions={setDisplayOptions}>
+        <div className="d-flex flex-column p-3 w-100">
+          <div className="d-flex justify-content-between">
+            <label className="my-auto" htmlFor={name + "-selected"}>
+              {label}
+            </label>
+            <p className="error-message">{errors && errors[name]?.message}</p>
+          </div>
+          <Select onClick={handleClick}>
+            <p id={name + "-selected"} className="m-0"></p>
+          </Select>
+          <div className="position-relative shadow-lg rounded w-100">
+            <div className={styles.suggestion}>
+              {displayOptions ? (
+                <>
+                  <Button onClick={handleClick}>Done</Button>
+
+                  {options.map((option, index) => {
+                    return (
+                      <div key={index} className="d-flex">
+                        <input
+                          id={option + name}
+                          type="checkbox"
+                          name={option + "-s"}
+                          data-value={option}
+                          onChange={handleChange}
+                          className="my-auto"
+                          checked={
+                            value?.length > 0 && value.includes(option)
+                              ? true
+                              : false
+                          }
+                        />{" "}
+                        <label
+                          className="w-100 my-auto mx-2 p-2"
+                          htmlFor={option + name}
+                        >
+                          {convertedValue(option)}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
-      {/* <input type="text" ref={refs} /> */}
+      </ComponentWrapper>
     </>
   );
 };

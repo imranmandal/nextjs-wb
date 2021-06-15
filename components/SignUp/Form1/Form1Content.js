@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "@/styles/Signup.module.css";
+import { reportPlayStoreClick } from "GTM";
 
 function Form1Content(props) {
   const { form1ContentStyle, form1ContentH1Style } = props;
@@ -37,6 +38,7 @@ function Form1Content(props) {
         </h2>
         <a
           className="p-2"
+          onClick={reportPlayStoreClick}
           href="https://play.google.com/store/apps/details?id=apptivism.would_bee.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
         >
           <img

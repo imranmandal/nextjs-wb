@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "@/styles/Form.module.css";
+import ComponentWrapper from "./ComponentWrapper";
 
 import ClientOnly from "../ClientOnly";
 const InputGql = (props) => {
@@ -12,12 +13,10 @@ const InputGql = (props) => {
     setData,
     QUERY_NAME,
     OUTPUT_OBJ_NAME,
-    customRegister,
     setValue,
     errors,
   } = props;
 
-  const suggestionRef = useRef();
   const [display, setDisplay] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
 
@@ -28,23 +27,10 @@ const InputGql = (props) => {
   });
 
   useEffect(() => {
-    let handler = (event) => {
-      if (!suggestionRef.current.contains(event.target)) {
-        setDisplay(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
-
-  useEffect(() => {
     setQueryVariable((prevVal) => ({ ...prevVal, skip: 0 }));
   }, [queryVariable.like]);
 
-  const handleClick = () => {
+  const handleClose = () => {
     setDisplay(true);
   };
 
@@ -115,50 +101,52 @@ const InputGql = (props) => {
 
   return (
     <>
-      <div ref={suggestionRef} className="d-flex flex-column p-3 w-100">
-        <ClientOnly>
-          <div className="d-flex justify-content-between">
-            <label htmlFor={name}>{label}</label>
-            <p className="error-message">{errors && errors[name]?.message}</p>
-          </div>
-
-          <input
-            className="form-control w-100"
-            type="text"
-            name={name}
-            onChange={handleChange}
-            value={value.name}
-            onClick={handleClick}
-            id={name}
-            placeholder={placeholder}
-            autoComplete="new-off"
-          />
-
-          {display ? (
-            <div className="inputSearchResult shadow-lg rounded position-relative">
-              <div onScroll={handleScroll} className={styles.suggestion}>
-                {suggestions.length > 0 ? (
-                  suggestions.map((suggestion, index) => {
-                    return (
-                      <p
-                        key={index}
-                        onClick={handleSelect}
-                        data-value={suggestion.id}
-                      >
-                        {suggestion.name}
-                      </p>
-                    );
-                  })
-                ) : (
-                  <p className={styles.suggestion} value="">
-                    No result
-                  </p>
-                )}
-              </div>
+      <ComponentWrapper setDisplayOptions={setDisplay}>
+        <div className="d-flex flex-column p-3 w-100">
+          <ClientOnly>
+            <div className="d-flex justify-content-between">
+              <label htmlFor={name}>{label}</label>
+              <p className="error-message">{errors && errors[name]?.message}</p>
             </div>
-          ) : null}
-        </ClientOnly>
-      </div>
+
+            <input
+              className="form-control w-100"
+              type="text"
+              name={name}
+              onChange={handleChange}
+              value={value.name}
+              onClick={handleClose}
+              id={name}
+              placeholder={placeholder}
+              autoComplete="new-off"
+            />
+
+            {display ? (
+              <div className="inputSearchResult shadow-lg rounded position-relative">
+                <div onScroll={handleScroll} className={styles.suggestion}>
+                  {suggestions.length > 0 ? (
+                    suggestions.map((suggestion, index) => {
+                      return (
+                        <p
+                          key={index}
+                          onClick={handleSelect}
+                          data-value={suggestion.id}
+                        >
+                          {suggestion.name}
+                        </p>
+                      );
+                    })
+                  ) : (
+                    <p className={styles.suggestion} value="">
+                      No result
+                    </p>
+                  )}
+                </div>
+              </div>
+            ) : null}
+          </ClientOnly>
+        </div>
+      </ComponentWrapper>
     </>
   );
 };

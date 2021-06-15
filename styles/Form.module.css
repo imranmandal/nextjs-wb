@@ -55,7 +55,8 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.suggestion p {
+.suggestion p,
+.suggestion div {
   margin: 0.8rem;
   padding: 3px 0.5rem;
   border-bottom: 1px solid #dddada;

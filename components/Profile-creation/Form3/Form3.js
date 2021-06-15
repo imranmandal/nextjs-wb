@@ -7,10 +7,10 @@ import InputGql from "@/components/FormComponent/InputSearch";
 import Select from "@/components/FormComponent/Select";
 import {
   AnnualIncome,
-  Degree,
+  Degrees,
   EmployedIn,
   Occupation,
-} from "@/components/SignUp/FormData";
+} from "@/components/FormComponent/FormData";
 
 import { form3Schema, SubmitForm3 } from "./Form3Functions";
 import { SAVE_SECOND_SCREEN } from "@/components/Graphql/mutations/mutation";
@@ -20,9 +20,10 @@ import {
   GET_INSTITUTE_NAMES,
 } from "@/components/Graphql/query/query";
 import AuthContext from "context/AuthContext";
-import { parseJwt } from "../CommonFuntions";
+import { parseJwt } from "../ParseJwt";
 import modalStyles from "@/styles/Modal.module.css";
 import styles from "@/styles/Form.module.css";
+import MultipleSelect from "@/components/FormComponent/MultipleSelect";
 
 //  ------- COMPONENT
 
@@ -30,8 +31,7 @@ function Form3(props) {
   const { userToken } = useContext(AuthContext);
 
   const [data, setData] = useState({
-    degree: "",
-    institute: "",
+    degrees: [],
     employedIn: "",
     occupation: {
       text: "",
@@ -52,8 +52,7 @@ function Form3(props) {
   });
 
   const customRegister = {
-    degree: register("degree"),
-    institute: register("institute"),
+    degrees: register("degrees"),
     employedIn: register("employedIn"),
     occupation: register("occupation"),
     income: register("income"),
@@ -74,30 +73,16 @@ function Form3(props) {
         </p>
         <form onSubmit={handleSubmit(submitForm3)}>
           <div className="form3-field-group d-flex flex-md-row flex-column">
-            <Select
-              label="highest degree *"
-              name="degree"
-              selected={data.degree}
-              setSelected={setData}
-              options={Degree}
-              customRegister={customRegister}
-              errors={errors}
-            />
-            <InputGql
-              label="Institute name *"
-              name="institute"
-              placeholder="type to search"
-              value={data.institute}
+            <MultipleSelect
+              label="degrees *"
+              name="degrees"
+              value={data.degrees}
+              data={data}
               setData={setData}
-              QUERY_NAME={GET_INSTITUTE_NAMES}
-              OUTPUT_OBJ_NAME={"institutes"}
-              customRegister={customRegister}
               setValue={setValue}
+              options={Degrees}
               errors={errors}
             />
-          </div>
-
-          <div className="form3-field-group d-flex flex-md-row flex-column">
             <Select
               label="employed in *"
               name="employedIn"
@@ -108,6 +93,9 @@ function Form3(props) {
               customRegister={customRegister}
               errors={errors}
             />
+          </div>
+
+          <div className="form3-field-group d-flex flex-md-row flex-column">
             <InputOccupation
               label="occupation *"
               name="occupation"
@@ -119,9 +107,6 @@ function Form3(props) {
               errors={errors}
               setValue={setValue}
             />
-          </div>
-
-          <div className="form3-field-group d-flex flex-md-row flex-column">
             <InputGql
               label="Company/Organization you work for"
               name="employerName"
@@ -131,7 +116,9 @@ function Form3(props) {
               QUERY_NAME={GET_EMPLOYER_NAME}
               OUTPUT_OBJ_NAME={"employers"}
             />
+          </div>
 
+          <div className="form3-field-group d-flex flex-md-row flex-column">
             <InputGql
               label="designation name"
               name="designation"
@@ -141,9 +128,6 @@ function Form3(props) {
               QUERY_NAME={GET_DESIGNATION_NAME}
               OUTPUT_OBJ_NAME={"designations"}
             />
-          </div>
-
-          <div className="form3-field-group d-flex flex-md-row flex-column">
             <Select
               label="annual income *"
               name="income"

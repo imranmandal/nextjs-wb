@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Select from "@/components/FormComponent/Select";
-import { TypeOfIdProof } from "@/components/SignUp/FormData";
+import { TypeOfIdProof } from "@/components/FormComponent/FormData";
 import { FaCamera, FaTimes } from "react-icons/fa";
 import { IoAttach } from "react-icons/io5";
 import { Spinner } from "react-bootstrap";

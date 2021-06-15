@@ -1,9 +1,9 @@
 import * as yup from "yup";
-import { TypeOfIdProof } from "@/components/SignUp/FormData";
+import { TypeOfIdProof } from "@/components/FormComponent/FormData";
 import Compressor from "compressorjs";
 import { API_URL } from "@/config/index";
 import { toast } from "react-toastify";
-import { parseJwt } from "../CommonFuntions";
+import { parseJwt } from "../ParseJwt";
 
 // -----FORM SCHEMA
 

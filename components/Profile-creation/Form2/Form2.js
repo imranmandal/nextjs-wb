@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import AuthContext from "context/AuthContext";
-import { parseJwt } from "../CommonFuntions";
+import { parseJwt } from "../ParseJwt";
 import InputGql from "@/components/FormComponent/InputSearch";
 import Select from "@/components/FormComponent/Select";
 import { form2Schema, submitForm } from "./Form2functions";
@@ -22,7 +22,7 @@ import {
   MotherTongue,
   ProfileManagedBy,
   Religion,
-} from "../../SignUp/FormData";
+} from "../../FormComponent/FormData";
 
 // Component start
 function Form2(props) {

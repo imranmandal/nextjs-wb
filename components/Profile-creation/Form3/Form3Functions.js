@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 // -----FORM SCHEMA
 
 export const form3Schema = yup.object().shape({
-  degree: yup.string().required("required"),
-  institute: yup.string().required("required"),
+  degrees: yup.string().required("required"),
   employedIn: yup.string().required("required"),
   occupation: yup.string().required("required"),
   income: yup.string().required("required"),

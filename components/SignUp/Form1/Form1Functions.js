@@ -123,11 +123,21 @@ export const verifyOtp = (
     .catch((error) => toast.error("Please check the OTP!"));
 };
 
-// ------ FORM SUBMIT
-export const submitForm1 = (props, login) => {
-  const { data, setData } = props;
-
-  props.setPageLoading(true);
-
-  // props.setPageLoading(false);
+//  ------- DEVICE DETECTION
+export const deviceInfo = {
+  // os: {
+  //   name: window.navigator.platform,
+  //   language: window.navigator.language,
+  // },
+  // screen: {
+  //   width: screen.width,
+  //   height: screen.height,
+  // },
+  // browser: {
+  //   name: window.navigator.appName,
+  //   appCodeName: window.navigator.appCodeName,
+  //   product: window.navigator.product,
+  //   appVersion: window.navigator.appVersion,
+  //   userAgent: window.navigator.userAgent,
+  // },
 };

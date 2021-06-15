@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import styles from "@/styles/Footer.module.css";
+import { reportPlayStoreClick } from "GTM";
 import {
   GrFacebookOption,
   GrInstagram,
@@ -59,7 +60,7 @@ function Footer() {
           <ul className={styles.ul}>
             <li>
               <Link href="https://play.google.com/store/apps/details?id=apptivism.would_bee.app">
-                <a>android app</a>
+                <a onClick={reportPlayStoreClick}>android app</a>
               </Link>
             </li>
             {/* <li onClick={handleClick}>

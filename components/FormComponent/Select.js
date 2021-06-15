@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { convertedHeight, replaceUnderScore } from "../SignUp/Data&Funct";
+import { convertedHeight, convertedValue } from "./FormFunctions";
 
 export default function Select(props) {
   const {
@@ -11,39 +10,6 @@ export default function Select(props) {
     customRegister,
     errors,
   } = props;
-  const [suggestions, setSuggestions] = useState(options);
-
-  // Converting income
-  String.prototype.allReplace = function (obj) {
-    var retStr = this;
-    for (var x in obj) {
-      retStr = retStr.replace(new RegExp(x, "g"), obj[x]);
-    }
-    return retStr;
-  };
-
-  const convertedValue = (valueInString) => {
-    if (!valueInString) {
-      return;
-    }
-    const convertedVal = valueInString.allReplace({
-      DASH: "-",
-      slash: "/",
-      _TO: " -",
-      _or: " /",
-      ONE_: "1 ",
-      TWO: "2",
-      SEVENTY_FIVE: "75",
-      THIRTY_FIVE: "35",
-      FIVE: "5",
-      TEN: "10",
-      TWENTY: "20",
-      THIRTY: "30",
-      FIFTY: "50",
-    });
-
-    return replaceUnderScore(convertedVal);
-  };
 
   const handleChange = (elem) => {
     const { value, name } = elem.target;
@@ -75,10 +41,10 @@ export default function Select(props) {
         >
           <option value="">Select {placeholder || name}</option>
           {name === "drink" || name === "smoke"
-            ? suggestions.map((suggestion, index) => {
+            ? options.map((option, index) => {
                 return (
-                  <option key={index} value={suggestion.value}>
-                    {convertedValue(suggestion.text)}
+                  <option key={index} value={option.value}>
+                    {convertedValue(option.text)}
                   </option>
                 );
               })

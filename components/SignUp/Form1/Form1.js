@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   generateOtp,
   schema,
-  submitForm1,
   verifyOtp as otpVerification,
 } from "./Form1Functions";
 import Form1Content from "./Form1Content";
@@ -49,7 +48,6 @@ function Form1(props) {
   useEffect(() => {
     if (data.phoneAuthToken) {
       localStorage.setItem("phoneAuthToken", data.phoneAuthToken);
-      // console.log(data.phoneAuthToken);
     }
   }, [phoneAuthToken]);
 
@@ -71,15 +69,8 @@ function Form1(props) {
     setData((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
-  // const form1ContentStyle = accessToken
-  //   ? { width: "60%", marginLeft: "10%" }
-  //   : { width: "50%" };
-  // const form1ContentH1Style = accessToken ? { fontSize: "2rem" } : null;
-
   // ---- SUBMIT
   const onSubmit = () => {
-    // submitForm1(props, login);
-
     const { email, phone, otp, password, phoneAuthToken, userSource } = data;
 
     props.setPageLoading(true);
@@ -97,7 +88,6 @@ function Form1(props) {
         props.setPageLoading(false);
       })
       .catch(() => props.setPageLoading(false));
-    // props.nextStep();
   };
 
   const verifyOtp = async (e) => {
@@ -116,10 +106,7 @@ function Form1(props) {
   return (
     <>
       <div className={styles.form1}>
-        <Form1Content
-        // form1ContentH1Style={form1ContentH1Style}
-        // form1ContentStyle={form1ContentStyle}
-        />
+        <Form1Content />
 
         <div className={styles.form1_form}>
           <div className="w-100 p-4 p-sm-3">
@@ -158,7 +145,6 @@ function Form1(props) {
                     ref={customRegister.phone.ref}
                     className="form-control"
                     placeholder="Phone"
-                    // disabled={disablePhoneInput}
                   />
                   <div className="d-flex">
                     <button
@@ -232,8 +218,6 @@ function Form1(props) {
                       type="password"
                       name="password"
                       placeholder="Password"
-                      // vlaue={data.password}
-                      // onChange={handleChange}
                       onChange={(e) => {
                         customRegister.password.onChange(e);
                         handleChange(e);
@@ -259,19 +243,11 @@ function Form1(props) {
                 </>
               ) : null}
 
-              <div
-                className="d-flex justify-content-between"
-                // className={
-                //   accessToken
-                //     ? "m-3 signUpFormBtn-group"
-                //     : "m-3 d-flex justify-content-between"
-                // }
-              >
+              <div className="d-flex justify-content-between">
                 <input
                   className="w-100 mx-1 mx-sm-3 btn btn-lg btn-pink text-light"
                   type="submit"
                   value="Submit"
-                  // disabled={accessToken ? true : false}
                 />
 
                 {userToken ? (

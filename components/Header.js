@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
-// import logo from "/images/wouldbee1.png";
 import Link from "next/link";
 import styles from "@/styles/Header.module.css";
-// import Modal from "./SignUpModal";
 import SignUpModal from "@/components/SignUpModal";
 
 import AuthContext from "context/AuthContext";
@@ -27,9 +25,9 @@ function Header() {
           <div id="navbarSupportedContent" className={styles.navbar}>
             <ul className={styles.navbar_nav}>
               {/* {!userToken && (
-                <li className="text-light nav-item">
-                  <a aria-current="page" href="#profiles">
-                    View Profiles
+                <li className="text-light nav-i#profiles">
+                    View Profilestem">
+                  <a aria-current="page" href="
                   </a>
                 </li>
               )} */}

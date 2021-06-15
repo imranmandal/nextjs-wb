@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
-import { replaceUnderScore } from "../SignUp/Data&Funct";
+import React, { useState } from "react";
+import { replaceUnderScore } from "./FormFunctions";
 import styles from "@/styles/Form.module.css";
+import ComponentWrapper from "./ComponentWrapper";
 
 function InputOccupation(props) {
   const {
     name,
     label,
-    value,
     placeholder,
     setData,
     options,
@@ -14,7 +14,7 @@ function InputOccupation(props) {
     setValue,
     customRegister,
   } = props;
-  const suggestionRef = useRef();
+
   const [display, setDisplay] = useState(false);
   const [suggestions, setSuggestions] = useState([...options.sort()]);
 
@@ -23,19 +23,7 @@ function InputOccupation(props) {
     return withoutUnderScore.replace("dash", "-");
   };
 
-  useEffect(() => {
-    let handler = (event) => {
-      if (!suggestionRef.current.contains(event.target)) {
-        setDisplay(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
-
-  const handleClick = () => {
+  const handleClose = () => {
     setDisplay(true);
   };
 
@@ -69,53 +57,52 @@ function InputOccupation(props) {
 
   return (
     <>
-      <div
-        ref={suggestionRef}
-        className="d-flex flex-column justify-content-between p-3 w-100"
-      >
-        <div className="d-flex justify-content-between">
-          <label htmlFor={name}>{label}</label>
-          <p className="error-message">{errors && errors[name]?.message}</p>
-        </div>
-        <input
-          className="form-control w-100"
-          type="text"
-          name={name}
-          onChange={(e) => {
-            customRegister[name].onChange(e);
-            handleChange(e);
-          }}
-          ref={customRegister[name].ref}
-          onClick={handleClick}
-          id={name}
-          placeholder={placeholder}
-          autoComplete="new-off"
-        />
-        {display ? (
-          <div className="inputSearchResult shadow-lg rounded position-relative">
-            <div className={styles.suggestion}>
-              {suggestions.length > 0 ? (
-                suggestions.map((suggestion, index) => {
-                  return (
-                    <p
-                      key={index}
-                      className="suggestion"
-                      onClick={handleSelect}
-                      data-value={suggestion}
-                    >
-                      {replaceSpecialChar(suggestion)}
-                    </p>
-                  );
-                })
-              ) : (
-                <p className="suggestion text-secondary" value="">
-                  No result
-                </p>
-              )}
-            </div>
+      <ComponentWrapper setDisplayOptions={setDisplay}>
+        <div className="d-flex flex-column justify-content-between p-3 w-100">
+          <div className="d-flex justify-content-between">
+            <label htmlFor={name}>{label}</label>
+            <p className="error-message">{errors && errors[name]?.message}</p>
           </div>
-        ) : null}
-      </div>
+          <input
+            className="form-control w-100"
+            type="text"
+            name={name}
+            onChange={(e) => {
+              customRegister[name].onChange(e);
+              handleChange(e);
+            }}
+            ref={customRegister[name].ref}
+            onClick={handleClose}
+            id={name}
+            placeholder={placeholder}
+            autoComplete="new-off"
+          />
+          {display ? (
+            <div className="inputSearchResult shadow-lg rounded position-relative">
+              <div className={styles.suggestion}>
+                {suggestions.length > 0 ? (
+                  suggestions.map((suggestion, index) => {
+                    return (
+                      <p
+                        key={index}
+                        className="suggestion"
+                        onClick={handleSelect}
+                        data-value={suggestion}
+                      >
+                        {replaceSpecialChar(suggestion)}
+                      </p>
+                    );
+                  })
+                ) : (
+                  <p className="suggestion text-secondary" value="">
+                    No result
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </ComponentWrapper>
     </>
   );
 }
