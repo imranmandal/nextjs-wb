@@ -48,8 +48,8 @@ const Layout = ({
 Layout.defaultProps = {
   title:
     "Would Bee - Free Matrimony & Match Making, Jeevansathi Search for Shaadi in Bharat",
-  description: "Find the latest DJ and other musical events",
-  keywords: "music, dj, edm, fun",
+  description: "Truly Free, Fanatically Safe!",
+  keywords: "matrimony, jeevansathi, wouldbee",
   // showImage: true,
   // imgPath: "/Images/bg-landscape-desktop.jpg",
 };
