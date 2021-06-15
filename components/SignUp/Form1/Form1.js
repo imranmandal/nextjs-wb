@@ -12,6 +12,9 @@ import Form1Content from "./Form1Content";
 // import { AuthContext } from "Context/auth.context";
 import styles from "@/styles/Signup.module.css";
 import AuthContext from "context/AuthContext";
+import Select from "@/components/FormComponent/Select";
+import { UserSource } from "@/components/FormComponent/FormData";
+import { convertedValue } from "@/components/FormComponent/FormFunctions";
 
 function Form1(props) {
   const { data, setData } = props;
@@ -42,8 +45,36 @@ function Form1(props) {
 
   // ---- CONTEXT
   const { login, userToken, error } = useContext(AuthContext);
+  const [deviceInfo, setDeviceInfo] = useState({
+    os: {},
+    browser: {},
+    screen: {},
+  });
 
-  useEffect(() => error && toast.error(error));
+  useEffect(() => {
+    error && toast.error(error);
+  });
+
+  useEffect(() => {
+    console.log(deviceInfo);
+    setDeviceInfo({
+      os: {
+        name: navigator.platform,
+        language: navigator.language,
+      },
+      screen: {
+        width: screen.width,
+        height: screen.height,
+      },
+      browser: {
+        name: navigator.appName,
+        appCodeName: navigator.appCodeName,
+        product: navigator.product,
+        appVersion: navigator.appVersion,
+        userAgent: navigator.userAgent,
+      },
+    });
+  }, []);
 
   useEffect(() => {
     if (data.phoneAuthToken) {
@@ -81,6 +112,7 @@ function Form1(props) {
       otp,
       password,
       phoneAuthToken,
+      deviceInfo,
       userSource,
       props,
     })
@@ -242,6 +274,26 @@ function Form1(props) {
                   </div>
                 </>
               ) : null}
+              <div className="my-3 mx-1 mx-sm-3">
+                <label className="text-light" htmlFor="userSource">
+                  Where{" "}
+                  <span className="text-lowercase">did you here about us</span>{" "}
+                  (Optional)
+                </label>
+                <select
+                  className="form-control"
+                  name="userSource"
+                  id="userSource"
+                  onChange={handleChange}
+                >
+                  <option value="">Select</option>
+                  {UserSource.map((source) => {
+                    return (
+                      <option value={source}>{convertedValue(source)}</option>
+                    );
+                  })}
+                </select>
+              </div>
 
               <div className="d-flex justify-content-between">
                 <input

@@ -29,7 +29,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   //   Login user
-  const login = async ({ email, phone, otp, password, userSource }) => {
+  const login = async ({
+    email,
+    phone,
+    otp,
+    password,
+    userSource,
+    deviceInfo,
+  }) => {
     const phoneAuthToken = localStorage.getItem("phoneAuthToken");
 
     axios
@@ -41,6 +48,7 @@ export const AuthProvider = ({ children }) => {
         appLanguage: 1,
         phoneAuthToken: phoneAuthToken,
         userSource: userSource,
+        deviceInfo: deviceInfo,
       })
       .then((res) => {
         console.log(res);

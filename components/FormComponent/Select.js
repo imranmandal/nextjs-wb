@@ -34,10 +34,10 @@ export default function Select(props) {
           id={name}
           // value={selected}
           onChange={(e) => {
-            customRegister[name].onChange(e);
+            customRegister && customRegister[name].onChange(e);
             handleChange(e);
           }}
-          ref={customRegister[name].ref}
+          ref={customRegister && customRegister[name].ref}
         >
           <option value="">Select {placeholder || name}</option>
           {name === "drink" || name === "smoke"
