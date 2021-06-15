@@ -191,7 +191,7 @@ function Form1(props) {
 
                 {showOtpInput ? (
                   <div className="d-flex flex-column">
-                    <div className="d-flex my-2">
+                    <div className="d-flex  flex-column my-2">
                       <input
                         type="text"
                         name="otp"
@@ -205,13 +205,13 @@ function Form1(props) {
                         disabled={disablePhoneInput}
                       />
                       <p className="error-message">{errors.otp?.message}</p>
-                      <button
+                      {/* <button
                         className="btn btn-pink w-50"
                         // onClick={verifyOtp}
                         disabled={disableVerifyBtn}
                       >
                         resend
-                      </button>
+                      </button> */}
                     </div>
                     <button
                       className="btn btn-pink w-50"

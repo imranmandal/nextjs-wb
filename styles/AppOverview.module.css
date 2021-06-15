@@ -34,7 +34,7 @@
 }
 
 .phone img {
-  border-radius: 15px;
+  border-radius: 30px;
 }
 
 .para2,
@@ -197,6 +197,20 @@
   .filler4 {
     right: -16%;
     height: 300px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+  .para1,
+  .para2,
+  .para3,
+  .para4 {
+    height: 160px;
+  }
+  .para1 .content,
+  .para3 .content {
+    margin-left: 30%;
+    margin-right: auto;
   }
 }
 
