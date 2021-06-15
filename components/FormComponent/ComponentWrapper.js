@@ -18,7 +18,9 @@ const ComponentWrapper = ({ children, setDisplayOptions }) => {
 
   return (
     <>
-      <div ref={containerRef}>{children}</div>
+      <div className="w-100" ref={containerRef}>
+        {children}
+      </div>
     </>
   );
 };

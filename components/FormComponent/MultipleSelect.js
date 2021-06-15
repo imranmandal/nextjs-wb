@@ -114,7 +114,7 @@ const MultipleSelect = ({
                           }
                         />{" "}
                         <label
-                          className="w-100 my-auto mx-2 p-2"
+                          className="w-100 my-auto mx-2 p-1"
                           htmlFor={option + name}
                         >
                           {convertedValue(option)}

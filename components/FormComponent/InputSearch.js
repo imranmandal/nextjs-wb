@@ -101,8 +101,8 @@ const InputGql = (props) => {
 
   return (
     <>
-      <ComponentWrapper setDisplayOptions={setDisplay}>
-        <div className="d-flex flex-column p-3 w-100">
+      <div className="d-flex flex-column p-3 w-100">
+        <ComponentWrapper setDisplayOptions={setDisplay}>
           <ClientOnly>
             <div className="d-flex justify-content-between">
               <label htmlFor={name}>{label}</label>
@@ -145,8 +145,8 @@ const InputGql = (props) => {
               </div>
             ) : null}
           </ClientOnly>
-        </div>
-      </ComponentWrapper>
+        </ComponentWrapper>
+      </div>
     </>
   );
 };

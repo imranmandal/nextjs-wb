@@ -335,7 +335,7 @@ function Form2(props) {
             />
           </div>
 
-          <div className="form2-field-group d-flex flex-md-row flex-column">
+          <div className="form2-field-group d-flex justify-content-evenly flex-md-row flex-column">
             <InputGql
               name="city"
               value={data.city}
