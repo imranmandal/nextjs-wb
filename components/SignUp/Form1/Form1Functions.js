@@ -45,7 +45,9 @@ export const generateOtp = (
   props,
   setShowRecaptcha,
   setRecaptchaResult,
-  setShowOtpInput
+  setShowOtpInput,
+  setDisablePhoneInput,
+  setDisableVerifyBtn
 ) => {
   event.preventDefault();
 
@@ -68,6 +70,8 @@ export const generateOtp = (
             setRecaptchaResult(response);
             setShowRecaptcha(false);
             setShowOtpInput(true);
+            setDisablePhoneInput(true);
+            setDisableVerifyBtn(true);
           })
           .catch((error) => toast.error(error.message));
       } else {
@@ -121,6 +125,25 @@ export const verifyOtp = (
         });
     })
     .catch((error) => toast.error("Please check the OTP!"));
+};
+
+// Send report
+const sendReport = async (uuId, phone, phoneVerified) => {
+  console.log(phone, phoneVerified);
+
+  const res = await fetch(`${API_URL}/auth/update-session/`, {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ sessionId: uuId, phone, phoneVerified }),
+  });
+
+  if (res.ok) {
+    console.log({ phone, phoneVerified });
+  } else {
+    return { status: 400, error: "failed to update session" };
+  }
 };
 
 //  ------- DEVICE DETECTION

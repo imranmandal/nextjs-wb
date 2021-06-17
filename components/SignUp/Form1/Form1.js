@@ -177,6 +177,7 @@ function Form1(props) {
                     ref={customRegister.phone.ref}
                     className="form-control"
                     placeholder="Phone"
+                    disabled={disablePhoneInput}
                   />
                   <div className="d-flex">
                     <button
@@ -187,7 +188,9 @@ function Form1(props) {
                           props,
                           setShowRecaptcha,
                           setRecaptchaResult,
-                          setShowOtpInput
+                          setShowOtpInput,
+                          setDisablePhoneInput,
+                          setDisableVerifyBtn
                         );
                       }}
                       disabled={disableVerifyBtn}
@@ -220,7 +223,6 @@ function Form1(props) {
                         ref={customRegister.otp.ref}
                         className="form-control"
                         placeholder="OTP"
-                        disabled={disablePhoneInput}
                       />
                       <p className="error-message">{errors.otp?.message}</p>
                       {/* <button
@@ -231,11 +233,7 @@ function Form1(props) {
                         resend
                       </button> */}
                     </div>
-                    <button
-                      className="btn btn-pink w-50"
-                      onClick={verifyOtp}
-                      disabled={disableVerifyBtn}
-                    >
+                    <button className="btn btn-pink w-50" onClick={verifyOtp}>
                       verify otp
                     </button>
                   </div>
