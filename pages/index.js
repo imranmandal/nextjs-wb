@@ -1,10 +1,14 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Home.module.css";
 import AppOverview from "components/AppOverview";
+import AuthContext from "context/AuthContext";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
+import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
+  const { uuId, createUuid } = useContext(AuthContext);
   const router = useRouter();
   const [values, setValues] = useState({
     imgValues: {
@@ -16,6 +20,11 @@ export default function Home() {
       vdoPath: "/Images/wouldbee.mp4",
     },
   });
+
+  useEffect(() => {
+    // console.log(uuidv4());
+    createUuid();
+  }, []);
 
   // if (router.query.q === "ALeKk00ErtDO57453vZu3qIWxu7Ss5OY6w") {
   //   return setValues((prevVal) => ({

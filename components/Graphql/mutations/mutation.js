@@ -47,8 +47,7 @@ export const SAVE_FIRST_PAGE = gql`
 export const SAVE_SECOND_SCREEN = gql`
   mutation saveSecondScreen(
     $id: String!
-    $degree: EducationDegree!
-    $gradIntituteName: String
+    $degrees: [ActualDegree!]
     $employedIn: EmployedIn!
     $occupation: Occupation!
     $employerName: String
@@ -58,8 +57,7 @@ export const SAVE_SECOND_SCREEN = gql`
     saveSecondScreen(
       professionalDetailsInput: {
         id: $id
-        degree: $degree
-        gradInstituteName: $gradIntituteName
+        degrees: $degrees
         employedIn: $employedIn
         occupation: $occupation
         employerName: $employerName

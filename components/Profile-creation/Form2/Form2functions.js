@@ -37,14 +37,13 @@ export const submitForm = (data, uid, props, saveFirstPage) => {
       profileManagedBy: data.managedBy,
       religion: data.religion,
       height: parseInt(data.height),
-      disabilities: data.disability,
-      majorDiseases: data.disease,
+      disabilities: [...data.disability.value],
+      majorDiseases: [...data.disease.value],
       diet: data.diet,
       smoke: JSON.parse(data.smoke),
       drink: JSON.parse(data.drink),
     },
   }).then((res) => {
-    // console.log(res);
     props.nextStep();
   });
 };

@@ -91,11 +91,12 @@ function Form4(props) {
 
   const submit = (validatedData) => {
     if (validatedData.profilePic.length === 0) {
-      return toast("Please select the profile pic");
+      return toast.error("Please select the profile pic");
     }
-    if (validatedData.frontPage.length === 0) {
-      return toast("Please select a document.");
+    if (!data.verificationDocFile.frontPage.name) {
+      return toast.error("Please select a document.");
     }
+    // console.log();
     submitForm4(userToken, data, setLoading, props, showBackPageInput);
   };
 
@@ -110,6 +111,9 @@ function Form4(props) {
     const { name, files } = e.target;
 
     if (files[0]) {
+      if (name === "frontPage") {
+        setValue(name, files, true);
+      }
       console.log(files[0]);
       setData((prevVal) => ({
         ...prevVal,
@@ -283,11 +287,7 @@ function Form4(props) {
                   type="file"
                   id="frontPage"
                   name="frontPage"
-                  onChange={(e) => {
-                    customRegister.frontPage.onChange(e);
-                    handleFileChange(e);
-                  }}
-                  ref={customRegister.frontPage.ref}
+                  onChange={handleFileChange}
                   disabled={disableFileInput}
                 />
 

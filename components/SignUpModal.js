@@ -8,7 +8,7 @@ import SignUpForm from "./SignUp/SignUp";
 
 const SignUpModal = ({ msg, show, children, handleClose }) => {
   const [isBrowser, setIsBrowser] = useState(false);
-  console.log(show);
+  // console.log(show);
 
   useEffect(() => setIsBrowser(true), []);
 

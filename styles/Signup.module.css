@@ -65,8 +65,8 @@
 }
 
 .leftCornerFiller {
-  height: 250px;
-  width: 300px;
+  height: 150px;
+  width: 200px;
   left: -5%;
   bottom: 0%;
 }
@@ -76,7 +76,7 @@
 }
 
 .form1_form {
-  background: rgb(225 28 116 / 32%);
+  /* background: rgb(225 28 116 / 32%); */
   border-radius: 5px;
 }
 
@@ -86,6 +86,32 @@
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr 1fr;
+}
+
+.form1 input,
+.form1 select {
+  border-color: #e11c74;
+}
+
+.phoneInput {
+  display: flex;
+  border: 1px solid #e11c74;
+  border-radius: 5px;
+}
+
+.phoneInput input {
+  border: none;
+  background: #fff;
+}
+
+.phoneInput label {
+  margin: auto;
+  padding: 0 5px;
+  border-right: 1.5px solid #e11c74;
+  background-color: -internal-light-dark(
+    rgba(239, 239, 239, 0.3),
+    rgba(59, 59, 59, 0.3)
+  );
 }
 
 .btn_grp {
@@ -114,7 +140,9 @@
   }
 
   .phoneImg {
-    width: 95px;
+    padding: 10% 0 0 25%;
+    width: 150px;
+    height: 200px;
   }
 
   .phoneImg img {
@@ -130,5 +158,9 @@
 
   .filler2 {
     right: -40px;
+  }
+
+  .filler3 {
+    bottom: 10%;
   }
 }

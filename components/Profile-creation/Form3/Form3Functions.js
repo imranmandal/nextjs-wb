@@ -14,8 +14,7 @@ export const SubmitForm3 = (uid, data, props, saveSecondScreen) => {
   saveSecondScreen({
     variables: {
       id: uid,
-      degree: data.degree,
-      gradIntituteName: data.institute.name,
+      degrees: [...data.degrees.value],
       employedIn: data.employedIn,
       occupation: data.occupation.value,
       employerName: data.employerName.name,

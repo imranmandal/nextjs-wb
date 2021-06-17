@@ -20,8 +20,8 @@ const MultipleSelect = ({
     var wordLength =
       width > 768 ? Math.floor(width / 30) : Math.floor(width / 10);
 
-    if (value?.length > 0) {
-      const selected = value.map((val) => replaceUnderScore(val));
+    if (value?.innerValue?.length > 0) {
+      const selected = value?.innerValue.map((val) => replaceUnderScore(val));
       const joined = selected.join(", ");
       const sliced =
         joined.length > wordLength
@@ -30,7 +30,7 @@ const MultipleSelect = ({
       document.getElementById(name + "-selected").innerHTML =
         sliced.toLocaleLowerCase();
 
-      setValue(name, value.join(" "), true);
+      setValue(name, value?.innerValue.join(" "), true);
     } else {
       document.getElementById(name + "-selected").innerHTML = "Select";
       setValue(name, "", true);
@@ -46,28 +46,46 @@ const MultipleSelect = ({
       if (value !== "NONE") {
         setData((prevValue) => ({
           ...prevValue,
-          [name]: [
-            ...prevValue[name].filter((val) => {
-              return val !== "NONE";
-            }),
-            value,
-          ],
+          [name]: {
+            innerValue: [
+              ...prevValue[name]?.innerValue?.filter((val) => {
+                return val !== "NONE";
+              }),
+              convertedValue(value),
+            ],
+            value: [
+              ...prevValue[name]?.value?.filter((val) => {
+                return val !== "NONE";
+              }),
+              value,
+            ],
+          },
         }));
       } else {
         setData((prevValue) => ({
           ...prevValue,
-          [name]: [value],
+          [name]: {
+            innerValue: [convertedValue(value)],
+            value: [value],
+          },
         }));
       }
     }
     if (!checked) {
       setData((prevValue) => ({
         ...prevValue,
-        [name]: [
-          ...prevValue[name].filter((val) => {
-            return val !== value;
-          }),
-        ],
+        [name]: {
+          innerValue: [
+            ...prevValue[name]?.innerValue?.filter((val) => {
+              return val !== convertedValue(value);
+            }),
+          ],
+          value: [
+            ...prevValue[name]?.value?.filter((val) => {
+              return val !== value;
+            }),
+          ],
+        },
       }));
     }
   };
@@ -108,7 +126,8 @@ const MultipleSelect = ({
                           onChange={handleChange}
                           className="my-auto"
                           checked={
-                            value?.length > 0 && value.includes(option)
+                            value?.value?.length > 0 &&
+                            value.value.includes(option)
                               ? true
                               : false
                           }

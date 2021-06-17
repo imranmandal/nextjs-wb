@@ -97,6 +97,10 @@ const InputGql = (props) => {
     setQueryVariable((prevVal) => ({ ...prevVal, like: value }));
     setData((prevVal) => ({ ...prevVal, [name]: value }));
     searchSuggestion();
+
+    if (!value) {
+      setValue(name, "", true);
+    }
   };
 
   return (

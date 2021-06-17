@@ -16,6 +16,7 @@
     "compressorjs": "^1.0.7",
     "cookie": "^0.4.1",
     "firebase": "^8.6.5",
+    "get-mac-address": "^1.0.0",
     "graphql": "^15.5.0",
     "jwt-decode": "^3.1.2",
     "next": "10.2.3",
@@ -30,6 +31,7 @@
     "sitemap": "^7.0.0",
     "styled-components": "^5.3.0",
     "toastify": "^2.0.1",
+    "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },
   "devDependencies": {

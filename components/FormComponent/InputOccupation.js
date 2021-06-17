@@ -8,6 +8,7 @@ function InputOccupation(props) {
     name,
     label,
     placeholder,
+    value,
     setData,
     options,
     errors,
@@ -34,12 +35,14 @@ function InputOccupation(props) {
       ...prevVal,
       [name]: {
         value: value,
-        name: innerText,
+        text: innerText,
       },
     }));
-    setValue(name, innerText, {
+
+    setValue("occupation", innerText, {
       shouldValidate: true,
     });
+
     setDisplay(false);
   };
 
@@ -53,6 +56,10 @@ function InputOccupation(props) {
         }
       })
     );
+
+    if (!value) {
+      setValue(name, "", true);
+    }
   };
 
   return (
@@ -67,11 +74,8 @@ function InputOccupation(props) {
             className="form-control w-100"
             type="text"
             name={name}
-            onChange={(e) => {
-              customRegister[name].onChange(e);
-              handleChange(e);
-            }}
-            ref={customRegister[name].ref}
+            onChange={handleChange}
+            value={value}
             onClick={handleClose}
             id={name}
             placeholder={placeholder}

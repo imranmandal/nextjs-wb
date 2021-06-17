@@ -1,8 +1,6 @@
-import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import firebase from "../../../firebase";
-import jwtDecode from "jwt-decode";
 import { API_URL } from "@/config/index";
 import * as yup from "yup";
 
@@ -28,11 +26,11 @@ export const schema = yup.object().shape({
 });
 
 // ------- CHECK NUMBER ALREADY EXISTS
-const CheckPhoneExists = async (phone) => {
+const CheckPhoneExists = async (phone, uuId) => {
   const result = await axios
-    .get(`${API_URL}/auth/check-phone/${phone}`)
+    .get(`${API_URL}/auth/check-phone/${phone}/?sessionId=${uuId}`)
     .then((res) => {
-      console.log(res.data.exists);
+      // console.log(res.data.exists);
       return res.data.exists;
     })
     .catch((error) => toast.error(error.message));
@@ -45,7 +43,9 @@ export const generateOtp = (
   props,
   setShowRecaptcha,
   setRecaptchaResult,
-  setShowOtpInput
+  setShowOtpInput,
+  setDisablePhoneInput,
+  setDisableVerifyBtn
 ) => {
   event.preventDefault();
 
@@ -68,6 +68,8 @@ export const generateOtp = (
             setRecaptchaResult(response);
             setShowRecaptcha(false);
             setShowOtpInput(true);
+            setDisablePhoneInput(true);
+            setDisableVerifyBtn(true);
           })
           .catch((error) => toast.error(error.message));
       } else {
@@ -81,7 +83,7 @@ export const generateOtp = (
 
 // ------VERIFY OTP
 export const verifyOtp = (
-  event,
+  uuId,
   data,
   setData,
   setPhoneAuthToken,
@@ -90,11 +92,15 @@ export const verifyOtp = (
   setDisablePhoneInput,
   recaptchaResult
 ) => {
-  event.preventDefault();
   const captchaResult = recaptchaResult;
+  // console.log(recaptchaResult);
   const otp = data.otp;
+  const phone = data.phone;
 
-  if (!otp) return toast.error("Please enter the OTP");
+  if (!otp) {
+    sendReport(uuId, phone, "false");
+    return toast.error("Please enter the OTP");
+  }
   captchaResult
     .confirm(otp)
     .then(function (result) {
@@ -119,25 +125,29 @@ export const verifyOtp = (
         .catch(function (error) {
           console.log(error.message);
         });
+      sendReport(uuId, phone, "true");
     })
-    .catch((error) => toast.error("Please check the OTP!"));
+    .catch((error) => {
+      sendReport(uuId, phone, "false");
+      toast.error("Please check the OTP!");
+    });
 };
 
-//  ------- DEVICE DETECTION
-export const deviceInfo = {
-  // os: {
-  //   name: window.navigator.platform,
-  //   language: window.navigator.language,
-  // },
-  // screen: {
-  //   width: screen.width,
-  //   height: screen.height,
-  // },
-  // browser: {
-  //   name: window.navigator.appName,
-  //   appCodeName: window.navigator.appCodeName,
-  //   product: window.navigator.product,
-  //   appVersion: window.navigator.appVersion,
-  //   userAgent: window.navigator.userAgent,
-  // },
+// Send report
+const sendReport = async (uuId, phone, phoneVerified) => {
+  console.log(phone, phoneVerified);
+
+  const res = await fetch(`${API_URL}/auth/update-session/`, {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ sessionId: uuId, phone, phoneVerified }),
+  });
+
+  if (res.ok) {
+    console.log({ phone, phoneVerified });
+  } else {
+    return { status: 400, error: "failed to update session" };
+  }
 };

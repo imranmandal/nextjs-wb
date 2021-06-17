@@ -42,8 +42,8 @@ function Form2(props) {
     religion: "",
     caste: "",
     height: "",
-    disability: [],
-    disease: [],
+    disability: { innerValue: [], value: [] },
+    disease: { innerValue: [], value: [] },
     diet: "",
     city: "",
     smoke: "",
@@ -124,8 +124,11 @@ function Form2(props) {
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
 
+  SavedResponse?.error && console.log(error);
+
   const submit = () => {
     const uid = parseJwt(userToken);
+    console.log(data);
     submitForm(data, uid, props, saveFirstPage);
   };
   // TODO: Create error - Min age should be 21/18 years for male/female
@@ -292,7 +295,6 @@ function Form2(props) {
               data={data}
               setData={setData}
               setValue={setValue}
-              // refs={register}
               options={Disability}
               errors={errors}
             />

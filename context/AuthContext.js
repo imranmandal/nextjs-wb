@@ -2,7 +2,7 @@ import { NEXT_URL, API_URL } from "@/config/index";
 import axios from "node_modules/axios/index";
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import { v4 as uuidv4 } from "uuid";
 import {
   ApolloClient,
   InMemoryCache,
@@ -17,6 +17,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
+  const [uuId, setUuId] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => checkUserLoggedIn());
@@ -28,8 +29,8 @@ export const AuthProvider = ({ children }) => {
     console.log(user);
   };
 
-  //   Login user
-  const login = async ({
+  //   Sign up user
+  const signUp = async ({
     email,
     phone,
     otp,
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
         deviceInfo: deviceInfo,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         router.push("/profile-creation");
       })
       .catch((error) => {
@@ -61,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   //   Logout user
   const logout = async () => {
-    const res = fetch(`${NEXT_URL}/api/logout`, {
+    const res = await fetch(`${NEXT_URL}/api/logout`, {
       method: "POST",
     });
 
@@ -73,13 +74,50 @@ export const AuthProvider = ({ children }) => {
 
   //   Check if user is logged in
   const checkUserLoggedIn = async () => {
-    const res = await fetch(`${NEXT_URL}/api/user`);
+    const res = await fetch(`${NEXT_URL}/api/user`, {
+      method: "GET",
+    });
     const data = await res.json();
 
     if (res.ok) {
       setUserToken(data.token);
     } else {
       setUserToken(null);
+    }
+  };
+
+  //  Create and Save new uuid
+  const createUuid = async () => {
+    const uuid = uuidv4();
+    const status = await checkUuidExist();
+    if (status) {
+      return;
+    }
+    axios
+      .post(`${NEXT_URL}/api/createUuid`, {
+        uuid: uuid,
+      })
+      .then((res) => {
+        setUuId(res.data.uuid);
+        // router.push("/profile-creation");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const checkUuidExist = async () => {
+    const res = await fetch(`${NEXT_URL}/api/userId`, {
+      method: "GET",
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      setUuId(data.uuid);
+      return true;
+    } else {
+      setUuId(null);
+      return false;
     }
   };
 
@@ -111,7 +149,9 @@ export const AuthProvider = ({ children }) => {
   // -----------Apollo setup end
 
   return (
-    <AuthContext.Provider value={{ userToken, error, register, login, logout }}>
+    <AuthContext.Provider
+      value={{ userToken, uuId, error, register, signUp, logout, createUuid }}
+    >
       <ApolloProvider client={client}>{children}</ApolloProvider>
     </AuthContext.Provider>
   );

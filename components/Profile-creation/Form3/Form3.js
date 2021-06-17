@@ -31,7 +31,7 @@ function Form3(props) {
   const { userToken } = useContext(AuthContext);
 
   const [data, setData] = useState({
-    degrees: [],
+    degrees: { innerValue: [], value: [] },
     employedIn: "",
     occupation: {
       text: "",
@@ -62,6 +62,7 @@ function Form3(props) {
 
   const submitForm3 = () => {
     const uid = parseJwt(userToken);
+    // console.log(data);
     SubmitForm3(uid, data, props, saveSecondScreen);
   };
 
@@ -100,10 +101,10 @@ function Form3(props) {
               label="occupation *"
               name="occupation"
               value={data.occupation.text}
-              placeholder="Select"
               setData={setData}
+              setValue={setValue}
+              placeholder="Select"
               options={Occupation}
-              customRegister={customRegister}
               errors={errors}
               setValue={setValue}
             />
@@ -113,6 +114,7 @@ function Form3(props) {
               placeholder="type to search"
               value={data.employerName}
               setData={setData}
+              setValue={setValue}
               QUERY_NAME={GET_EMPLOYER_NAME}
               OUTPUT_OBJ_NAME={"employers"}
             />
@@ -125,6 +127,7 @@ function Form3(props) {
               placeholder="type to search"
               value={data.designation}
               setData={setData}
+              setValue={setValue}
               QUERY_NAME={GET_DESIGNATION_NAME}
               OUTPUT_OBJ_NAME={"designations"}
             />
@@ -160,7 +163,7 @@ function Form3(props) {
         {SavedResponse.loading ? (
           <div className={modalStyles.overlay}>
             <div className="spinner-border text-pink" role="status">
-              <span class="sr-only"></span>
+              <span className="sr-only"></span>
             </div>
           </div>
         ) : null}

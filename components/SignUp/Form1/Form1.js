@@ -3,26 +3,23 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  generateOtp,
-  schema,
-  verifyOtp as otpVerification,
-} from "./Form1Functions";
+import { generateOtp, schema, verifyOtp } from "./Form1Functions";
 import Form1Content from "./Form1Content";
-// import { AuthContext } from "Context/auth.context";
 import styles from "@/styles/Signup.module.css";
 import AuthContext from "context/AuthContext";
-import Select from "@/components/FormComponent/Select";
 import { UserSource } from "@/components/FormComponent/FormData";
 import { convertedValue } from "@/components/FormComponent/FormFunctions";
 
 function Form1(props) {
   const { data, setData } = props;
   const [phoneAuthToken, setPhoneAuthToken] = useState("");
+  // ---- CONTEXT
+  const { signUp, userToken, uuId, error } = useContext(AuthContext);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -43,8 +40,6 @@ function Form1(props) {
   const [disablePhoneInput, setDisablePhoneInput] = useState(false);
   const [disableVerifyBtn, setDisableVerifyBtn] = useState(true);
 
-  // ---- CONTEXT
-  const { login, userToken, error } = useContext(AuthContext);
   const [deviceInfo, setDeviceInfo] = useState({
     os: {},
     browser: {},
@@ -56,8 +51,12 @@ function Form1(props) {
   });
 
   useEffect(() => {
-    console.log(deviceInfo);
+    // console.log(deviceInfo);
     setDeviceInfo({
+      device: {
+        deviceId: uuId,
+        // deviceMac: "",
+      },
       os: {
         name: navigator.platform,
         language: navigator.language,
@@ -75,6 +74,11 @@ function Form1(props) {
       },
     });
   }, []);
+
+  // const deviceinformation = {
+  //   deviceId: uuidv4(),
+  //   deviceWeb: ""
+  // }
 
   useEffect(() => {
     if (data.phoneAuthToken) {
@@ -106,7 +110,7 @@ function Form1(props) {
 
     props.setPageLoading(true);
 
-    login({
+    signUp({
       email,
       phone,
       otp,
@@ -119,12 +123,15 @@ function Form1(props) {
       .then(() => {
         props.setPageLoading(false);
       })
-      .catch(() => props.setPageLoading(false));
+      .catch((error) => {
+        props.setPageLoading(false);
+      });
   };
 
-  const verifyOtp = async (e) => {
-    otpVerification(
-      e,
+  const otpVerify = (e) => {
+    e.preventDefault();
+    verifyOtp(
+      uuId,
       data,
       setData,
       setPhoneAuthToken,
@@ -159,24 +166,20 @@ function Form1(props) {
                 <p className="error-message">{errors.email?.message}</p>
               </div>
               <div className="form-floating my-3 mx-1 mx-sm-3">
-                <div className="d-flex">
-                  <input
-                    type="text"
-                    value="+91"
-                    className="form-control "
-                    disabled
-                    style={{ width: "3rem", padding: "5px" }}
-                  />
+                <div className={styles.phoneInput}>
+                  <label value="+91" disabled>
+                    +91
+                  </label>
                   <input
                     type="text"
                     name="phone"
                     onChange={(e) => {
-                      customRegister.phone.onChange(e);
+                      setValue("phone", e.target.value, true);
                       handleChange(e);
                     }}
-                    ref={customRegister.phone.ref}
                     className="form-control"
                     placeholder="Phone"
+                    disabled={disablePhoneInput}
                   />
                   <div className="d-flex">
                     <button
@@ -187,7 +190,9 @@ function Form1(props) {
                           props,
                           setShowRecaptcha,
                           setRecaptchaResult,
-                          setShowOtpInput
+                          setShowOtpInput,
+                          setDisablePhoneInput,
+                          setDisableVerifyBtn
                         );
                       }}
                       disabled={disableVerifyBtn}
@@ -208,8 +213,8 @@ function Form1(props) {
                 </span>
 
                 {showOtpInput ? (
-                  <div className="d-flex flex-column">
-                    <div className="d-flex  flex-column my-2">
+                  <div className="d-flex">
+                    <div className="d-flex flex-column my-2 w-100">
                       <input
                         type="text"
                         name="otp"
@@ -220,7 +225,6 @@ function Form1(props) {
                         ref={customRegister.otp.ref}
                         className="form-control"
                         placeholder="OTP"
-                        disabled={disablePhoneInput}
                       />
                       <p className="error-message">{errors.otp?.message}</p>
                       {/* <button
@@ -231,11 +235,7 @@ function Form1(props) {
                         resend
                       </button> */}
                     </div>
-                    <button
-                      className="btn btn-pink w-50"
-                      onClick={verifyOtp}
-                      disabled={disableVerifyBtn}
-                    >
+                    <button className="btn btn-pink w-50" onClick={otpVerify}>
                       verify otp
                     </button>
                   </div>
@@ -287,9 +287,11 @@ function Form1(props) {
                   onChange={handleChange}
                 >
                   <option value="">Select</option>
-                  {UserSource.map((source) => {
+                  {UserSource.map((source, index) => {
                     return (
-                      <option value={source}>{convertedValue(source)}</option>
+                      <option key={index} value={source}>
+                        {convertedValue(source)}
+                      </option>
                     );
                   })}
                 </select>

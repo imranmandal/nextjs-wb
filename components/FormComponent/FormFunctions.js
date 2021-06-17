@@ -54,6 +54,8 @@ export const convertedValue = (valueInString) => {
   }
   const convertedVal = valueInString.allReplace({
     DASH: "-",
+    openbr_: "(",
+    _closebr: ")",
     _dot_: ".",
     slash: "/",
     _TO: " -",
