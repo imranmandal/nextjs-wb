@@ -73,7 +73,7 @@ function Form3(props) {
           Step {props.currentStep} of {props.totalSteps - 1}
         </p>
         <form onSubmit={handleSubmit(submitForm3)}>
-          <div className="form3-field-group d-flex flex-md-row flex-column">
+          <div className={styles.form3_input_container}>
             <MultipleSelect
               label="degrees *"
               name="degrees"
@@ -84,19 +84,7 @@ function Form3(props) {
               options={Degrees}
               errors={errors}
             />
-            <Select
-              label="employed in *"
-              name="employedIn"
-              placeholder=" "
-              selected={data.employedIn}
-              setSelected={setData}
-              options={EmployedIn}
-              customRegister={customRegister}
-              errors={errors}
-            />
-          </div>
 
-          <div className="form3-field-group d-flex flex-md-row flex-column">
             <InputOccupation
               label="occupation *"
               name="occupation"
@@ -107,6 +95,19 @@ function Form3(props) {
               options={Occupation}
               errors={errors}
               setValue={setValue}
+            />
+          </div>
+
+          <div className={styles.form3_input_container}>
+            <InputGql
+              label="designation name"
+              name="designation"
+              placeholder="type to search"
+              value={data.designation}
+              setData={setData}
+              setValue={setValue}
+              QUERY_NAME={GET_DESIGNATION_NAME}
+              OUTPUT_OBJ_NAME={"designations"}
             />
             <InputGql
               label="Company/Organization you work for"
@@ -120,16 +121,16 @@ function Form3(props) {
             />
           </div>
 
-          <div className="form3-field-group d-flex flex-md-row flex-column">
-            <InputGql
-              label="designation name"
-              name="designation"
-              placeholder="type to search"
-              value={data.designation}
-              setData={setData}
-              setValue={setValue}
-              QUERY_NAME={GET_DESIGNATION_NAME}
-              OUTPUT_OBJ_NAME={"designations"}
+          <div className={styles.form3_input_container}>
+            <Select
+              label="employed in *"
+              name="employedIn"
+              placeholder=" "
+              selected={data.employedIn}
+              setSelected={setData}
+              options={EmployedIn}
+              customRegister={customRegister}
+              errors={errors}
             />
             <Select
               label="annual income *"

@@ -9,6 +9,9 @@ import styles from "@/styles/Signup.module.css";
 import AuthContext from "context/AuthContext";
 import { UserSource } from "@/components/FormComponent/FormData";
 import { convertedValue } from "@/components/FormComponent/FormFunctions";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Form1(props) {
   const { data, setData } = props;
@@ -105,12 +108,12 @@ function Form1(props) {
   };
 
   // ---- SUBMIT
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const { email, phone, otp, password, phoneAuthToken, userSource } = data;
 
     props.setPageLoading(true);
 
-    signUp({
+    const response = await signUp({
       email,
       phone,
       otp,
@@ -119,13 +122,15 @@ function Form1(props) {
       deviceInfo,
       userSource,
       props,
-    })
-      .then(() => {
-        props.setPageLoading(false);
-      })
-      .catch((error) => {
-        props.setPageLoading(false);
-      });
+    });
+
+    if (response.status > 400 && response.status < 500) {
+      if (response.status === 409) {
+        console.log(response);
+        return toast.error("Email already exists.");
+      }
+      toast.error("Something went wrong. Please try again later");
+    }
   };
 
   const otpVerify = (e) => {
@@ -146,25 +151,11 @@ function Form1(props) {
     <>
       <div className={styles.form1}>
         <Form1Content />
-
         <div className={styles.form1_form}>
           <div className="w-100 p-4 p-sm-3">
             <h2 className="text-center p-3">Sign Up</h2>
+            <ToastContainer />
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="m-1 m-sm-3">
-                <input
-                  type="email"
-                  name="email"
-                  onChange={(e) => {
-                    customRegister.email.onChange(e);
-                    handleChange(e);
-                  }}
-                  className="form-control"
-                  placeholder="Email"
-                  ref={customRegister.email.ref}
-                />
-                <p className="error-message">{errors.email?.message}</p>
-              </div>
               <div className="form-floating my-3 mx-1 mx-sm-3">
                 <div className={styles.phoneInput}>
                   <label value="+91" disabled>
@@ -191,9 +182,9 @@ function Form1(props) {
                           setShowRecaptcha,
                           setRecaptchaResult,
                           setShowOtpInput,
-                          setDisablePhoneInput,
-                          setDisableVerifyBtn
+                          setDisablePhoneInput
                         );
+                        setDisableVerifyBtn(true);
                       }}
                       disabled={disableVerifyBtn}
                     >
@@ -244,6 +235,20 @@ function Form1(props) {
 
               {data.phoneAuthToken ? (
                 <>
+                  <div className="m-1 m-sm-3">
+                    <input
+                      type="email"
+                      name="email"
+                      onChange={(e) => {
+                        customRegister.email.onChange(e);
+                        handleChange(e);
+                      }}
+                      className="form-control"
+                      placeholder="Email"
+                      ref={customRegister.email.ref}
+                    />
+                    <p className="error-message">{errors.email?.message}</p>
+                  </div>
                   <div className="my-3 mx-1 mx-sm-3">
                     <input
                       className="form-control"
@@ -275,7 +280,7 @@ function Form1(props) {
                 </>
               ) : null}
               <div className="my-3 mx-1 mx-sm-3">
-                <label className="text-light" htmlFor="userSource">
+                <label className="text-secondary" htmlFor="userSource">
                   Where{" "}
                   <span className="text-lowercase">did you here about us</span>{" "}
                   (Optional)
@@ -318,7 +323,7 @@ function Form1(props) {
               </div>
               {showRecaptcha && (
                 <div className="my-3 mx-auto mx-sm-auto">
-                  <div className="m-1" id="recaptcha"></div>
+                  <div className="m-3" id="recaptcha"></div>
                 </div>
               )}
             </form>

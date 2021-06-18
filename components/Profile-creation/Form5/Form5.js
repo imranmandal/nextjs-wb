@@ -20,7 +20,7 @@ export default function Form5(props) {
               />
             </a>
             <Link href="/">
-              <a className="btn btn-light bg-none text-dark border-0 ">
+              <a className="p-3 bg-none text-dark border-0 ">
                 <FaAngleLeft />
                 Go back home
               </a>

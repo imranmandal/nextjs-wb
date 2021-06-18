@@ -136,7 +136,9 @@ const MultipleSelect = ({
                           className="w-100 my-auto mx-2 p-1"
                           htmlFor={option + name}
                         >
-                          {convertedValue(option)}
+                          {name === "degreees"
+                            ? convertedValue(option)
+                            : convertedValue(option).toLocaleLowerCase()}
                         </label>
                       </div>
                     );

@@ -12,6 +12,7 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
+import { toast } from "node_modules/react-toastify/dist/index";
 
 const AuthContext = createContext();
 
@@ -39,8 +40,7 @@ export const AuthProvider = ({ children }) => {
     deviceInfo,
   }) => {
     const phoneAuthToken = localStorage.getItem("phoneAuthToken");
-
-    axios
+    const res = await axios
       .post(`${NEXT_URL}/api/signup`, {
         email: email,
         phone: `${phone}`,
@@ -54,10 +54,14 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         // console.log(res);
         router.push("/profile-creation");
+        return res;
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
+        return error.response;
       });
+
+    return res;
   };
 
   //   Logout user

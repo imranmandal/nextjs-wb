@@ -24,6 +24,12 @@ export const GET_CITY_NAME = gql`
       values {
         id
         name
+        state {
+          name
+          country {
+            name
+          }
+        }
       }
     }
   }

@@ -8,7 +8,7 @@ import { parseJwt } from "../ParseJwt";
 // -----FORM SCHEMA
 
 export const form4Schema = yup.object().shape({
-  bio: yup.string().required(),
+  bio: yup.string().min(0).max(2000).required(),
   verificationDocName: yup
     .string()
     .required("Please select one document to upload"),
@@ -22,15 +22,6 @@ export const form4Schema = yup.object().shape({
   //   return value && value[0].size <= 10000000;
   // }),
 });
-
-// ------ AUTO GENERATE BIO
-export const defaultBio =
-  "I am a simple and joyful person. I am an Agent with a Less Than High School degree, currently working in Public Sector sector in Mumbai, MH, IND. I am looking for a life partner from a decent family, having good moral values and ethics.";
-
-export const autoGenerateBio = (setData, setValue) => {
-  setValue("bio", defaultBio, true);
-  setData((prevVal) => ({ ...prevVal, bio: defaultBio }));
-};
 
 // ------ HANDLE PROFILE CHANGE
 export const handleProfileChange = (e, setData) => {

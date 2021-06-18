@@ -131,6 +131,8 @@ function Form2(props) {
     console.log(data);
     submitForm(data, uid, props, saveFirstPage);
   };
+
+  SavedResponse && console.log(SavedResponse);
   // TODO: Create error - Min age should be 21/18 years for male/female
 
   return (
@@ -166,7 +168,7 @@ function Form2(props) {
                   customRegister.fname.onChange(e);
                   handleChange(e);
                 }}
-                placeholder="Jon"
+                placeholder=""
                 ref={customRegister.fname.ref}
               />
             </div>
@@ -184,7 +186,7 @@ function Form2(props) {
                   customRegister.lname.onChange(e);
                   handleChange(e);
                 }}
-                placeholder="Doe"
+                placeholder=""
                 ref={customRegister.lname.ref}
               />
             </div>
@@ -313,6 +315,18 @@ function Form2(props) {
           </div>
 
           <div className="form2-field-group d-flex flex-md-row flex-column">
+            <InputGql
+              name="city"
+              value={data.city}
+              setData={setData}
+              label="resident city *"
+              placeholder="type to search"
+              QUERY_NAME={GET_CITY_NAME}
+              OUTPUT_OBJ_NAME="cities"
+              customRegister={customRegister}
+              setValue={setValue}
+              errors={errors}
+            />
             <Select
               label="dietary habits *"
               name="diet"
@@ -322,6 +336,9 @@ function Form2(props) {
               customRegister={customRegister}
               errors={errors}
             />
+          </div>
+
+          <div className="form2-field-group d-flex justify-content-evenly flex-md-row flex-column">
             <Select
               label="smoke habits *"
               name="smoke"
@@ -335,22 +352,6 @@ function Form2(props) {
               customRegister={customRegister}
               errors={errors}
             />
-          </div>
-
-          <div className="form2-field-group d-flex justify-content-evenly flex-md-row flex-column">
-            <InputGql
-              name="city"
-              value={data.city}
-              setData={setData}
-              label="resident city *"
-              placeholder="type to search"
-              QUERY_NAME={GET_CITY_NAME}
-              OUTPUT_OBJ_NAME="cities"
-              customRegister={customRegister}
-              setValue={setValue}
-              errors={errors}
-            />
-
             <Select
               label="drinking habits *"
               name="drink"

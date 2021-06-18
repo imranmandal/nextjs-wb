@@ -33,7 +33,9 @@ const CheckPhoneExists = async (phone, uuId) => {
       // console.log(res.data.exists);
       return res.data.exists;
     })
-    .catch((error) => toast.error(error.message));
+    .catch((error) =>
+      toast.error("Something went wrong. Please try again later.")
+    );
   return result;
 };
 
@@ -44,8 +46,7 @@ export const generateOtp = (
   setShowRecaptcha,
   setRecaptchaResult,
   setShowOtpInput,
-  setDisablePhoneInput,
-  setDisableVerifyBtn
+  setDisablePhoneInput
 ) => {
   event.preventDefault();
 
@@ -69,9 +70,10 @@ export const generateOtp = (
             setShowRecaptcha(false);
             setShowOtpInput(true);
             setDisablePhoneInput(true);
-            setDisableVerifyBtn(true);
           })
-          .catch((error) => toast.error(error.message));
+          .catch((error) =>
+            toast.error("Something went wrong. Please try again later.")
+          );
       } else {
         toast.error("Phone already exists.");
       }
@@ -135,7 +137,7 @@ export const verifyOtp = (
 
 // Send report
 const sendReport = async (uuId, phone, phoneVerified) => {
-  console.log(phone, phoneVerified);
+  // console.log(phone, phoneVerified);
 
   const res = await fetch(`${API_URL}/auth/update-session/`, {
     method: "POST", // or 'PUT'
@@ -146,7 +148,7 @@ const sendReport = async (uuId, phone, phoneVerified) => {
   });
 
   if (res.ok) {
-    console.log({ phone, phoneVerified });
+    // console.log({ phone, phoneVerified });
   } else {
     return { status: 400, error: "failed to update session" };
   }

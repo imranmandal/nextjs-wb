@@ -134,7 +134,7 @@ export const Degrees = [
   "B_dot_Pharma",
   "M_dot_Arch",
   "M_dot_Des",
-  "M_dot_E_slash_B_dot_Tech",
+  "M_dot_E_slash_M_dot_Tech",
   "M_dot_Pharma",
   "MS_openbr_Engineering_closebr",
   //Computers

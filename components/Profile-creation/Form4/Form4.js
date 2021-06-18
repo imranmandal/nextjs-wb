@@ -4,10 +4,8 @@ import { TypeOfIdProof } from "@/components/FormComponent/FormData";
 import { FaCamera, FaTimes } from "react-icons/fa";
 import { IoAttach } from "react-icons/io5";
 import { Spinner } from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
-  autoGenerateBio,
-  defaultBio,
   form4Schema,
   handleProfileChange,
   submitForm4,
@@ -175,17 +173,6 @@ function Form4(props) {
               <p className="error-message text-center">
                 {errors && errors.profilePic?.message}
               </p>
-              {/* <input
-                className={styles.profilePic}
-                type="file"
-                id="profilePic"
-                name="profilePic"
-                onChange={(e) => {
-                  customRegister.profilePic.onChange(e);
-                  handleProfileChange(e, setData);
-                }}
-                ref={customRegister.profilePic.ref}
-              /> */}
 
               <input
                 className={styles.verification}
@@ -203,17 +190,9 @@ function Form4(props) {
             <div className="d-flex flex-column justify-content-between p-3 w-100">
               <div className="d-flex justify-content-between ">
                 <label className="text-left my-auto" htmlFor="bio">
-                  Write a short bio
+                  Write <span className="text-lowercase">a short bio</span>{" "}
+                  (Optional)
                 </label>
-                <button
-                  className="btn btn-light text-pink bg-none border-0"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    autoGenerateBio(setData, setValue);
-                  }}
-                >
-                  Auto Generate
-                </button>
               </div>
 
               <textarea

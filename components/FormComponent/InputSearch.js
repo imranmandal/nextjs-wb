@@ -19,6 +19,8 @@ const InputGql = (props) => {
 
   const [display, setDisplay] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
 
   const [queryVariable, setQueryVariable] = useState({
     like: "",
@@ -37,7 +39,7 @@ const InputGql = (props) => {
   const handleSelect = (e) => {
     const value = e.target.getAttribute("data-value");
     const innerText = e.target.innerHTML;
-
+    setInputValue("");
     setData((prevVal) => ({
       ...prevVal,
       [name]: {
@@ -95,12 +97,17 @@ const InputGql = (props) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setQueryVariable((prevVal) => ({ ...prevVal, like: value }));
-    setData((prevVal) => ({ ...prevVal, [name]: value }));
+    // setData((prevVal) => ({ ...prevVal, [name]: value }));
+    setInputValue(value);
     searchSuggestion();
 
     if (!value) {
       setValue(name, "", true);
     }
+  };
+
+  const openSearch = () => {
+    setDisplay(true);
   };
 
   return (
@@ -117,37 +124,88 @@ const InputGql = (props) => {
               className="form-control w-100"
               type="text"
               name={name}
-              onChange={handleChange}
+              // onChange={handleChange}
               value={value.name}
-              onClick={handleClose}
-              id={name}
+              onClick={openSearch}
+              // id={name}
               placeholder={placeholder}
               autoComplete="new-off"
             />
 
             {display ? (
-              <div className="inputSearchResult shadow-lg rounded position-relative">
-                <div onScroll={handleScroll} className={styles.suggestion}>
-                  {suggestions.length > 0 ? (
-                    suggestions.map((suggestion, index) => {
-                      return (
-                        <p
-                          key={index}
-                          onClick={handleSelect}
-                          data-value={suggestion.id}
-                        >
-                          {suggestion.name}
+              <div className="position-relative">
+                <div className={styles.top_suggestion}>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={inputValue}
+                    onChange={handleChange}
+                    autoFocus
+                  />
+                  <div className="position-relative">
+                    <div onScroll={handleScroll} className={styles.options}>
+                      {suggestions.length > 0 ? (
+                        suggestions.map((suggestion, index) => {
+                          return (
+                            <p
+                              key={index}
+                              onClick={handleSelect}
+                              data-value={suggestion.id}
+                            >
+                              {name === "city"
+                                ? suggestion.name +
+                                  ", " +
+                                  suggestion.state?.name +
+                                  ", " +
+                                  suggestion.state?.country.name
+                                : suggestion.name}
+                            </p>
+                          );
+                        })
+                      ) : (
+                        <p className={styles.options} value="">
+                          No result
                         </p>
-                      );
-                    })
-                  ) : (
-                    <p className={styles.suggestion} value="">
-                      No result
-                    </p>
-                  )}
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : null}
+
+            {/* {showSearch ? (
+              <div className="inputSearchResult shadow-lg rounded position-relative">
+                <div>
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={handleChange}
+                  />
+                  <div
+                    onScroll={handleScroll}
+                    className={styles.top_suggestion}
+                  >
+                    {suggestions.length > 0 ? (
+                      suggestions.map((suggestion, index) => {
+                        return (
+                          <p
+                            key={index}
+                            onClick={handleSelect}
+                            data-value={suggestion.id}
+                          >
+                            {suggestion.name}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p className={styles.suggestion} value="">
+                        No result
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : null} */}
           </ClientOnly>
         </ComponentWrapper>
       </div>
