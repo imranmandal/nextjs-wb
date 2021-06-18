@@ -169,7 +169,7 @@ function Form4(props) {
                 <img src={data.profilePic} alt="" />
                 <FaCamera className={styles.profilePicIcon} />
               </label>
-              <label className="mx-auto">profile pic *</label>
+              <label className="mx-auto">profile picture *</label>
               <p className="error-message text-center">
                 {errors && errors.profilePic?.message}
               </p>
