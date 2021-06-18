@@ -20,7 +20,6 @@ const InputGql = (props) => {
   const [display, setDisplay] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [showSearch, setShowSearch] = useState(false);
 
   const [queryVariable, setQueryVariable] = useState({
     like: "",

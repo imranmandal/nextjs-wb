@@ -8,12 +8,10 @@ import { parseJwt } from "../ParseJwt";
 // -----FORM SCHEMA
 
 export const form4Schema = yup.object().shape({
-  bio: yup.string().min(0).max(2000).required(),
-  verificationDocName: yup
-    .string()
-    .required("Please select one document to upload"),
+  bio: yup.string().min(0).max(2000),
+  verificationDocName: yup.string(),
   profilePic: yup.mixed().required("Please select a profile pic."),
-  frontPage: yup.mixed().required("Please select a file."),
+  frontPage: yup.mixed(),
   // .test("fileSize", "picture is too large", (value) => {
   //   console.log(valuep[0]);
   //   return value && value[0].size <= 10000000;
@@ -31,9 +29,9 @@ export const handleProfileChange = (e, setData) => {
       new Compressor(file, {
         quality: 0.6,
         success: (blob) => {
-          console.log(file);
+          // console.log(file);
           const myFile = new File([blob], blob.name);
-          console.log(myFile);
+          // console.log(myFile);
 
           setData((prevVal) => ({
             ...prevVal,
@@ -67,13 +65,18 @@ export const submitForm4 = async (
   const formData = new FormData();
   formData.append("picture", data.profilePicData);
   formData.append("bioText", `${data.bio}`);
-  formData.append("proofType", proofTypeId);
+  {
+    proofTypeId !== 0 && formData.append("proofType", proofTypeId);
+  }
+
   formData.append("id", uid);
-  formData.append(
-    "idProof",
-    data.verificationDocFile.frontPage,
-    data.verificationDocFile.frontPage.name
-  );
+  if (data.verificationDocFile.frontPage.name) {
+    formData.append(
+      "idProof",
+      data.verificationDocFile.frontPage,
+      data.verificationDocFile.frontPage.name
+    );
+  }
   if (showBackPageInput && data.verificationDocFile.backPage.name) {
     formData.append(
       "idProof",

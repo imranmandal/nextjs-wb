@@ -50,7 +50,7 @@ function Form2(props) {
     drink: "",
   });
 
-  const [maxAge, setMaxAge] = useState(0);
+  const [maxAge, setMaxAge] = useState(25);
   const [maxDate, setMaxDate] = useState(null);
 
   const {
@@ -66,18 +66,12 @@ function Form2(props) {
   // ---- SET MAX AGE
 
   useEffect(() => {
-    if (data.gender.maleSelected) {
-      return setMaxAge(21);
-    }
-    return setMaxAge(18);
-  }, [data.gender.maleSelected]);
-
-  useEffect(() => {
     const today = new Date();
     const dd = (today.getDate() < 10 ? "0" : "") + today.getDate();
     const MM = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
     setMaxDate(`${today.getFullYear() - maxAge}` + "-" + `${MM}` + "-" + dd);
-  }, [maxAge]);
+  }, []);
+
   // ---- MAX AGE END
 
   const customRegister = {
@@ -128,11 +122,11 @@ function Form2(props) {
 
   const submit = () => {
     const uid = parseJwt(userToken);
-    console.log(data);
+    // console.log(data);
     submitForm(data, uid, props, saveFirstPage);
   };
 
-  SavedResponse && console.log(SavedResponse);
+  // SavedResponse && console.log(SavedResponse);
   // TODO: Create error - Min age should be 21/18 years for male/female
 
   return (

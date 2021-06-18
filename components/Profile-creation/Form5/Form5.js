@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { FaAngleLeft, FaCheckCircle } from "react-icons/fa";
 import styles from "@/styles/Form.module.css";
 
@@ -11,20 +12,20 @@ export default function Form5(props) {
           <FaCheckCircle className={styles.check} />
           <h1>Thank you for registration.</h1>
           <p>we will verify your profile and notify you shortly.</p>
-          <div className="d-flex flex-column">
-            <a href="https://play.google.com/store/apps/details?id=apptivism.would_bee.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-              <img
-                style={{ width: "150px" }}
-                alt="Get it on Google Play"
-                src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-              />
-            </a>
-            <Link href="/">
-              <a className="p-3 bg-none text-dark border-0 ">
-                <FaAngleLeft />
-                Go back home
+          <div className="d-flex flex-column my-5">
+            <p style={{ fontSize: "1.1rem" }}>
+              Meanwhile, please install our app to view your matches.
+            </p>
+            <div className={styles.downloadBtn}>
+              <a
+                className="download"
+                href="https://play.google.com/store/apps/details?id=apptivism.would_bee.app"
+                onClick="return gtag_report_conversion('https://wouldbee.com')"
+              >
+                download app
+                <IoLogoGooglePlaystore className="mx-1" />
               </a>
-            </Link>
+            </div>
           </div>
         </div>
         <div className="form5-field-footer my-sm-3 my-5">
@@ -36,6 +37,12 @@ export default function Form5(props) {
             support@wouldbee.com
           </a>
         </div>
+        <Link href="/">
+          <a className="p-3 bg-none text-dark border-0 ">
+            <FaAngleLeft />
+            Go back home
+          </a>
+        </Link>
       </div>
     </div>
   );

@@ -113,48 +113,16 @@
   position: relative;
   height: 250px;
   width: 250px;
-  background-color: #d5dbdb;
-  border: none;
-  border-radius: 50%;
+  border-radius: 56%;
   overflow: hidden;
   margin: 1rem auto;
-}
-
-.profilePreview {
   display: inline-block;
-  background: -moz-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.65) 100%
-  ); /* FF3.6+ */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, rgba(0, 0, 0, 0.65)),
-    color-stop(100%, rgba(0, 0, 0, 0))
-  ); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.65) 100%
-  ); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.65) 100%
-  ); /* Opera 11.10+ */
-  background: -ms-linear-gradient(
-    top,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.65) 100%
-  ); /* IE10+ */
+  border: none;
   background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.65) 100%
-  ); /* W3C */
-  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); IE6-9 */
+    27deg,
+    rgba(225, 28, 116, 0.6811099439775911) 0%,
+    rgba(225, 28, 116, 0.14329481792717091) 61%
+  );
 }
 
 .profilePreview img {
@@ -168,12 +136,18 @@
 
 .profilePicIcon {
   position: absolute;
+  text-align: center;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   padding: 0;
   font-size: 2rem;
   color: #e11c74;
+}
+
+.profilePicIcon p {
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .attachLabelContainer {
@@ -232,6 +206,26 @@
   min-height: 40vh;
   max-height: fit-content;
   padding: 7%;
+}
+
+.downloadBtn {
+  background-color: #e11c74;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 15px 20px;
+  width: fit-content;
+  margin: 30px auto auto;
+}
+
+.downloadBtn a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.downloadBtn i {
+  padding: 0 5px;
 }
 
 @media (max-width: 768px) {

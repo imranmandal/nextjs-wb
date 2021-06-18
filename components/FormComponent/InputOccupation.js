@@ -18,6 +18,7 @@ function InputOccupation(props) {
 
   const [display, setDisplay] = useState(false);
   const [suggestions, setSuggestions] = useState([...options.sort()]);
+  const [inputValue, setInputValue] = useState("");
 
   const replaceSpecialChar = (option) => {
     const withoutUnderScore = replaceUnderScore(option);
@@ -31,6 +32,7 @@ function InputOccupation(props) {
   const handleSelect = (e) => {
     const value = e.target.getAttribute("data-value");
     const innerText = e.target.innerHTML;
+
     setData((prevVal) => ({
       ...prevVal,
       [name]: {
@@ -48,7 +50,9 @@ function InputOccupation(props) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prevVal) => ({ ...prevVal, [name]: value }));
+    // setData((prevVal) => ({ ...prevVal, [name]: value }));
+    setInputValue(value);
+
     setSuggestions(
       options.filter((suggestion) => {
         if (suggestion.toLowerCase().includes(value.toLowerCase())) {
@@ -62,6 +66,10 @@ function InputOccupation(props) {
     }
   };
 
+  const openSearch = () => {
+    setDisplay(true);
+  };
+
   return (
     <>
       <ComponentWrapper setDisplayOptions={setDisplay}>
@@ -70,38 +78,50 @@ function InputOccupation(props) {
             <label htmlFor={name}>{label}</label>
             <p className="error-message">{errors && errors[name]?.message}</p>
           </div>
+
           <input
             className="form-control w-100"
             type="text"
             name={name}
-            onChange={handleChange}
+            // onChange={handleChange}
             value={value}
-            onClick={handleClose}
-            id={name}
+            onClick={openSearch}
+            // id={name}
             placeholder={placeholder}
             autoComplete="new-off"
           />
           {display ? (
-            <div className="inputSearchResult shadow-lg rounded position-relative">
-              <div className={styles.suggestion}>
-                {suggestions.length > 0 ? (
-                  suggestions.map((suggestion, index) => {
-                    return (
-                      <p
-                        key={index}
-                        className="suggestion"
-                        onClick={handleSelect}
-                        data-value={suggestion}
-                      >
-                        {replaceSpecialChar(suggestion)}
+            <div className="position-relative">
+              <div className={styles.top_suggestion}>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={inputValue}
+                  onChange={handleChange}
+                  autoFocus
+                />
+                <div className="position-relative">
+                  <div className={styles.options}>
+                    {suggestions.length > 0 ? (
+                      suggestions.map((suggestion, index) => {
+                        return (
+                          <p
+                            key={index}
+                            className="suggestion"
+                            onClick={handleSelect}
+                            data-value={suggestion}
+                          >
+                            {replaceSpecialChar(suggestion)}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p className="suggestion text-secondary" value="">
+                        No result
                       </p>
-                    );
-                  })
-                ) : (
-                  <p className="suggestion text-secondary" value="">
-                    No result
-                  </p>
-                )}
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           ) : null}

@@ -91,12 +91,11 @@ function Form4(props) {
     if (validatedData.profilePic.length === 0) {
       return toast.error("Please select the profile pic");
     }
-    if (!data.verificationDocFile.frontPage.name) {
-      return toast.error("Please select a document.");
-    }
     // console.log();
+    console.log(userToken);
     submitForm4(userToken, data, setLoading, props, showBackPageInput);
   };
+  // console.log(userToken);
 
   // ----- HANDLE CHANGE
   const handleChange = (e) => {
@@ -167,7 +166,10 @@ function Form4(props) {
             <div className="my-auto px-3 d-flex flex-column justify-content-around w-100">
               <label htmlFor="profilePic" className={styles.profilePreview}>
                 <img src={data.profilePic} alt="" />
-                <FaCamera className={styles.profilePicIcon} />
+                <div className={styles.profilePicIcon}>
+                  <FaCamera />
+                  <p>Select</p>
+                </div>
               </label>
               <label className="mx-auto">profile picture *</label>
               <p className="error-message text-center">
@@ -215,7 +217,7 @@ function Form4(props) {
           <div className="form4-field-group d-flex">
             <div className="d-flex flex-wrap w-100">
               <Select
-                label="Verification"
+                label="Government ID proof (Optional)"
                 name="verificationDocName"
                 placeholder=" "
                 selected={data.verificationDocName}
