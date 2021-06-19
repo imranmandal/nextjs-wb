@@ -50,6 +50,10 @@ li {
   color: #fff;
 }
 
+.terms-policy {
+  font-size: 0.8rem;
+}
+
 .error-message {
   color: red;
   margin: auto 0;

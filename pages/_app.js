@@ -7,6 +7,7 @@ import "../styles/globals.css";
 
 import TagManager from "react-gtm-module";
 import { useEffect } from "react";
+import { TAG_MANAGER_ID } from "@/config/index";
 // import { useEffect } from "react";
 // import ReactGA from 'react-ga';
 
@@ -16,7 +17,7 @@ import { useEffect } from "react";
 
 // set up google-tag-manager
 const tagManagerArgs = {
-  gtmId: "GTM-K36P7SW",
+  gtmId: TAG_MANAGER_ID,
 };
 
 function MyApp({ Component, pageProps }) {

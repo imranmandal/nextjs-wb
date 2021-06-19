@@ -10,12 +10,13 @@ import AuthContext from "context/AuthContext";
 import { UserSource } from "@/components/FormComponent/FormData";
 import { convertedValue } from "@/components/FormComponent/FormFunctions";
 import { toast } from "react-toastify";
+import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Form1(props) {
   const { data, setData } = props;
-  const [phoneAuthToken, setPhoneAuthToken] = useState("");
+  // const [phoneAuthToken, setPhoneAuthToken] = useState("");
   // ---- CONTEXT
   const { signUp, userToken, uuId, error } = useContext(AuthContext);
 
@@ -83,11 +84,11 @@ function Form1(props) {
   //   deviceWeb: ""
   // }
 
-  useEffect(() => {
-    if (data.phoneAuthToken) {
-      localStorage.setItem("phoneAuthToken", data.phoneAuthToken);
-    }
-  }, [phoneAuthToken]);
+  // useEffect(() => {
+  //   if (data.phoneAuthToken) {
+  //     localStorage.setItem("phoneAuthToken", data.phoneAuthToken);
+  //   }
+  // }, [phoneAuthToken]);
 
   // ------- HANDLE CHANGE
   const handleChange = (elem) => {
@@ -139,7 +140,7 @@ function Form1(props) {
       uuId,
       data,
       setData,
-      setPhoneAuthToken,
+      // setPhoneAuthToken,
       setDisableVerifyBtn,
       setShowOtpInput,
       setDisablePhoneInput,
@@ -152,10 +153,20 @@ function Form1(props) {
       <div className={styles.form1}>
         <Form1Content />
         <div className={styles.form1_form}>
-          <div className="w-100 p-4 p-sm-3">
-            <h2 className="text-center p-3">Sign Up</h2>
+          <div className="w-100 p-sm-3">
+            <h2 className="text-center p-3" style={{ color: "#e11c74" }}>
+              Sign Up
+            </h2>
             <ToastContainer />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!data.phoneAuthToken) {
+                  return toast.error("Please verify Phone Number");
+                }
+                handleSubmit(onSubmit);
+              }}
+            >
               <div className="form-floating my-3 mx-1 mx-sm-3">
                 <div className={styles.phoneInput}>
                   <label value="+91" disabled>
@@ -203,6 +214,14 @@ function Form1(props) {
                   {`${wordCount}/10`}
                 </span>
 
+                {/* ============ re-captcha */}
+                {showRecaptcha && (
+                  <div className="my-3 mx-auto mx-sm-auto">
+                    <div className="m-3" id="recaptcha"></div>
+                  </div>
+                )}
+
+                {/* ------------- OTP input field */}
                 {showOtpInput ? (
                   <div className="d-flex">
                     <div className="d-flex flex-column my-2 w-100">
@@ -233,6 +252,7 @@ function Form1(props) {
                 ) : null}
               </div>
 
+              {/* ------------------ PASSWORD and Other fields */}
               {data.phoneAuthToken ? (
                 <>
                   <div className="m-1 m-sm-3">
@@ -277,30 +297,48 @@ function Form1(props) {
                     />
                     <p className="error-message">{errors.cPassword?.message}</p>
                   </div>
+                  <div className="my-3 mx-1 mx-sm-3">
+                    <label className="text-secondary" htmlFor="userSource">
+                      Where{" "}
+                      <span className="text-lowercase">
+                        did you here about us
+                      </span>{" "}
+                      (Optional)
+                    </label>
+                    <select
+                      className="form-control"
+                      name="userSource"
+                      id="userSource"
+                      onChange={handleChange}
+                    >
+                      <option value="">Select</option>
+                      {UserSource.map((source, index) => {
+                        return (
+                          <option key={index} value={source}>
+                            {convertedValue(source)}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
                 </>
               ) : null}
-              <div className="my-3 mx-1 mx-sm-3">
-                <label className="text-secondary" htmlFor="userSource">
-                  Where{" "}
-                  <span className="text-lowercase">did you here about us</span>{" "}
-                  (Optional)
-                </label>
-                <select
-                  className="form-control"
-                  name="userSource"
-                  id="userSource"
-                  onChange={handleChange}
-                >
-                  <option value="">Select</option>
-                  {UserSource.map((source, index) => {
-                    return (
-                      <option key={index} value={source}>
-                        {convertedValue(source)}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
+              <p className="text-pink terms-policy py-0 text-center">
+                By{" "}
+                <span className="text-lowercase ">
+                  continuing, you agree to our
+                </span>{" "}
+                <br />
+                <Link href="/terms">
+                  <a className="text-primary">
+                    Terms <span className="text-lowercase">of</span> Service
+                  </a>
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy">
+                  <a className="text-primary">Privacy Policy</a>
+                </Link>
+              </p>
 
               <div className="d-flex justify-content-between">
                 <input
@@ -321,11 +359,6 @@ function Form1(props) {
                   </button>
                 ) : null}
               </div>
-              {showRecaptcha && (
-                <div className="my-3 mx-auto mx-sm-auto">
-                  <div className="m-3" id="recaptcha"></div>
-                </div>
-              )}
             </form>
           </div>
         </div>

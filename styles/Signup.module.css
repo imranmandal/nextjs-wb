@@ -139,6 +139,10 @@
     padding: 0;
   }
 
+  .form1_form div {
+    padding: 0;
+  }
+
   .phoneImg {
     padding: 10% 0 0 25%;
     width: 150px;

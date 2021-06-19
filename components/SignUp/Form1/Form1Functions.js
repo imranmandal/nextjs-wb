@@ -120,7 +120,8 @@ export const verifyOtp = (
             ...prevValue,
             phoneAuthToken: idToken,
           }));
-          setPhoneAuthToken(idToken);
+
+          // setPhoneAuthToken(idToken);
           setDisableVerifyBtn(true);
           return idToken;
         })
