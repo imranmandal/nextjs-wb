@@ -12,6 +12,17 @@
   padding: 20px;
   z-index: 100;
   overflow: hidden;
+  animation: modalEnter 0.2s linear;
+}
+
+@keyframes modalEnter {
+  from {
+    top: -100px;
+    opacity: 0.3;
+  }
+  to {
+    top: 10px;
+  }
 }
 
 .header {
