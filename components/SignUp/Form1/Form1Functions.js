@@ -46,7 +46,8 @@ export const generateOtp = (
   setShowRecaptcha,
   setRecaptchaResult,
   setShowOtpInput,
-  setDisablePhoneInput
+  setDisablePhoneInput,
+  setDisableVerifyBtn
 ) => {
   event.preventDefault();
 
@@ -58,7 +59,9 @@ export const generateOtp = (
     CheckPhoneExists(phone).then((res) => {
       // console.log(res);
       if (!res) {
+        setDisableVerifyBtn(false);
         const captcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+
         const number = `+91${phone}`;
 
         // console.log("1");
@@ -71,10 +74,11 @@ export const generateOtp = (
             setShowOtpInput(true);
             setDisablePhoneInput(true);
           })
-          .catch((error) =>
-            toast.error("Something went wrong. Please try again later.")
-          );
+          .catch((error) => {
+            toast.error("Something went wrong. Please try again later.");
+          });
       } else {
+        setDisableVerifyBtn(false);
         toast.error("Phone already exists.");
       }
     });
@@ -88,14 +92,12 @@ export const verifyOtp = (
   uuId,
   data,
   setData,
-  setPhoneAuthToken,
   setDisableVerifyBtn,
   setShowOtpInput,
   setDisablePhoneInput,
   recaptchaResult
 ) => {
   const captchaResult = recaptchaResult;
-  // console.log(recaptchaResult);
   const otp = data.otp;
   const phone = data.phone;
 

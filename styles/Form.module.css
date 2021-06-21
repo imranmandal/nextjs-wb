@@ -84,6 +84,10 @@
   cursor: pointer;
 }
 
+.suggestion label {
+  cursor: pointer;
+}
+
 /* -------------- HIDE SCROLL BAR */
 
 /* this will hide the scrollbar in webkit based browsers - safari, chrome, etc */

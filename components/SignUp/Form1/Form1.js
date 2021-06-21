@@ -37,6 +37,7 @@ function Form1(props) {
     cPassword: register("cPassword"),
   };
 
+  const [timer, setTimer] = useState(60);
   const [wordCount, setWordCount] = useState(0);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -79,16 +80,21 @@ function Form1(props) {
     });
   }, []);
 
-  // const deviceinformation = {
-  //   deviceId: uuidv4(),
-  //   deviceWeb: ""
-  // }
+  const setTime = () => {
+    const nextTimer = timer - 1;
+    setTimer((prevValue) => (prevValue > 0 ? nextTimer : prevValue));
+    if (nextTimer <= 0) {
+      setShowOtpInput(false);
+      setTimer(60);
+      // setData((prevValue) => ({ ...prevValue, otp: "" }));
+      setDisablePhoneInput(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (data.phoneAuthToken) {
-  //     localStorage.setItem("phoneAuthToken", data.phoneAuthToken);
-  //   }
-  // }, [phoneAuthToken]);
+  showOtpInput &&
+    setTimeout(() => {
+      setTime();
+    }, 1000);
 
   // ------- HANDLE CHANGE
   const handleChange = (elem) => {
@@ -107,11 +113,14 @@ function Form1(props) {
     }
     setData((prevValue) => ({ ...prevValue, [name]: value }));
   };
-
+  errors && console.log(errors);
   // ---- SUBMIT
-  const onSubmit = async () => {
+  const submitForm = async () => {
+    if (!data.phoneAuthToken) {
+      return toast.error("Please verify Phone Number");
+    }
     const { email, phone, otp, password, phoneAuthToken, userSource } = data;
-
+    errors && console.log(errors);
     props.setPageLoading(true);
 
     const response = await signUp({
@@ -136,11 +145,11 @@ function Form1(props) {
 
   const otpVerify = (e) => {
     e.preventDefault();
+    console.log(recaptchaResult);
     verifyOtp(
       uuId,
       data,
       setData,
-      // setPhoneAuthToken,
       setDisableVerifyBtn,
       setShowOtpInput,
       setDisablePhoneInput,
@@ -158,15 +167,7 @@ function Form1(props) {
               Sign Up
             </h2>
             <ToastContainer />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!data.phoneAuthToken) {
-                  return toast.error("Please verify Phone Number");
-                }
-                handleSubmit(onSubmit);
-              }}
-            >
+            <form onSubmit={handleSubmit(submitForm)}>
               <div className="form-floating my-3 mx-1 mx-sm-3">
                 <div className={styles.phoneInput}>
                   <label value="+91" disabled>
@@ -184,27 +185,49 @@ function Form1(props) {
                     disabled={disablePhoneInput}
                   />
                   <div className="d-flex">
-                    <button
-                      className="btn btn-pink"
-                      onClick={(e) => {
-                        generateOtp(
-                          e,
-                          props,
-                          setShowRecaptcha,
-                          setRecaptchaResult,
-                          setShowOtpInput,
-                          setDisablePhoneInput
-                        );
-                        setDisableVerifyBtn(true);
-                      }}
-                      disabled={disableVerifyBtn}
-                    >
-                      {data.phoneAuthToken ? (
-                        <FaCheckCircle className="my-auto text-primary" />
+                    {!showOtpInput ? (
+                      !data.phoneAuthToken ? (
+                        <button
+                          style={{
+                            fontSize: ".7rem",
+                            width: "max-content",
+                            padding: "9px ",
+                          }}
+                          className="btn btn-pink"
+                          onClick={(e) => {
+                            generateOtp(
+                              e,
+                              props,
+                              setShowRecaptcha,
+                              setRecaptchaResult,
+                              setShowOtpInput,
+                              setDisablePhoneInput,
+                              setDisableVerifyBtn
+                            );
+                            setShowRecaptcha(true);
+                            setDisableVerifyBtn(true);
+                          }}
+                          disabled={disableVerifyBtn}
+                        >
+                          Send Otp
+                        </button>
                       ) : (
-                        "verify"
-                      )}
-                    </button>
+                        <FaCheckCircle className="my-auto text-primary" />
+                      )
+                    ) : (
+                      timer > 0 && (
+                        <p
+                          style={{
+                            fontSize: ".7rem",
+                            width: "max-content",
+                            padding: "9px ",
+                            margin: "0",
+                          }}
+                        >
+                          Resend in {timer} sec
+                        </p>
+                      )
+                    )}
                   </div>
                 </div>
                 <span className="my-auto d-flex justify-content-between">
@@ -237,14 +260,8 @@ function Form1(props) {
                         placeholder="OTP"
                       />
                       <p className="error-message">{errors.otp?.message}</p>
-                      {/* <button
-                        className="btn btn-pink w-50"
-                        // onClick={verifyOtp}
-                        disabled={disableVerifyBtn}
-                      >
-                        resend
-                      </button> */}
                     </div>
+
                     <button className="btn btn-pink w-50" onClick={otpVerify}>
                       verify otp
                     </button>
@@ -329,15 +346,21 @@ function Form1(props) {
                   continuing, you agree to our
                 </span>{" "}
                 <br />
-                <Link href="/terms">
-                  <a className="text-primary">
-                    Terms <span className="text-lowercase">of</span> Service
-                  </a>
-                </Link>{" "}
-                and{" "}
-                <Link href="/privacy">
-                  <a className="text-primary">Privacy Policy</a>
-                </Link>
+                <a
+                  target="_blank"
+                  href="https://wouldbee.com/terms"
+                  className="text-primary"
+                >
+                  Terms <span className="text-lowercase">of</span> Service
+                </a>{" "}
+                <span className="text-lowercase">and</span>{" "}
+                <a
+                  target="_blank"
+                  href="https://wouldbee.com/privacy"
+                  className="text-primary"
+                >
+                  Privacy Policy
+                </a>
               </p>
 
               <div className="d-flex justify-content-between">
