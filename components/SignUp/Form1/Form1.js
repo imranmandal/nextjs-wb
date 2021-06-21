@@ -134,6 +134,10 @@ function Form1(props) {
       props,
     });
 
+    if (response) {
+      props.setPageLoading(false);
+    }
+
     if (response.status > 400 && response.status < 500) {
       if (response.status === 409) {
         console.log(response);
@@ -212,7 +216,7 @@ function Form1(props) {
                           Send Otp
                         </button>
                       ) : (
-                        <FaCheckCircle className="my-auto text-primary" />
+                        <FaCheckCircle className="my-auto text-success px-2" />
                       )
                     ) : (
                       timer > 0 && (
@@ -271,7 +275,7 @@ function Form1(props) {
 
               {/* ------------------ PASSWORD and Other fields */}
               {data.phoneAuthToken ? (
-                <>
+                <div className={styles.otherDetails}>
                   <div className="m-1 m-sm-3">
                     <input
                       type="email"
@@ -338,7 +342,7 @@ function Form1(props) {
                       })}
                     </select>
                   </div>
-                </>
+                </div>
               ) : null}
               <p className="text-pink terms-policy py-0 text-center">
                 By{" "}
@@ -367,20 +371,8 @@ function Form1(props) {
                 <input
                   className="w-100 mx-1 mx-sm-3 btn btn-lg btn-pink text-light"
                   type="submit"
-                  value="Submit"
+                  value={props.pageLoading ? "Signing you up..." : "Sign Up"}
                 />
-
-                {userToken ? (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      props.nextStep();
-                    }}
-                    className="w-100 mx-3 btn btn-lg btn-pink text-light"
-                  >
-                    Next
-                  </button>
-                ) : null}
               </div>
             </form>
           </div>

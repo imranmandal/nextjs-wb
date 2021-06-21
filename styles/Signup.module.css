@@ -84,8 +84,29 @@
 .btn_grp,
 .input_grp {
   display: grid;
-  gap: 2rem;
+  gap: 2rem; /*---- Not for form1 */
   grid-template-columns: 1fr 1fr;
+}
+
+.form1 {
+  gap: 1rem;
+}
+
+.otherDetails {
+  position: relative;
+  transition: all 0.3s ease;
+  animation: otherDetailsEnter 0.3s ease-in;
+}
+
+@keyframes otherDetailsEnter {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  50% {
+    height: 80%;
+    opacity: 0.3;
+  }
 }
 
 .form1 input,
@@ -97,6 +118,7 @@
   display: flex;
   border: 1px solid #e11c74;
   border-radius: 5px;
+  min-width: 230px;
 }
 
 .phoneInput input {
@@ -116,6 +138,14 @@
 
 .btn_grp {
   margin: 1rem;
+}
+
+@media (max-width: 960px) {
+  .phoneImg {
+    padding: 10% 0 0 25%;
+    width: 150px;
+    height: 200px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -154,6 +184,10 @@
     height: 180px;
     width: 92.5px;
     margin: auto;
+  }
+
+  .phoneInput {
+    min-width: min-content;
   }
 
   .filler1 {
