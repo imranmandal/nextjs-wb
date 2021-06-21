@@ -2,12 +2,17 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { API_URL, NEXT_URL } from "@/config/index";
 import {
+  AnnualIncome,
   Degrees,
   gender as Gender,
   MaritalStatus,
+  Occupation,
   Religion,
 } from "@/components/FormComponent/FormData";
-import { convertedHeight } from "@/components/FormComponent/FormFunctions";
+import {
+  convertedHeight,
+  convertedValue,
+} from "@/components/FormComponent/FormFunctions";
 
 const Profile = ({
   title,
@@ -39,7 +44,12 @@ const Profile = ({
     Gender[gender]
   } | ${age} | ${convertedHeight(height)} | ${Religion[religion]} | ${
     MaritalStatus[maritalStatus]
-  } | ${Degrees[degrees] || ""} | ${city}`;
+  } | ${Degrees[degrees] || ""} | ${convertedValue(
+    AnnualIncome[income]
+  )} | ${convertedValue(
+    Occupation[occupation]
+  )} | ${city} | ${state} | ${country}`;
+
   return (
     <>
       {/* Name | Gender | Age | Height | Caste | Religion | Marital-Status | Degrees | Designation | CTC | City */}
@@ -79,7 +89,7 @@ const Profile = ({
           property="og:image:alt"
           content="A shiny red apple with a bite taken out"
         />
-        <meta property="og:site_name" content="Wouldbee.com" />
+        <meta property="og:site_name" content="wouldbee.com" />
         <meta property="fb:app_id" content="3074679522638036" />
         <link
           rel="image_src"
