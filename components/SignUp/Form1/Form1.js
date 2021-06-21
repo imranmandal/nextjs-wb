@@ -192,12 +192,8 @@ function Form1(props) {
                     {!showOtpInput ? (
                       !data.phoneAuthToken ? (
                         <button
-                          style={{
-                            fontSize: ".7rem",
-                            width: "max-content",
-                            padding: "9px ",
-                          }}
-                          className="btn btn-pink"
+                          style={{ width: "max-content" }}
+                          className="btn btn-pink px-0"
                           onClick={(e) => {
                             generateOtp(
                               e,
@@ -213,23 +209,14 @@ function Form1(props) {
                           }}
                           disabled={disableVerifyBtn}
                         >
-                          Send Otp
+                          <span className={styles.buttons}>Send Otp</span>
                         </button>
                       ) : (
                         <FaCheckCircle className="my-auto text-success px-2" />
                       )
                     ) : (
                       timer > 0 && (
-                        <p
-                          style={{
-                            fontSize: ".7rem",
-                            width: "max-content",
-                            padding: "9px ",
-                            margin: "0",
-                          }}
-                        >
-                          Resend in {timer} sec
-                        </p>
+                        <p className={styles.buttons}>Resend in {timer} sec</p>
                       )
                     )}
                   </div>
@@ -266,8 +253,11 @@ function Form1(props) {
                       <p className="error-message">{errors.otp?.message}</p>
                     </div>
 
-                    <button className="btn btn-pink w-50" onClick={otpVerify}>
-                      verify otp
+                    <button
+                      className="btn btn-pink w-50 mt-2"
+                      onClick={otpVerify}
+                    >
+                      <span className={styles.buttons}>verify otp</span>
                     </button>
                   </div>
                 ) : null}

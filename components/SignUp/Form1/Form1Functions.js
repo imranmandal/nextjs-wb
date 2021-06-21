@@ -9,15 +9,23 @@ export const schema = yup.object().shape({
   email: yup.string().required(),
   phone: yup
     .number()
+    .typeError("you must specify a number")
     .transform((value) => (isNaN(value) ? undefined : value))
     .positive()
     .integer()
     .min(10, "Phone must be at least 10 digits")
     .required("Phone is required"),
-  otp: yup.number().positive().integer().min(6).required(),
+  otp: yup
+    .number("Please enter Number value")
+    .typeError("Please enter Number value")
+    .positive("Please enter Number value")
+    .integer("Please enter Number value")
+    .min(6)
+    .required("Please enter OTP"),
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
+    .max(20, "Password must be maximum 20 characters")
     .required("Password is required"),
   cPassword: yup
     .string()

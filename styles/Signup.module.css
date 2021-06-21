@@ -190,6 +190,13 @@
     min-width: min-content;
   }
 
+  .buttons {
+    font-size: 0.7rem;
+    min-width: max-content;
+    padding: 9px;
+    margin: 0;
+  }
+
   .filler1 {
     left: -50px;
   }
