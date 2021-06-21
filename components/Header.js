@@ -21,16 +21,9 @@ function Header() {
               />
             </a>
           </Link>
-          {/* navbar-nav flex-row ml-auto mb-auto mb-lg-0 */}
           <div id="navbarSupportedContent" className={styles.navbar}>
-            <ul className={styles.navbar_nav}>
-              {/* {!userToken && (
-                <li className="text-light nav-i#profiles">
-                    View Profilestem">
-                  <a aria-current="page" href="
-                  </a>
-                </li>
-              )} */}
+            {/* <ul className={styles.navbar_nav}>
+             
 
               {!userToken ? (
                 <>
@@ -66,16 +59,16 @@ function Header() {
                   </Link>
                 </li>
               )}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </nav>
-      <SignUpModal
+      {/* <SignUpModal
         show={showSignUp}
         handleClose={() => {
           setShowSignUp(false);
         }}
-      />
+      /> */}
     </>
   );
 }

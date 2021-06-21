@@ -1,23 +1,48 @@
 import Head from "next/head";
 import { useEffect } from "react";
 import { API_URL, NEXT_URL } from "@/config/index";
+import {
+  Degrees,
+  gender as Gender,
+  MaritalStatus,
+  Religion,
+} from "@/components/FormComponent/FormData";
+import { convertedHeight } from "@/components/FormComponent/FormFunctions";
 
 const Profile = ({
   title,
   ogTitle,
   ogImage,
   ogDescription,
+  // data,
   uid,
   id,
   lastName,
+  gender,
+  age,
+  motherTongue,
+  maritalStatus,
+  height,
+  religion,
+  degree,
+  degrees,
+  occupation,
+  income,
   city,
   state,
   country,
+  displayPictureUrl,
 }) => {
   useEffect(() => console.log(id));
-
+  // console.log(data);
+  const description = `${lastName} | ${
+    Gender[gender]
+  } | ${age} | ${convertedHeight(height)} | ${Religion[religion]} | ${
+    MaritalStatus[maritalStatus]
+  } | ${Degrees[degrees] || ""} | ${city}`;
   return (
     <>
+      {/* Name | Gender | Age | Height | Caste | Religion | Marital-Status | Degrees | Designation | CTC | City */}
       <Head>
         <title>{title}</title>
         <meta property="og:title" content={id + " " + lastName || ogTitle} />
@@ -26,7 +51,7 @@ const Profile = ({
           content={`https://wouldbee.vercel.app/profiles/${uid}`}
         />
         <meta property="og:type" content="website" />
-        <meta property="og:description" content={ogDescription} />
+        <meta property="og:description" content={description} />
         <meta property="og:locale" content="en_US" />
         <meta
           property="og:image"
@@ -61,6 +86,7 @@ const Profile = ({
           href={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
       </Head>
+      {/* <Layout> */}
       <div className="d-flex justify-content-around mx-auto">
         <div className="page my-5 py-5 text-center bg-light shadow-lg rounded w-75 w-sm-50">
           <h1>{id}</h1>
@@ -70,6 +96,7 @@ const Profile = ({
           <p>{country}</p>
         </div>
       </div>
+      {/* </Layout> */}
     </>
   );
 };
@@ -108,16 +135,28 @@ export async function getServerSideProps({ params: { id } }) {
   const res = await fetch(`${API_URL}/profiles/${id}`);
 
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
 
   return {
     props: {
       uid: id,
       id: data.id,
       lastName: data.lastName,
+      gender: data.gender,
+      age: data.age,
+      motherTongue: data.motherTongue,
+      maritalStatus: data.maritalStatus,
+      height: data.height,
+      religion: data.religion,
+      degree: data.degree,
+      occupation: data.occupation,
+      income: data.income,
       city: data.city,
       state: data.state,
       country: data.country,
+      displayPictureUrl: data.displayPictureUrl,
+      // uid: id,
+      // data,
     },
   };
 }
