@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { API_URL, NEXT_URL } from "@/config/index";
 import {
   AnnualIncome,
@@ -38,20 +38,38 @@ const Profile = ({
   country,
   displayPictureUrl,
 }) => {
-  useEffect(() => console.log(id));
-  // console.log(data);
+  const [description, setDescription] = useState("");
 
-  const description = `${lastName} | ${
-    Gender[gender]
-  } | Age ${age} | ${convertedHeight(height)} | ${convertedValue(
-    Religion[religion]
-  )} | ${
-    maritalStatus && convertedValue(MaritalStatus[maritalStatus]) + " |"
-  }  ${degrees && convertedValue(degrees) + " |"}  ${convertedValue(
-    AnnualIncome[income]
-  )} | ${convertedValue(
-    Occupation[occupation]
-  )} | ${city} | ${state} | ${country}`;
+  const details = [
+    lastName,
+    gender,
+    convertedHeight(height),
+    convertedValue(Religion[religion]),
+    convertedValue(MaritalStatus[maritalStatus]),
+    convertedValue(degrees),
+    convertedValue(AnnualIncome[income]),
+    convertedValue(Occupation[occupation]),
+    city,
+    state,
+    country,
+  ];
+  // useEffect(() => {
+  //   console.log(id);
+
+  //   console.log(details);
+  // });
+
+  if (details) {
+    setDescription(
+      details
+        .filter((detail) => {
+          if (detail) {
+            return detail;
+          }
+        })
+        .join(" | ")
+    );
+  }
 
   return (
     <>
