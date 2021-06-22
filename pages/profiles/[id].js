@@ -38,8 +38,6 @@ const Profile = ({
   country,
   displayPictureUrl,
 }) => {
-  const [description, setDescription] = useState("");
-
   const details = [
     lastName,
     gender,
@@ -53,24 +51,37 @@ const Profile = ({
     state,
     country,
   ];
+
+  const [description, setDescription] = useState(
+    setDescription(
+      details
+        .filter((detail) => {
+          if (detail) {
+            return detail;
+          }
+        })
+        .join(" | ")
+    )
+  );
   // useEffect(() => {
   //   console.log(id);
 
   //   console.log(details);
   // });
-  useEffect(() => {
-    if (details) {
-      setDescription(
-        details
-          .filter((detail) => {
-            if (detail) {
-              return detail;
-            }
-          })
-          .join(" | ")
-      );
-    }
-  });
+
+  // useEffect(() => {
+  //   if (details) {
+  //     setDescription(
+  //       details
+  //         .filter((detail) => {
+  //           if (detail) {
+  //             return detail;
+  //           }
+  //         })
+  //         .join(" | ")
+  //     );
+  //   }
+  // });
 
   return (
     <>
