@@ -45,9 +45,11 @@ const Profile = ({
     Gender[gender]
   } | Age ${age} | ${convertedHeight(height)} | ${convertedValue(
     Religion[religion]
-  )} | ${maritalStatus && MaritalStatus[maritalStatus] + " |"}  ${
-    degrees && Degrees[degrees] + " |"
-  }  ${convertedValue(AnnualIncome[income])} | ${convertedValue(
+  )} | ${
+    maritalStatus && convertedValue(MaritalStatus[maritalStatus]) + " |"
+  }  ${degrees && convertedValue(degrees) + " |"}  ${convertedValue(
+    AnnualIncome[income]
+  )} | ${convertedValue(
     Occupation[occupation]
   )} | ${city} | ${state} | ${country}`;
 
