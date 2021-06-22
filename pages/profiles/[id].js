@@ -89,10 +89,7 @@ const Profile = ({
       <Head>
         <title>{title}</title>
         <meta property="og:title" content={id + " " + lastName || ogTitle} />
-        <meta
-          property="og:url"
-          content={`https://wouldbee.vercel.app/profiles/${uid}`}
-        />
+        <meta property="og:url" content={`${NEXT_URL}/profiles/${uid}`} />
         <meta property="og:type" content="website" />
         <meta property="og:description" content={description} />
         <meta property="og:locale" content="en_US" />
