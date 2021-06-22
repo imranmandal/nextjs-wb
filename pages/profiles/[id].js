@@ -58,18 +58,19 @@ const Profile = ({
 
   //   console.log(details);
   // });
-
-  if (details) {
-    setDescription(
-      details
-        .filter((detail) => {
-          if (detail) {
-            return detail;
-          }
-        })
-        .join(" | ")
-    );
-  }
+  useEffect(() => {
+    if (details) {
+      setDescription(
+        details
+          .filter((detail) => {
+            if (detail) {
+              return detail;
+            }
+          })
+          .join(" | ")
+      );
+    }
+  });
 
   return (
     <>
