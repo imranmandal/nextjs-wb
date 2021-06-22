@@ -53,15 +53,13 @@ const Profile = ({
   ];
 
   const [description, setDescription] = useState(
-    setDescription(
-      details
-        .filter((detail) => {
-          if (detail) {
-            return detail;
-          }
-        })
-        .join(" | ")
-    )
+    details
+      .filter((detail) => {
+        if (detail) {
+          return detail;
+        }
+      })
+      .join(" | ")
   );
   // useEffect(() => {
   //   console.log(id);
