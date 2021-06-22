@@ -40,13 +40,14 @@ const Profile = ({
 }) => {
   useEffect(() => console.log(id));
   // console.log(data);
+
   const description = `${lastName} | ${
     Gender[gender]
-  } | ${age} | ${convertedHeight(height)} | ${Religion[religion]} | ${
-    MaritalStatus[maritalStatus]
-  } | ${Degrees[degrees] || ""} | ${convertedValue(
-    AnnualIncome[income]
-  )} | ${convertedValue(
+  } | Age ${age} | ${convertedHeight(height)} | ${convertedValue(
+    Religion[religion]
+  )} | ${MaritalStatus[maritalStatus]} | ${
+    Degrees[degrees] + "|" || ""
+  }  ${convertedValue(AnnualIncome[income])} | ${convertedValue(
     Occupation[occupation]
   )} | ${city} | ${state} | ${country}`;
 
@@ -89,6 +90,7 @@ const Profile = ({
           property="og:image:alt"
           content="A shiny red apple with a bite taken out"
         />
+        <meta property="og:logo" content={`${NEXT_URL}/Images/logo.png`} />
         <meta property="og:site_name" content="wouldbee.com" />
         <meta property="fb:app_id" content="3074679522638036" />
         <link
