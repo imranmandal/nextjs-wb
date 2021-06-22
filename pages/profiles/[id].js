@@ -40,13 +40,13 @@ const Profile = ({
 }) => {
   const details = [
     lastName,
-    Gender[gender],
+    Gender[gender - 1],
     `Age ${age}`,
     convertedHeight(height),
-    convertedValue(Religion[religion]),
-    convertedValue(MaritalStatus[maritalStatus]),
+    convertedValue(Religion[religion - 1]),
+    convertedValue(MaritalStatus[maritalStatus - 1]),
     convertedValue(degrees),
-    convertedValue(AnnualIncome[income]),
+    convertedValue(AnnualIncome[income - 1]),
     convertedValue(Occupation[occupation]),
     city,
     state,
@@ -70,7 +70,7 @@ const Profile = ({
 
   // useEffect(() => {
   //   if (details) {
-  //     setDescription(
+  //     console.log(
   //       details
   //         .filter((detail) => {
   //           if (detail) {
