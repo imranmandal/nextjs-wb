@@ -40,7 +40,8 @@ const Profile = ({
 }) => {
   const details = [
     lastName,
-    gender,
+    Gender[gender],
+    `Age ${age}`,
     convertedHeight(height),
     convertedValue(Religion[religion]),
     convertedValue(MaritalStatus[maritalStatus]),
