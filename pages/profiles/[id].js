@@ -62,25 +62,6 @@ const Profile = ({
       })
       .join(" | ")
   );
-  // useEffect(() => {
-  //   console.log(id);
-
-  //   console.log(details);
-  // });
-
-  // useEffect(() => {
-  //   if (details) {
-  //     console.log(
-  //       details
-  //         .filter((detail) => {
-  //           if (detail) {
-  //             return detail;
-  //           }
-  //         })
-  //         .join(" | ")
-  //     );
-  //   }
-  // });
 
   return (
     <>
@@ -95,21 +76,31 @@ const Profile = ({
         <meta
           property="og:image"
           itemProp="image"
-          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
+          }
         />
         <meta
           property="og:image"
           itemProp="image"
-          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl ||
+            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+          }
         />
 
         <meta
           property="og:image:secure_url"
-          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
+          }
         />
         <meta
           property="og:image:secure_url"
-          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl ||
+            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+          }
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="256" />
@@ -123,10 +114,12 @@ const Profile = ({
         <meta property="fb:app_id" content="3074679522638036" />
         <link
           rel="image_src"
-          href={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+          href={
+            displayPictureUrl ||
+            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+          }
         />
       </Head>
-      {/* <Layout> */}
       <div className="d-flex justify-content-around mx-auto">
         <div className="page my-5 py-5 text-center bg-light shadow-lg rounded w-75 w-sm-50">
           <h1>{id}</h1>
@@ -136,7 +129,6 @@ const Profile = ({
           <p>{country}</p>
         </div>
       </div>
-      {/* </Layout> */}
     </>
   );
 };
