@@ -113,7 +113,6 @@ function Form1(props) {
     }
     setData((prevValue) => ({ ...prevValue, [name]: value }));
   };
-  errors && console.log(errors);
   // ---- SUBMIT
   const submitForm = async () => {
     if (!data.phoneAuthToken) {
@@ -149,7 +148,7 @@ function Form1(props) {
 
   const otpVerify = (e) => {
     e.preventDefault();
-    console.log(recaptchaResult);
+    // console.log(recaptchaResult);
     verifyOtp(
       uuId,
       data,
@@ -192,8 +191,7 @@ function Form1(props) {
                     {!showOtpInput ? (
                       !data.phoneAuthToken ? (
                         <button
-                          style={{ width: "max-content" }}
-                          className="btn btn-pink px-0"
+                          className="btn btn-pink px-0 form1_btn"
                           onClick={(e) => {
                             generateOtp(
                               e,
@@ -209,15 +207,13 @@ function Form1(props) {
                           }}
                           disabled={disableVerifyBtn}
                         >
-                          <span className={styles.buttons}>Send Otp</span>
+                          <span className="form1_btn">Send Otp</span>
                         </button>
                       ) : (
-                        <FaCheckCircle className="my-auto text-success px-2" />
+                        <FaCheckCircle className="my-auto text-success " />
                       )
                     ) : (
-                      timer > 0 && (
-                        <p className={styles.buttons}>Resend in {timer} sec</p>
-                      )
+                      timer > 0 && <p className="form1_btn">{timer} sec</p>
                     )}
                   </div>
                 </div>
@@ -254,7 +250,7 @@ function Form1(props) {
                     </div>
 
                     <button
-                      className="btn btn-pink w-50 mt-2"
+                      className="btn btn-pink w-50 mt-2 form1_btn"
                       onClick={otpVerify}
                     >
                       <span className={styles.buttons}>verify otp</span>

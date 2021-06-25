@@ -31,9 +31,9 @@ const InputGql = (props) => {
     setQueryVariable((prevVal) => ({ ...prevVal, skip: 0 }));
   }, [queryVariable.like]);
 
-  const handleClose = () => {
-    setDisplay(true);
-  };
+  // const handleClose = () => {
+  //   setDisplay(true);
+  // };
 
   const handleSelect = (e) => {
     const value = e.target.getAttribute("data-value");

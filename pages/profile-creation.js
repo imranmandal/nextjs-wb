@@ -9,7 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Signup.module.css";
 
-const ProfileCreation = () => {
+const ProfileCreation = ({ start }) => {
+  const count = ["1", "2", "4"];
+  console.log(count.indexOf(start) + 1);
   return (
     <>
       <div className={styles.profileCreation}>
@@ -25,7 +27,7 @@ const ProfileCreation = () => {
           </Link>
         </div>
         <ToastContainer />
-        <StepWizard>
+        <StepWizard initialStep={start}>
           <Form2 />
           <Form3 />
           <Form4 />
@@ -34,6 +36,11 @@ const ProfileCreation = () => {
       </div>
     </>
   );
+};
+
+ProfileCreation.getInitialProps = async ({ query }) => {
+  console.log("cuurent:", query.currentPage);
+  return { start: query.currentPage };
 };
 
 export default ProfileCreation;

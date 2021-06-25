@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import AuthContext from "context/AuthContext";
@@ -10,7 +10,10 @@ import { form2Schema, submitForm } from "./Form2functions";
 import styles from "@/styles/Form.module.css";
 import modalStyles from "@/styles/Modal.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { GET_CITY_NAME } from "@/components/Graphql/query/query";
+import {
+  GET_CITY_NAME,
+  GET_FIRST_SCREEN,
+} from "@/components/Graphql/query/query";
 import { SAVE_FIRST_PAGE } from "@/components/Graphql/mutations/mutation";
 import MultipleSelect from "@/components/FormComponent/MultipleSelect";
 import {
@@ -27,6 +30,7 @@ import {
 // Component start
 function Form2(props) {
   const { userToken } = useContext(AuthContext);
+  const uid = parseJwt(userToken);
 
   // console.log(typeof parseJwt(userToken));
   const [data, setData] = useState({
@@ -54,7 +58,6 @@ function Form2(props) {
   const [maxDate, setMaxDate] = useState(null);
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     setValue,
@@ -73,23 +76,6 @@ function Form2(props) {
   }, []);
 
   // ---- MAX AGE END
-
-  const customRegister = {
-    managedBy: register("managedBy"),
-    fname: register("fname"),
-    lname: register("lname"),
-    dob: register("dob"),
-    maritalStatus: register("maritalStatus"),
-    motherTongue: register("motherTongue"),
-    religion: register("religion"),
-    height: register("height"),
-    disability: register("disability"),
-    disease: register("disease"),
-    diet: register("diet"),
-    smoke: register("smoke"),
-    city: register("city"),
-    drink: register("drink"),
-  };
 
   const handleGenderChange = (elem) => {
     const name = elem.target.name;
@@ -113,7 +99,12 @@ function Form2(props) {
   const handleChange = (elem) => {
     const { name, value } = elem.target;
     setData((prevValue) => ({ ...prevValue, [name]: value }));
+    setValue((name, value));
   };
+
+  const SavedData = useQuery(GET_FIRST_SCREEN, {
+    variables: { id: uid },
+  });
 
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
@@ -121,13 +112,86 @@ function Form2(props) {
   SavedResponse?.error && console.log(error);
 
   const submit = () => {
-    const uid = parseJwt(userToken);
     // console.log(data);
     submitForm(data, uid, props, saveFirstPage);
   };
 
-  // SavedResponse && console.log(SavedResponse);
-  // TODO: Create error - Min age should be 21/18 years for male/female
+  useEffect(() => {
+    if (SavedData.data) {
+      const profile = SavedData.data.user.profile;
+      // console.log(profile);
+      setData({
+        fname: profile.firstName,
+        lname: profile.lastName,
+        gender: {
+          maleSelected: profile.gender === "MALE" ? true : false,
+          femaleSelected: profile.gender === "FEMALE" ? true : false,
+        },
+        dob:
+          profile.dob.slice(0, 4) +
+          "-" +
+          profile.dob.slice(5, 7) +
+          "-" +
+          profile.dob.slice(8, 10),
+        managedBy: profile.profileManagedBy,
+        maritalStatus: profile.maritalStatus,
+        motherTongue: profile.motherTongue,
+        religion: profile.socialDetails.religion,
+        height: profile.otherProfileDetails?.height,
+        disability: {
+          innerValue: [...profile.otherProfileDetails.disabilities],
+          value: [...profile.otherProfileDetails.disabilities],
+        },
+        disease: {
+          innerValue: [...profile.otherProfileDetails.majorDiseases],
+          value: [...profile.otherProfileDetails.majorDiseases],
+        },
+        diet: profile.otherProfileDetails.diet,
+        city: {
+          id: profile.city.id,
+          name:
+            profile.city.name +
+            ", " +
+            profile.city.state.name +
+            ", " +
+            profile.city.state.country.name,
+        },
+        smoke: profile.otherProfileDetails.smoke,
+        drink: profile.otherProfileDetails.drink,
+      });
+
+      setValue("managedBy", profile.profileManagedBy);
+      setValue("fname", profile.firstName);
+      setValue("lname", profile.lastName);
+      setValue(
+        "dob",
+        profile.dob.slice(0, 4) +
+          "-" +
+          profile.dob.slice(5, 7) +
+          "-" +
+          profile.dob.slice(8, 10)
+      );
+
+      setValue("maritalStatus", profile.maritalStatus);
+      setValue("motherTongue", profile.motherTongue);
+      setValue("religion", profile.socialDetails.religion);
+      setValue("height", profile.otherProfileDetails?.height);
+      setValue("disability", [...profile.otherProfileDetails.disabilities]);
+      setValue("disease", [...profile.otherProfileDetails.majorDiseases]);
+      setValue("diet", profile.otherProfileDetails.diet);
+      setValue(
+        "city",
+        profile.city.name +
+          ", " +
+          profile.city.state.name +
+          ", " +
+          profile.city.state.country.name
+      );
+      setValue("smoke", profile.otherProfileDetails.smoke);
+      setValue("drink", profile.otherProfileDetails.drink);
+      //
+    }
+  }, [SavedData]);
 
   return (
     <>
@@ -142,8 +206,9 @@ function Form2(props) {
               placeholder=" "
               name="managedBy"
               options={ProfileManagedBy}
+              selected={data.managedBy}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
           </div>
@@ -158,12 +223,13 @@ function Form2(props) {
                 id="fname"
                 name="fname"
                 className="form-control"
+                value={data.fname}
                 onChange={(e) => {
-                  customRegister.fname.onChange(e);
+                  // customRegister.fname.onChange(e);
                   handleChange(e);
                 }}
                 placeholder=""
-                ref={customRegister.fname.ref}
+                // ref={customRegister.fname.ref}
               />
             </div>
             <div className="p-3 w-100">
@@ -176,12 +242,13 @@ function Form2(props) {
                 id="lname"
                 name="lname"
                 className="form-control"
+                value={data.lname}
                 onChange={(e) => {
-                  customRegister.lname.onChange(e);
+                  // customRegister.lname.onChange(e);
                   handleChange(e);
                 }}
                 placeholder=""
-                ref={customRegister.lname.ref}
+                // ref={customRegister.lname.ref}
               />
             </div>
           </div>
@@ -227,14 +294,13 @@ function Form2(props) {
                 id="dob"
                 name="dob"
                 className="form-control w-100"
-                placeholder="dd/mm/yyyy"
-                // value={data.dob}
+                value={data.dob}
                 max={maxDate}
                 onChange={(e) => {
-                  customRegister.dob.onChange(e);
+                  // customRegister.dob.onChange(e);
                   handleChange(e);
                 }}
-                ref={customRegister.dob.ref}
+                // ref={customRegister.dob.ref}
               />
             </div>
           </div>
@@ -245,8 +311,10 @@ function Form2(props) {
               placeholder=" "
               name="maritalStatus"
               options={MaritalStatus}
+              selected={data.maritalStatus}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
+              // customRegister={customRegister}
               errors={errors}
             />
             <Select
@@ -256,7 +324,7 @@ function Form2(props) {
               options={MotherTongue}
               selected={data.motherTongue}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
           </div>
@@ -268,7 +336,7 @@ function Form2(props) {
               options={Religion}
               selected={data.religion}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
             <Select
@@ -278,7 +346,7 @@ function Form2(props) {
               options={Height}
               selected={data.height}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
           </div>
@@ -317,7 +385,7 @@ function Form2(props) {
               placeholder="type to search"
               QUERY_NAME={GET_CITY_NAME}
               OUTPUT_OBJ_NAME="cities"
-              customRegister={customRegister}
+              // customRegister={customRegister}
               setValue={setValue}
               errors={errors}
             />
@@ -327,7 +395,7 @@ function Form2(props) {
               options={DietaryChoice}
               selected={data.diet}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
           </div>
@@ -343,7 +411,7 @@ function Form2(props) {
               ]}
               selected={data.smoke}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
             <Select
@@ -356,7 +424,7 @@ function Form2(props) {
               ]}
               selected={data.drink}
               setSelected={setData}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
           </div>

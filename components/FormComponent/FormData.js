@@ -1,4 +1,4 @@
-export const gender = ["Male", "Female"];
+export const gender = ["Male", "female"];
 
 export const MaritalStatus = [
   "NEVER_MARRIED",

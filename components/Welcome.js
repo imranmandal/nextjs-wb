@@ -3,13 +3,7 @@ import { IoLogoGooglePlaystore } from "react-icons/io5";
 import Image from "next/image";
 import styles from "@/styles/Welcome.module.css";
 
-function Welcome({
-  showVideo,
-  showImage,
-  vdoPath,
-  wideImgPath,
-  portraitImgPath,
-}) {
+function Welcome({ showVideo, showImage, vdoPath, imgPath }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -20,7 +14,7 @@ function Welcome({
         {showImage && (
           <div className={styles.bgWrap}>
             <Image
-              src={wideImgPath || "/Images/bg-landscape-desktop.jpg"}
+              src={imgPath || "/Images/bg-landscape-desktop.jpg"}
               layout="fill"
               objectFit="cover"
               quality={100}

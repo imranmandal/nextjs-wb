@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import InputOccupation from "@/components/FormComponent/InputOccupation";
@@ -11,24 +11,25 @@ import {
   EmployedIn,
   Occupation,
 } from "@/components/FormComponent/FormData";
-
 import { form3Schema, SubmitForm3 } from "./Form3Functions";
 import { SAVE_SECOND_SCREEN } from "@/components/Graphql/mutations/mutation";
 import {
   GET_DESIGNATION_NAME,
   GET_EMPLOYER_NAME,
-  GET_INSTITUTE_NAMES,
+  GET_SECOND_SCREEN,
 } from "@/components/Graphql/query/query";
 import AuthContext from "context/AuthContext";
 import { parseJwt } from "../ParseJwt";
 import modalStyles from "@/styles/Modal.module.css";
 import styles from "@/styles/Form.module.css";
 import MultipleSelect from "@/components/FormComponent/MultipleSelect";
+import { convertedValue } from "@/components/FormComponent/FormFunctions";
 
 //  ------- COMPONENT
 
 function Form3(props) {
   const { userToken } = useContext(AuthContext);
+  const uid = parseJwt(userToken);
 
   const [data, setData] = useState({
     degrees: { innerValue: [], value: [] },
@@ -43,7 +44,6 @@ function Form3(props) {
   });
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     setValue,
@@ -51,17 +51,49 @@ function Form3(props) {
     resolver: yupResolver(form3Schema),
   });
 
-  const customRegister = {
-    degrees: register("degrees"),
-    employedIn: register("employedIn"),
-    occupation: register("occupation"),
-    income: register("income"),
-  };
+  const SavedData = useQuery(GET_SECOND_SCREEN, {
+    variables: {
+      id: uid,
+    },
+  });
 
   const [saveSecondScreen, SavedResponse] = useMutation(SAVE_SECOND_SCREEN);
 
+  useEffect(() => {
+    if (SavedData.data) {
+      console.log(SavedData.data);
+      const profile = SavedData.data.professionalDetails;
+      setData({
+        degrees: {
+          innerValue: [...profile.degrees],
+          value: [...profile.degrees],
+        },
+        employedIn: profile.employedIn,
+        occupation: {
+          text: convertedValue(profile.occupation),
+          value: profile.occupation,
+        },
+        employerName: {
+          id: profile.employer.id,
+          name: profile.employer.name,
+        },
+        designation: {
+          id: profile.designation.id,
+          name: profile.designation.name,
+        },
+        income: profile.annualIncome,
+      });
+
+      setValue("degrees", [...profile.degrees]);
+      setValue("occupation", profile.occupation);
+      setValue("employedIn", profile.employedIn);
+      setValue("emloyerName", profile.employer.name);
+      setValue("designation", profile.designation.name);
+      setValue("income", profile.annualIncome);
+    }
+  }, [SavedData.data]);
+
   const submitForm3 = () => {
-    const uid = parseJwt(userToken);
     // console.log(data);
     SubmitForm3(uid, data, props, saveSecondScreen);
   };
@@ -129,7 +161,7 @@ function Form3(props) {
               selected={data.employedIn}
               setSelected={setData}
               options={EmployedIn}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
             <Select
@@ -139,7 +171,7 @@ function Form3(props) {
               selected={data.income}
               setSelected={setData}
               options={AnnualIncome}
-              customRegister={customRegister}
+              setValue={setValue}
               errors={errors}
             />
           </div>

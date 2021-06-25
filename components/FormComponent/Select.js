@@ -5,9 +5,11 @@ export default function Select(props) {
     label,
     placeholder,
     name,
+    selected,
     setSelected,
     options,
-    customRegister,
+    setValue,
+    // customRegister,
     errors,
   } = props;
 
@@ -17,6 +19,7 @@ export default function Select(props) {
       ...prevVal,
       [name]: value.includes("select") ? null : value,
     }));
+    setValue(name, value.includes("select") ? null : value);
   };
 
   return (
@@ -32,12 +35,12 @@ export default function Select(props) {
           className="form-control w-100 text-capitalize"
           name={name}
           id={name}
-          // value={selected}
+          value={selected}
           onChange={(e) => {
-            customRegister && customRegister[name].onChange(e);
+            // customRegister && customRegister[name].onChange(e);
             handleChange(e);
           }}
-          ref={customRegister && customRegister[name].ref}
+          // ref={customRegister && customRegister[name].ref}
         >
           <option value="">Select {placeholder || name}</option>
           {name === "drink" || name === "smoke"

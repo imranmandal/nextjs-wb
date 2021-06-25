@@ -1,16 +1,5 @@
 import { gql } from "@apollo/client";
 
-export const GET_INSTITUTE_NAMES = gql`
-  query institutes($like: String, $skip: Int, $take: Int) {
-    institutes(
-      options: { q: $like, skip: $skip, take: $take, isApproved: { eq: true } }
-    ) {
-      id
-      name
-    }
-  }
-`;
-
 export const GET_CITY_NAME = gql`
   query cities($like: String, $skip: Int, $take: Int) {
     cities(
@@ -53,6 +42,72 @@ export const GET_EMPLOYER_NAME = gql`
     ) {
       id
       name
+    }
+  }
+`;
+
+export const GET_PROFILE_CREATION_SCREEN = gql`
+  query profileCreationPage($id: String!) {
+    profile(id: $id) {
+      profileCreationScreen
+    }
+  }
+`;
+
+export const GET_FIRST_SCREEN = gql`
+  query User($id: String!) {
+    user(id: $id) {
+      phone
+      email
+      profile {
+        profileManagedBy
+        firstName
+        lastName
+        gender
+        dob
+        maritalStatus
+        motherTongue
+        socialDetails {
+          religion
+        }
+        otherProfileDetails {
+          height
+          disabilities
+          majorDiseases
+          diet
+          smoke
+          drink
+        }
+        city {
+          id
+          name
+          state {
+            name
+            country {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_SECOND_SCREEN = gql`
+  query User($id: String!) {
+    professionalDetails(id: $id) {
+      designation {
+        id
+        name
+      }
+      degrees
+      occupation
+      employer {
+        id
+        name
+      }
+      employedIn
+      annualIncome
     }
   }
 `;

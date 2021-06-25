@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import styles from "@/styles/Layout.module.css";
 import Welcome from "./Welcome";
 import DownloadApp from "./DownloadAppSection";
-import { useEffect, useState } from "react";
 
 const Layout = ({
   title,
@@ -14,18 +13,10 @@ const Layout = ({
   children,
   // showImage,
   // showVideo,
-  wideImgPath,
-  portraitImgPath,
+  // imgPath,
   // vdoPath,
 }) => {
   const router = useRouter();
-  const [imgUrl, setImgUrl] = useState(null);
-
-  useEffect(() => {
-    window.innerWidth < 768
-      ? setImgUrl(portraitImgPath)
-      : setImgUrl(wideImgPath);
-  });
 
   return (
     <>
@@ -39,10 +30,10 @@ const Layout = ({
 
       {router.pathname === "/" && (
         <Welcome
-          // showImage={showImage}
-          // showVideo={showVideo}
-          wideImgPath={imgUrl}
-          // vdoPath={vdoPath}
+        // showImage={showImage}
+        // showVideo={showVideo}
+        // imgPath={imgPath}
+        // vdoPath={vdoPath}
         />
       )}
 
@@ -60,8 +51,7 @@ Layout.defaultProps = {
   description: "Truly Free, Fanatically Safe!",
   keywords: "matrimony, jeevansathi, wouldbee",
   // showImage: true,
-  wideImgPath: "/Images/bg-landscape-desktop.jpg",
-  portraitImgPath: "/Images/bg-phone-portrait-small.jpg",
+  // imgPath: "/Images/bg-landscape-desktop.jpg",
 };
 
 export default Layout;

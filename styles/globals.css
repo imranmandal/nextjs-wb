@@ -60,6 +60,13 @@ li {
   /* position: absolute; */
 }
 
+.form1_btn {
+  width: max-content;
+  font-size: 0.7rem;
+  padding: 9px 5px !important;
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .page {
     padding: 5% 10%;

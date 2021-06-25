@@ -10,7 +10,7 @@ export default async (req, res) => {
       cookie.serialize("uuid", uuid, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
-        maxAge: 60 * 60 * 24 * 7, //1 week
+        maxAge: 60 * 60 * 24 * 30, //1 Month
         sameSite: "strict",
         path: "/",
       })

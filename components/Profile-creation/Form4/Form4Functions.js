@@ -12,35 +12,29 @@ export const form4Schema = yup.object().shape({
   verificationDocName: yup.string(),
   profilePic: yup.mixed().required("Please select a profile pic."),
   frontPage: yup.mixed(),
-  // .test("fileSize", "picture is too large", (value) => {
-  //   console.log(valuep[0]);
-  //   return value && value[0].size <= 10000000;
-  // }),
-  // .test("fileSize", "file is too large", (value) => {
-  //   return value && value[0].size <= 10000000;
-  // }),
 });
 
 // ------ HANDLE PROFILE CHANGE
-export const handleProfileChange = (e, setData) => {
+export const handleProfileChange = (e, setData, setLoading) => {
   const file = e.target.files[0];
   if (file) {
+    setLoading(true);
     if (file.type === "image/jpeg" || file.type === "image/png") {
       new Compressor(file, {
         quality: 0.6,
         success: (blob) => {
-          // console.log(file);
           const myFile = new File([blob], blob.name);
-          // console.log(myFile);
 
           setData((prevVal) => ({
             ...prevVal,
             profilePic: URL.createObjectURL(myFile),
             profilePicData: myFile,
           }));
+          setLoading(false);
         },
       });
     } else {
+      setLoading(false);
       return toast.warning("Please select JPEG,JPG or PNG images");
     }
   }

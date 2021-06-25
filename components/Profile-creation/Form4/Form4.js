@@ -5,6 +5,7 @@ import { FaCamera, FaTimes } from "react-icons/fa";
 import { IoAttach } from "react-icons/io5";
 import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import Compressor from "compressorjs";
 import {
   form4Schema,
   handleProfileChange,
@@ -91,11 +92,10 @@ function Form4(props) {
     if (validatedData.profilePic.length === 0) {
       return toast.error("Please select the profile pic");
     }
-    // console.log();
-    console.log(userToken);
+    // console.log(validatedData);
+    // console.log(data);
     submitForm4(userToken, data, setLoading, props, showBackPageInput);
   };
-  // console.log(userToken);
 
   // ----- HANDLE CHANGE
   const handleChange = (e) => {
@@ -111,14 +111,23 @@ function Form4(props) {
       if (name === "frontPage") {
         setValue(name, files, true);
       }
-      console.log(files[0]);
-      setData((prevVal) => ({
-        ...prevVal,
-        verificationDocFile: {
-          ...prevVal.verificationDocFile,
-          [name]: files[0],
+      // console.log(files[0]);
+      setLoading(true);
+      new Compressor(files[0], {
+        quality: 0.6,
+        success: (blob) => {
+          const myFile = new File([blob], blob.name);
+
+          setData((prevVal) => ({
+            ...prevVal,
+            verificationDocFile: {
+              ...prevVal.verificationDocFile,
+              [name]: myFile,
+            },
+          }));
+          setLoading(false);
         },
-      }));
+      });
     }
   };
 
@@ -183,7 +192,7 @@ function Form4(props) {
                 name="profilePic"
                 onChange={(e) => {
                   customRegister.profilePic.onChange(e);
-                  handleProfileChange(e, setData);
+                  handleProfileChange(e, setData, setLoading);
                 }}
                 ref={customRegister.profilePic.ref}
               />
@@ -223,7 +232,7 @@ function Form4(props) {
                 selected={data.verificationDocName}
                 setSelected={setData}
                 options={TypeOfIdProof}
-                customRegister={customRegister}
+                setValue={setValue}
                 errors={errors}
               />
 
@@ -253,11 +262,6 @@ function Form4(props) {
                         className={styles.removeFileBtn}
                       >
                         X
-                        {/* <FaTimes
-                          name="frontPage"
-                          className="my-auto"
-                          fontSize="20"
-                        /> */}
                       </button>
                     )}
                   </span>
@@ -301,7 +305,6 @@ function Form4(props) {
                             className={styles.removeFileBtn}
                           >
                             X
-                            {/* <FaTimes className="my-auto" fontSize="20" /> */}
                           </button>
                         )}
                       </span>
@@ -312,7 +315,6 @@ function Form4(props) {
                       type="file"
                       id="backPage"
                       name="backPage"
-                      // value={data.verificationDocFile.backPage}
                       onChange={handleFileChange}
                       disabled={disableFileInput}
                     />

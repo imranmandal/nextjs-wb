@@ -1,106 +1,51 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { API_URL, NEXT_URL } from "@/config/index";
-import {
-  AnnualIncome,
-  Degrees,
-  gender as Gender,
-  MaritalStatus,
-  Occupation,
-  Religion,
-} from "@/components/FormComponent/FormData";
-import {
-  convertedHeight,
-  convertedValue,
-} from "@/components/FormComponent/FormFunctions";
 
 const Profile = ({
   title,
   ogTitle,
   ogImage,
   ogDescription,
-  // data,
   uid,
   id,
   lastName,
-  gender,
-  age,
-  motherTongue,
-  maritalStatus,
-  height,
-  religion,
-  degree,
-  degrees,
-  occupation,
-  income,
   city,
   state,
   country,
-  displayPictureUrl,
 }) => {
-  const details = [
-    lastName,
-    Gender[gender - 1],
-    `Age ${age}`,
-    convertedHeight(height),
-    convertedValue(Religion[religion - 1]),
-    convertedValue(MaritalStatus[maritalStatus - 1]),
-    convertedValue(degrees),
-    convertedValue(AnnualIncome[income - 1]),
-    convertedValue(Occupation[occupation]),
-    city,
-    state,
-    country,
-  ];
-
-  const [description, setDescription] = useState(
-    details
-      .filter((detail) => {
-        if (detail) {
-          return detail;
-        }
-      })
-      .join(" | ")
-  );
+  useEffect(() => console.log(id));
 
   return (
     <>
-      {/* Name | Gender | Age | Height | Caste | Religion | Marital-Status | Degrees | Designation | CTC | City */}
       <Head>
         <title>{title}</title>
         <meta property="og:title" content={id + " " + lastName || ogTitle} />
-        <meta property="og:url" content={`${NEXT_URL}/profiles/${uid}`} />
+        <meta
+          property="og:url"
+          content={`https://wouldbee.vercel.app/profiles/${uid}`}
+        />
         <meta property="og:type" content="website" />
-        <meta property="og:description" content={description} />
+        <meta property="og:description" content={ogDescription} />
         <meta property="og:locale" content="en_US" />
         <meta
           property="og:image"
           itemProp="image"
-          content={
-            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
-          }
+          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
         />
         <meta
           property="og:image"
           itemProp="image"
-          content={
-            displayPictureUrl ||
-            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
-          }
+          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
 
         <meta
           property="og:image:secure_url"
-          content={
-            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
-          }
+          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
         />
         <meta
           property="og:image:secure_url"
-          content={
-            displayPictureUrl ||
-            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
-          }
+          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="256" />
@@ -109,15 +54,11 @@ const Profile = ({
           property="og:image:alt"
           content="A shiny red apple with a bite taken out"
         />
-        <meta property="og:logo" content={`${NEXT_URL}/Images/logo.png`} />
-        <meta property="og:site_name" content="wouldbee.com" />
+        <meta property="og:site_name" content="Wouldbee.com" />
         <meta property="fb:app_id" content="3074679522638036" />
         <link
           rel="image_src"
-          href={
-            displayPictureUrl ||
-            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
-          }
+          href={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
         />
       </Head>
       <div className="d-flex justify-content-around mx-auto">
@@ -167,28 +108,16 @@ export async function getServerSideProps({ params: { id } }) {
   const res = await fetch(`${API_URL}/profiles/${id}`);
 
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
 
   return {
     props: {
       uid: id,
       id: data.id,
       lastName: data.lastName,
-      gender: data.gender,
-      age: data.age,
-      motherTongue: data.motherTongue,
-      maritalStatus: data.maritalStatus,
-      height: data.height,
-      religion: data.religion,
-      degree: data.degree,
-      occupation: data.occupation,
-      income: data.income,
       city: data.city,
       state: data.state,
       country: data.country,
-      displayPictureUrl: data.displayPictureUrl,
-      // uid: id,
-      // data,
     },
   };
 }
