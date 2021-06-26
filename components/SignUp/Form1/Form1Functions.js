@@ -50,6 +50,7 @@ const CheckPhoneExists = async (phone, uuId) => {
 // ------- GENERATE OTP
 export const generateOtp = (
   event,
+  uuId,
   props,
   setShowRecaptcha,
   setRecaptchaResult,
@@ -64,7 +65,7 @@ export const generateOtp = (
   const phone = data.phone;
 
   if (phone.length === 10) {
-    CheckPhoneExists(phone).then((res) => {
+    CheckPhoneExists(phone, uuId).then((res) => {
       // console.log(res);
       if (!res) {
         setDisableVerifyBtn(false);

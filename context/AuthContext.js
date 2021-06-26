@@ -21,7 +21,10 @@ export const AuthProvider = ({ children }) => {
   const [uuId, setUuId] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => checkUserLoggedIn());
+  useEffect(() => {
+    checkUserLoggedIn();
+    createUuid();
+  });
 
   const router = useRouter();
 
