@@ -75,6 +75,11 @@ function Form2(props) {
     setMaxDate(`${today.getFullYear() - maxAge}` + "-" + `${MM}` + "-" + dd);
   }, []);
 
+  useEffect(() => {
+    Object.keys(errors).length > 0 &&
+      toast.error("Please fill all the fields.");
+  }, [errors]);
+
   // ---- MAX AGE END
 
   const handleGenderChange = (elem) => {
@@ -99,7 +104,7 @@ function Form2(props) {
   const handleChange = (elem) => {
     const { name, value } = elem.target;
     setData((prevValue) => ({ ...prevValue, [name]: value }));
-    setValue((name, value));
+    setValue(name, value);
   };
 
   const SavedData = useQuery(GET_FIRST_SCREEN, {
@@ -118,79 +123,81 @@ function Form2(props) {
 
   useEffect(() => {
     if (SavedData.data) {
-      const profile = SavedData.data.user.profile;
-      // console.log(profile);
-      setData({
-        fname: profile.firstName,
-        lname: profile.lastName,
-        gender: {
-          maleSelected: profile.gender === "MALE" ? true : false,
-          femaleSelected: profile.gender === "FEMALE" ? true : false,
-        },
-        dob:
-          profile.dob.slice(0, 4) +
-          "-" +
-          profile.dob.slice(5, 7) +
-          "-" +
-          profile.dob.slice(8, 10),
-        managedBy: profile.profileManagedBy,
-        maritalStatus: profile.maritalStatus,
-        motherTongue: profile.motherTongue,
-        religion: profile.socialDetails.religion,
-        height: profile.otherProfileDetails?.height,
-        disability: {
-          innerValue: [...profile.otherProfileDetails.disabilities],
-          value: [...profile.otherProfileDetails.disabilities],
-        },
-        disease: {
-          innerValue: [...profile.otherProfileDetails.majorDiseases],
-          value: [...profile.otherProfileDetails.majorDiseases],
-        },
-        diet: profile.otherProfileDetails.diet,
-        city: {
-          id: profile.city.id,
-          name:
-            profile.city.name +
-            ", " +
-            profile.city.state.name +
-            ", " +
-            profile.city.state.country.name,
-        },
-        smoke: profile.otherProfileDetails.smoke,
-        drink: profile.otherProfileDetails.drink,
-      });
+      const profile = SavedData.data?.user.profile;
+      if (profile) {
+        setData({
+          fname: profile?.firstName,
+          lname: profile?.lastName,
+          gender: {
+            maleSelected: profile?.gender === "MALE" ? true : false,
+            femaleSelected: profile?.gender === "FEMALE" ? true : false,
+          },
+          dob:
+            profile?.dob.slice(0, 4) +
+            "-" +
+            profile?.dob.slice(5, 7) +
+            "-" +
+            profile?.dob.slice(8, 10),
+          managedBy: profile?.profileManagedBy,
+          maritalStatus: profile?.maritalStatus,
+          motherTongue: profile?.motherTongue,
+          religion: profile?.socialDetails.religion,
+          height: profile?.otherProfileDetails?.height,
+          disability: {
+            innerValue: [...profile?.otherProfileDetails.disabilities],
+            value: [...profile?.otherProfileDetails.disabilities],
+          },
+          disease: {
+            innerValue: [...profile?.otherProfileDetails.majorDiseases],
+            value: [...profile?.otherProfileDetails.majorDiseases],
+          },
+          diet: profile?.otherProfileDetails.diet,
+          city: {
+            id: profile?.city.id,
+            name:
+              profile?.city.name +
+              ", " +
+              profile.city?.state.name +
+              ", " +
+              profile?.city.state.country.name,
+          },
+          smoke: profile?.otherProfileDetails.smoke,
+          drink: profile?.otherProfileDetails.drink,
+        });
 
-      setValue("managedBy", profile.profileManagedBy);
-      setValue("fname", profile.firstName);
-      setValue("lname", profile.lastName);
-      setValue(
-        "dob",
-        profile.dob.slice(0, 4) +
-          "-" +
-          profile.dob.slice(5, 7) +
-          "-" +
-          profile.dob.slice(8, 10)
-      );
+        setValue("managedBy", profile?.profileManagedBy);
+        setValue("fname", profile?.firstName);
+        setValue("lname", profile?.lastName);
+        setValue(
+          "dob",
+          profile?.dob.slice(0, 4) +
+            "-" +
+            profile?.dob.slice(5, 7) +
+            "-" +
+            profile?.dob.slice(8, 10)
+        );
 
-      setValue("maritalStatus", profile.maritalStatus);
-      setValue("motherTongue", profile.motherTongue);
-      setValue("religion", profile.socialDetails.religion);
-      setValue("height", profile.otherProfileDetails?.height);
-      setValue("disability", [...profile.otherProfileDetails.disabilities]);
-      setValue("disease", [...profile.otherProfileDetails.majorDiseases]);
-      setValue("diet", profile.otherProfileDetails.diet);
-      setValue(
-        "city",
-        profile.city.name +
-          ", " +
-          profile.city.state.name +
-          ", " +
-          profile.city.state.country.name
-      );
-      setValue("smoke", profile.otherProfileDetails.smoke);
-      setValue("drink", profile.otherProfileDetails.drink);
-      //
+        setValue("maritalStatus", profile?.maritalStatus);
+        setValue("motherTongue", profile?.motherTongue);
+        setValue("religion", profile?.socialDetails.religion);
+        setValue("height", profile?.otherProfileDetails?.height);
+        setValue("disability", [...profile?.otherProfileDetails.disabilities]);
+        setValue("disease", [...profile?.otherProfileDetails.majorDiseases]);
+        setValue("diet", profile?.otherProfileDetails.diet);
+        setValue(
+          "city",
+          profile?.city.name +
+            ", " +
+            profile?.city.state.name +
+            ", " +
+            profile?.city.state.country.name
+        );
+        setValue("smoke", profile?.otherProfileDetails.smoke);
+        setValue("drink", profile?.otherProfileDetails.drink);
+        //
+      }
     }
+    // console.log(profile);
   }, [SavedData]);
 
   return (
@@ -229,6 +236,7 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder=""
+                disabled={SavedData.data?.user?.profile.firstName}
                 // ref={customRegister.fname.ref}
               />
             </div>
@@ -248,6 +256,7 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder=""
+                disabled={SavedData.data?.user?.profile.lastName}
                 // ref={customRegister.lname.ref}
               />
             </div>
@@ -263,6 +272,7 @@ function Form2(props) {
                   checked={data.gender.maleSelected}
                   onChange={handleGenderChange}
                   id="male"
+                  disabled={SavedData.data?.user?.profile.gender}
                 />
                 <label className="my-auto" htmlFor="male">
                   male
@@ -276,6 +286,7 @@ function Form2(props) {
                   checked={data.gender.femaleSelected}
                   onChange={handleGenderChange}
                   id="female"
+                  disabled={SavedData.data?.user?.profile.gender}
                 />
                 <label className="my-auto" htmlFor="female">
                   female
@@ -320,7 +331,7 @@ function Form2(props) {
             <Select
               label="mother tongue *"
               name="motherTongue"
-              placeholder="Language"
+              placeholder=" "
               options={MotherTongue}
               selected={data.motherTongue}
               setSelected={setData}
@@ -333,6 +344,7 @@ function Form2(props) {
             <Select
               label="religion *"
               name="religion"
+              placeholder=" "
               options={Religion}
               selected={data.religion}
               setSelected={setData}

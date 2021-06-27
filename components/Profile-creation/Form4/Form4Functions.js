@@ -64,19 +64,23 @@ export const submitForm4 = async (
   }
 
   formData.append("id", uid);
-  if (data.verificationDocFile.frontPage.name) {
-    formData.append(
-      "idProof",
-      data.verificationDocFile.frontPage,
-      data.verificationDocFile.frontPage.name
-    );
-  }
-  if (showBackPageInput && data.verificationDocFile.backPage.name) {
-    formData.append(
-      "idProof",
-      data.verificationDocFile.backPage,
-      data.verificationDocFile.backPage.name
-    );
+  if (data.verificationDocName) {
+    if (data.verificationDocFile.frontPage.name) {
+      formData.append(
+        "idProof",
+        data.verificationDocFile.frontPage,
+        data.verificationDocFile.frontPage.name
+      );
+    } else {
+      return toast.error("Please upload the selected Govt. ID Proof");
+    }
+    if (showBackPageInput && data.verificationDocFile.backPage.name) {
+      formData.append(
+        "idProof",
+        data.verificationDocFile.backPage,
+        data.verificationDocFile.backPage.name
+      );
+    }
   }
 
   var requestOptions = {

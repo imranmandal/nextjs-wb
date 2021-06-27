@@ -1,28 +1,30 @@
 .modal {
   position: absolute;
-  top: 10px;
+  top: auto;
   left: auto;
   right: auto;
-  bottom: 100px;
+  bottom: auto;
   background: white;
-  width: 80vw;
+  overflow: auto;
+  /* width: 80vw; */
+  width: fit-content;
   /* min-width: 60vw; */
   height: fit-content;
-  border-radius: 5px;
-  padding: 20px;
+  border-radius: 10px;
+  /* padding: 20px; */
   z-index: 100;
-  overflow: hidden;
-  animation: modalEnter 0.2s linear;
+  overflow-y: hidden;
+  animation: modalEnter 0.3s ease-in-out;
 }
 
 @keyframes modalEnter {
   from {
-    top: -100px;
+    top: -50px;
     opacity: 0;
   }
   to {
-    top: 10px;
-    opacity: 0.3;
+    top: 90px;
+    opacity: 1;
   }
 }
 
@@ -33,16 +35,22 @@
 }
 
 .closeBtn {
+  position: absolute;
+  top: 5%;
+  right: 3%;
+  z-index: 200;
+  font-size: 1.5rem;
+  color: #e5e7e9;
   cursor: pointer;
+}
+
+.closeBtn svg {
+  box-shadow: 0 0 10px #333;
 }
 
 .closeBtn:hover {
   transform: rotate(180deg);
   transition: all 0.3s;
-}
-
-.body {
-  padding-top: 10px;
 }
 
 .overlay {
@@ -52,7 +60,7 @@
   bottom: 100px;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,8 +78,277 @@
   scrollbar-width: none; /* Firefox */
 }
 
+/* --------------------------------------------- */
+
+.body {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: -20px 0 50px;
+}
+
+.body p {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  /* margin: 20px 0 30px; */
+}
+
+.body a {
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.container {
+  background: #fff;
+  position: relative;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.container_inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.login_container form,
+.sign_up_container form {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.login_container,
+.sign_up_container {
+  background: #fff;
+  position: absolute;
+  top: auto;
+  bottom: auto;
+  height: 100%;
+  overflow: auto;
+  transition: all 0.6s ease-in-out;
+}
+
+.login_container {
+  left: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 2;
+}
+
+.sign_up_container {
+  left: 0;
+  opacity: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 1;
+}
+
+.overlay_container {
+  background: #e11c74;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+.overlay_container_inner {
+  background: #e11c74;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+.overlay_inner {
+  color: #fff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay_right,
+.overlay_left {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 40px;
+  height: 100%;
+  width: 100%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay_right {
+  position: absolute;
+  width: 50%;
+  right: 0;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay_left {
+  position: absolute;
+  width: 50%;
+  left: 0;
+  transform: translateX(-20%);
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Move signin to the right */
+.right_panel_active .login_container {
+  transform: translateX(100%);
+}
+
+/* Move overlay_inner to left */
+.right_panel_active .overlay_container {
+  transform: translateX(-100%);
+}
+
+/* Bring sign up over sign in */
+.right_panel_active .sign_up_container {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+}
+
+/* Move overlay back to the right */
+.right_panel_active .overlay_inner {
+  transform: translateX(50%);
+}
+
+.right_panel_active .overlay_left {
+  transform: translateX(0);
+  /* z-index: 6; */
+}
+.right_panel_active .overlay_right {
+  transform: translateX(20%);
+}
+
 @media (max-width: 960px) {
-  .modal {
-    width: 90%;
+  @keyframes modalEnter {
+    from {
+      top: -50px;
+      opacity: 0;
+    }
+    to {
+      top: 0px;
+      opacity: 1;
+    }
+  }
+
+  .container {
+    height: 100vh;
+    overflow-x: hidden;
+    width: 400px;
+  }
+
+  .sign_up_container,
+  .login_container {
+    width: 100%;
+    top: 20%;
+    height: fit-content;
+  }
+
+  .sign_up_container {
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+
+  .login_container {
+    transform: translateX(0);
+  }
+
+  .overlay_right {
+    position: absolute;
+    width: 50%;
+    left: auto;
+    right: 0;
+    transform: translateX(0);
+    transform: translateY(-10%);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  .overlay_left {
+    width: 50%;
+    right: 0;
+    left: auto;
+    transform: translateX(0);
+    transform: translateY(-530%);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  .overlay_container {
+    height: 20%;
+    width: 100%;
+    top: 80%;
+    left: 0;
+    transform: translateY(0);
+  }
+
+  .overlay_inner {
+    transform: translateY(10%);
+  }
+
+  /* Move signin to the right */
+  .right_panel_active .login_container {
+    transform: translateX(100%);
+  }
+
+  /* Bring sign up over sign in */
+  .right_panel_active .sign_up_container {
+    transform: translateX(0);
+  }
+
+  /* Move overlay_inner to left */
+  .right_panel_active .overlay_container {
+    transform: translateY(-410%);
+  }
+
+  /* Move overlay back to the right */
+  .right_panel_active .overlay_inner {
+    transform: translateY(70%);
+  }
+
+  .right_panel_active .overlay_left {
+    transform: translateX(0);
+    transform: translateY(-200%);
+    height: 10%;
+  }
+  .right_panel_active .overlay_right {
+    transform: translateY(1000%);
+  }
+}
+
+@media (max-width: 768px) {
+  .closeBtn {
+    position: absolute;
+    top: 3%;
+    right: 10%;
   }
 }

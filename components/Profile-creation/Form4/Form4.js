@@ -43,6 +43,7 @@ function Form4(props) {
           ...prevVal,
           verificationDocFile: { ...prevVal.verificationDocFile, backPage: {} },
         }));
+        setDisableFileInput(false);
         setShowBackPageInput(false);
         return;
       }

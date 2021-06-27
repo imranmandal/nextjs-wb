@@ -27,6 +27,22 @@
 }
 /* ------------- */
 
+.form_container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+.login_container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.login_container {
+  transform: translateX(100%);
+}
+
 .phoneImg {
   height: 350px;
   width: 180px;
@@ -71,29 +87,31 @@
   bottom: 0%;
 }
 
-.form1 {
+.sign_up {
   /* padding: 0 10%; */
 }
 
-.form1_form {
+.sign_up_form,
+.login_form {
   /* background: rgb(225 28 116 / 32%); */
   border-radius: 5px;
 }
 
-.form1,
+.sign_up,
 .btn_grp,
 .input_grp {
   display: grid;
-  gap: 2rem; /*---- Not for form1 */
+  gap: 2rem; /*---- Not for sign_up */
   grid-template-columns: 1fr 1fr;
 }
 
-.form1 {
+.sign_up {
   gap: 1rem;
 }
 
 .otherDetails {
   position: relative;
+  padding: 0;
   transition: all 0.3s ease;
   animation: otherDetailsEnter 0.3s ease-in;
 }
@@ -109,8 +127,9 @@
   }
 }
 
-.form1 input,
-.form1 select {
+.sign_up input,
+.sign_up select,
+.login input {
   border-color: #e11c74;
 }
 
@@ -146,6 +165,15 @@
     width: 150px;
     height: 200px;
   }
+
+  .phoneInput,
+  .sign_up_form input[type="email"],
+  .sign_up_form input[type="password"],
+  .sign_up_form select,
+  .login input,
+  .buttons {
+    width: 280.7px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -157,20 +185,12 @@
     width: 200px;
   }
 
-  .form1 {
+  .sign_up {
     max-width: 540px;
     display: flex;
     padding: 5% 0;
     margin: auto;
     flex-direction: column-reverse;
-  }
-
-  .form1_form form {
-    padding: 0;
-  }
-
-  .form1_form div {
-    padding: 0;
   }
 
   .phoneImg {
@@ -188,6 +208,11 @@
 
   .phoneInput {
     min-width: min-content;
+  }
+
+  .submitBtn {
+    background-color: #e11c74;
+    color: #fff;
   }
 
   .buttons {

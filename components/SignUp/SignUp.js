@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import Form1 from "./Form1/Form1";
+import Form1 from "./Forms/SignUpForm";
 import styles from "@/styles/Signup.module.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +23,7 @@ const SignUpForm = (props) => {
     <div className=" container my-4 mx-auto text-left">
       <div className="col mx-auto my-5 text-capitalize">
         <div className={styles.body}>
-          <div className={styles.sign_up}>
+          {/* <div className={styles.sign_up}>
             <div className={styles.logo}>
               <Image
                 src="/Images/wouldbee1.png"
@@ -41,7 +41,7 @@ const SignUpForm = (props) => {
             </div>
 
             <p className="text-secondary">{props.msg || defaultMsg}</p>
-          </div>
+          </div> */}
 
           <Form1
             data={formData}
@@ -49,7 +49,7 @@ const SignUpForm = (props) => {
             pageLoading={pageLoading}
             setPageLoading={setPageLoading}
           />
-          <ToastContainer />
+          {/* <ToastContainer /> */}
         </div>
       </div>
     </div>

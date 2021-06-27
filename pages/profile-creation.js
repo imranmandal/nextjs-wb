@@ -10,8 +10,11 @@ import Link from "next/link";
 import styles from "@/styles/Signup.module.css";
 
 const ProfileCreation = ({ start }) => {
-  const count = ["1", "2", "4"];
-  console.log(count.indexOf(start) + 1);
+  const count = ["1", "2"];
+
+  const stepNumber =
+    count.indexOf(start) < 0 ? start : count.indexOf(start) + 2;
+  // console.log(count.indexOf(start));
   return (
     <>
       <div className={styles.profileCreation}>
@@ -21,13 +24,13 @@ const ProfileCreation = ({ start }) => {
               src="/Images/wouldbee1.png"
               alt="Wouldbee"
               layout="intrinsic"
-              height="100"
+              height="93"
               width="300"
             />
           </Link>
         </div>
         <ToastContainer />
-        <StepWizard initialStep={start}>
+        <StepWizard initialStep={stepNumber}>
           <Form2 />
           <Form3 />
           <Form4 />

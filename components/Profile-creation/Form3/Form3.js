@@ -51,6 +51,11 @@ function Form3(props) {
     resolver: yupResolver(form3Schema),
   });
 
+  useEffect(() => {
+    Object.keys(errors).length > 0 &&
+      toast.error("Please fill all the fields.");
+  }, [errors]);
+
   const SavedData = useQuery(GET_SECOND_SCREEN, {
     variables: {
       id: uid,
@@ -62,34 +67,40 @@ function Form3(props) {
   useEffect(() => {
     if (SavedData.data) {
       console.log(SavedData.data);
-      const profile = SavedData.data.professionalDetails;
-      setData({
-        degrees: {
-          innerValue: [...profile.degrees],
-          value: [...profile.degrees],
-        },
-        employedIn: profile.employedIn,
-        occupation: {
-          text: convertedValue(profile.occupation),
-          value: profile.occupation,
-        },
-        employerName: {
-          id: profile.employer.id,
-          name: profile.employer.name,
-        },
-        designation: {
-          id: profile.designation.id,
-          name: profile.designation.name,
-        },
-        income: profile.annualIncome,
-      });
+      const profile = SavedData.data?.professionalDetails;
+      if (profile) {
+        setData({
+          degrees: {
+            innerValue: [
+              ...profile?.degrees.map((degree) => {
+                return convertedValue(degree);
+              }),
+            ],
+            value: [...profile?.degrees],
+          },
+          employedIn: profile?.employedIn,
+          occupation: {
+            text: convertedValue(profile?.occupation),
+            value: profile?.occupation,
+          },
+          employerName: {
+            id: profile?.employer.id,
+            name: profile?.employer.name,
+          },
+          designation: {
+            id: profile?.designation.id,
+            name: profile?.designation.name,
+          },
+          income: profile?.annualIncome,
+        });
 
-      setValue("degrees", [...profile.degrees]);
-      setValue("occupation", profile.occupation);
-      setValue("employedIn", profile.employedIn);
-      setValue("emloyerName", profile.employer.name);
-      setValue("designation", profile.designation.name);
-      setValue("income", profile.annualIncome);
+        setValue("degrees", [...profile?.degrees]);
+        setValue("occupation", profile?.occupation);
+        setValue("employedIn", profile?.employedIn);
+        setValue("emloyerName", profile?.employer.name);
+        setValue("designation", profile?.designation.name);
+        setValue("income", profile?.annualIncome);
+      }
     }
   }, [SavedData.data]);
 
