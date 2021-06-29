@@ -4,43 +4,15 @@ import Link from "next/link";
 import styles from "@/styles/Header.module.css";
 import SignUpModal from "@/components/SignUpModal";
 import AuthContext from "context/AuthContext";
-import {
-  GET_INSTITUTE_NAMES,
-  GET_PROFILE_CREATION_SCREEN,
-} from "./Graphql/query/query";
-import { useQuery } from "@apollo/client";
-import { parseJwt } from "./Profile-creation/ParseJwt";
 
 function Header() {
   const { userToken, logout } = useContext(AuthContext);
   const router = useRouter();
   const [showSignUp, setShowSignUp] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
 
-  const uid = parseJwt(userToken);
-
-  const { data, error, loading } = useQuery(GET_PROFILE_CREATION_SCREEN, {
-    variables: {
-      id: uid,
-    },
-  });
-
-  useEffect(() => {
-    if (data) {
-      console.log(data.profile.profileCreationScreen);
-      setCurrentStep(data.profile.profileCreationScreen);
-    }
-  }, [data]);
-
-  const handleClick = () => {
-    !userToken
-      ? setShowSignUp(true)
-      : router.push({
-          pathname: "/profile-creation",
-          query: {
-            currentPage: currentStep || 1,
-          },
-        });
+  const handleClick = (e) => {
+    e.preventDefault();
+    !userToken ? setShowSignUp(true) : router.push("/profile-creation");
   };
   return (
     <>
@@ -79,7 +51,7 @@ function Header() {
                 </Link>
               </li>
 
-              {/* <li>
+              <li>
                 <Link href="#" scroll={false}>
                   <a
                     className="nav-link text-dark bg-light rounded-pill shadow-lg"
@@ -94,7 +66,7 @@ function Header() {
                     Logout
                   </a>
                 </Link>
-              </li> */}
+              </li>
             </ul>
           </div>
         </div>

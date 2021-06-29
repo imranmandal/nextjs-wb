@@ -28,9 +28,29 @@ export const AuthProvider = ({ children }) => {
 
   const router = useRouter();
 
-  //   Register User
-  const register = async (user) => {
-    console.log(user);
+  //   Login User
+  const login = async ({ phone, password }) => {
+    // console.log(phone);
+    const res = await fetch(`${NEXT_URL}/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phone,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setUserToken(data.token);
+      return data;
+    } else {
+      setError(data.message);
+      setError(null);
+    }
   };
 
   //   Sign up user
@@ -41,8 +61,9 @@ export const AuthProvider = ({ children }) => {
     password,
     userSource,
     deviceInfo,
+    phoneAuthToken,
   }) => {
-    const phoneAuthToken = localStorage.getItem("phoneAuthToken");
+    // const phoneAuthToken = localStorage.getItem("phoneAuthToken");
     const res = await axios
       .post(`${NEXT_URL}/api/signup`, {
         email: email,
@@ -157,7 +178,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ userToken, uuId, error, register, signUp, logout, createUuid }}
+      value={{ userToken, uuId, error, login, signUp, logout, createUuid }}
     >
       <ApolloProvider client={client}>{children}</ApolloProvider>
     </AuthContext.Provider>

@@ -14,11 +14,6 @@
   border-color: #e11c74;
 }
 
-.container input::placeholder {
-  text-transform: capitalize;
-  color: grey;
-}
-
 .gender_grp {
   width: 100%;
   padding: 1rem;

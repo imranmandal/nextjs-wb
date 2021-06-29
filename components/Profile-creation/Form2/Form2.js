@@ -77,7 +77,7 @@ function Form2(props) {
 
   useEffect(() => {
     Object.keys(errors).length > 0 &&
-      toast.error("Please fill all the fields.");
+      toast.error("Please fill all the required fields.");
   }, [errors]);
 
   // ---- MAX AGE END
@@ -114,7 +114,7 @@ function Form2(props) {
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
 
-  SavedResponse?.error && console.log(error);
+  SavedResponse?.error && console.log(SavedResponse.error);
 
   const submit = () => {
     // console.log(data);
@@ -236,7 +236,7 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder=""
-                disabled={SavedData.data?.user?.profile.firstName}
+                disabled={SavedData.data?.user?.profile?.firstName}
                 // ref={customRegister.fname.ref}
               />
             </div>
@@ -256,7 +256,7 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder=""
-                disabled={SavedData.data?.user?.profile.lastName}
+                disabled={SavedData.data?.user?.profile?.lastName}
                 // ref={customRegister.lname.ref}
               />
             </div>
@@ -272,7 +272,7 @@ function Form2(props) {
                   checked={data.gender.maleSelected}
                   onChange={handleGenderChange}
                   id="male"
-                  disabled={SavedData.data?.user?.profile.gender}
+                  disabled={SavedData.data?.user?.profile?.gender}
                 />
                 <label className="my-auto" htmlFor="male">
                   male
@@ -286,7 +286,7 @@ function Form2(props) {
                   checked={data.gender.femaleSelected}
                   onChange={handleGenderChange}
                   id="female"
-                  disabled={SavedData.data?.user?.profile.gender}
+                  disabled={SavedData.data?.user?.profile?.gender}
                 />
                 <label className="my-auto" htmlFor="female">
                   female

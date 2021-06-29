@@ -1,0 +1,64 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  padding: 7% 15%;
+}
+
+.container input[name="password"],
+.container input[name="cPassword"],
+.container input[type="submit"],
+.container p,
+.phoneInput {
+  margin-right: auto;
+  margin-left: auto;
+  width: 350px;
+  max-width: 350px;
+  /* min-width: 310px; */
+}
+
+.container input[name="password"],
+.container input[name="cPassword"],
+.container input[type="submit"],
+.phoneInput {
+  border: 1px solid #e11c74;
+}
+
+.phoneInput {
+  display: flex;
+  border-radius: 5px;
+  /* margin: 0; */
+  /* min-width: 100%; */
+  /* margin: auto; */
+}
+
+.phoneInput input {
+  border: none;
+  background: #fff;
+  width: 100%;
+}
+
+.phoneInput label {
+  margin: auto;
+  padding: 0 5px;
+  border-right: 1.5px solid #e11c74;
+  background-color: -internal-light-dark(
+    rgba(239, 239, 239, 0.3),
+    rgba(59, 59, 59, 0.3)
+  );
+}
+
+@media (max-width: 960px) {
+  .container {
+    padding: 7% 0;
+  }
+}
+@media (max-width: 400px) {
+  .container input[name="password"],
+  .container input[name="cPassword"],
+  .container input[type="submit"],
+  .container p,
+  .phoneInput {
+    width: 100%;
+  }
+}

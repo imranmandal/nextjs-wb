@@ -51,7 +51,8 @@ const CheckPhoneExists = async (phone, uuId) => {
 export const generateOtp = (
   event,
   uuId,
-  props,
+  data,
+  formType,
   setShowRecaptcha,
   setRecaptchaResult,
   setShowOtpInput,
@@ -60,40 +61,75 @@ export const generateOtp = (
 ) => {
   event.preventDefault();
 
-  const { data, setData } = props;
-
   const phone = data.phone;
 
   if (phone.length === 10) {
-    CheckPhoneExists(phone, uuId).then((res) => {
-      // console.log(res);
-      if (!res) {
-        setDisableVerifyBtn(false);
-        const captcha = new firebase.auth.RecaptchaVerifier("recaptcha");
-
-        const number = `+91${phone}`;
-
-        // console.log("1");
-        firebase
-          .auth()
-          .signInWithPhoneNumber(number, captcha)
-          .then((response) => {
-            setRecaptchaResult(response);
-            setShowRecaptcha(false);
-            setShowOtpInput(true);
-            setDisablePhoneInput(true);
-          })
-          .catch((error) => {
-            toast.error("Something went wrong. Please try again later.");
-          });
-      } else {
-        setDisableVerifyBtn(false);
-        toast.error("Phone already exists.");
-      }
-    });
+    if (formType === "signup") {
+      CheckPhoneExists(phone, uuId).then((res) => {
+        if (!res) {
+          generate(
+            phone,
+            setRecaptchaResult,
+            setShowOtpInput,
+            setDisablePhoneInput,
+            setDisableVerifyBtn,
+            setShowRecaptcha
+          );
+        } else {
+          setDisableVerifyBtn(false);
+          toast.error("Account with this phone number already exists.");
+        }
+      });
+    }
+    if (formType === "recovery") {
+      CheckPhoneExists(phone, uuId).then((res) => {
+        // console.log(res);
+        if (res) {
+          generate(
+            phone,
+            setRecaptchaResult,
+            setShowOtpInput,
+            setDisablePhoneInput,
+            setDisableVerifyBtn,
+            setShowRecaptcha
+          );
+        } else {
+          setDisableVerifyBtn(false);
+          toast.error("Account with this phone number does not exists.");
+        }
+      });
+    }
   } else {
     setShowRecaptcha(false);
   }
+};
+
+const generate = (
+  phone,
+  setRecaptchaResult,
+  setShowOtpInput,
+  setDisablePhoneInput,
+  setDisableVerifyBtn,
+  setShowRecaptcha
+) => {
+  setDisableVerifyBtn(false);
+  const captcha = new firebase.auth.RecaptchaVerifier("recaptcha");
+
+  const number = `+91${phone}`;
+
+  firebase
+    .auth()
+    .signInWithPhoneNumber(number, captcha)
+    .then((response) => {
+      setRecaptchaResult(response);
+      setShowRecaptcha(false);
+      setShowOtpInput(true);
+      setDisablePhoneInput(true);
+    })
+    .catch((error) => {
+      setShowRecaptcha(false);
+      toast.error("Something went wrong. Please try again later.");
+    });
 };
 
 // ------VERIFY OTP

@@ -156,17 +156,30 @@
   z-index: 1;
 }
 
+.loading_container,
 .overlay_container {
-  background: #e11c74;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
   height: 100%;
   overflow: hidden;
   transition: transform 0.6s ease-in-out;
   z-index: 100;
 }
+
+.loading_container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.overlay_container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  background: #e11c74;
+}
+
 .overlay_container_inner {
   background: #e11c74;
   position: absolute;
@@ -265,6 +278,7 @@
   .container {
     height: 100vh;
     overflow-x: hidden;
+    overflow-y: auto;
     width: 400px;
   }
 

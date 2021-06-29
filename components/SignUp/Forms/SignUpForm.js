@@ -14,8 +14,9 @@ import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Form1(props) {
+function SignUpForm(props) {
   const { data, setData } = props;
+  const formType = "signup";
   // const [phoneAuthToken, setPhoneAuthToken] = useState("");
   // ---- CONTEXT
   const { signUp, userToken, uuId, error } = useContext(AuthContext);
@@ -163,13 +164,13 @@ function Form1(props) {
   return (
     <>
       {/* <ToastContainer /> */}
-      <div /*className={styles.sign_up}*/>
+      <div>
         {/* <sign_upContent /> */}
         <div className={styles.sign_up_form}>
           <div className="w-100">
             <form onSubmit={handleSubmit(submitForm)}>
               <h2 className="text-center p-3 text-pink">Sign Up</h2>
-              <div className="form-floating my-3">
+              <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
                   <label value="+91" disabled>
                     +91
@@ -194,7 +195,8 @@ function Form1(props) {
                             generateOtp(
                               e,
                               uuId,
-                              props,
+                              data,
+                              formType,
                               setShowRecaptcha,
                               setRecaptchaResult,
                               setShowOtpInput,
@@ -224,8 +226,9 @@ function Form1(props) {
                 </span>
 
                 {/* ============ re-captcha */}
+
                 {showRecaptcha && (
-                  <div className="my-3 mx-auto mx-sm-auto">
+                  <div>
                     <div className="" id="recaptcha"></div>
                   </div>
                 )}
@@ -261,7 +264,7 @@ function Form1(props) {
               {/* ------------------ PASSWORD and Other fields */}
               {data.phoneAuthToken ? (
                 <div className={styles.otherDetails}>
-                  <div className="m-1 m-sm-3">
+                  <div className="">
                     <input
                       type="email"
                       name="email"
@@ -275,7 +278,7 @@ function Form1(props) {
                     />
                     <p className="error-message">{errors.email?.message}</p>
                   </div>
-                  <div className="my-3 mx-1 mx-sm-3">
+                  <div className="my-3">
                     <input
                       className="form-control"
                       type="password"
@@ -289,7 +292,7 @@ function Form1(props) {
                     />
                     <p className="error-message">{errors.password?.message}</p>
                   </div>
-                  <div className="my-3 mx-1 mx-sm-3">
+                  <div className="my-3">
                     <input
                       className="form-control"
                       type="password"
@@ -303,7 +306,7 @@ function Form1(props) {
                     />
                     <p className="error-message">{errors.cPassword?.message}</p>
                   </div>
-                  <div className="my-3 mx-1 mx-sm-3">
+                  <div className="my-3 text-start">
                     <label className="text-secondary" htmlFor="userSource">
                       Where{" "}
                       <span className="text-lowercase">
@@ -356,7 +359,7 @@ function Form1(props) {
                 <input
                   className="btn btn-pink w-100"
                   type="submit"
-                  value={props.pageLoading ? "Signing you up..." : "Sign Up"}
+                  value="Sign Up"
                 />
               </div>
             </form>
@@ -367,4 +370,4 @@ function Form1(props) {
   );
 }
 
-export default Form1;
+export default SignUpForm;

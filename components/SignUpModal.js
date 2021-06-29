@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import styles from "@/styles/Modal.module.css";
 import ReactDOM from "react-dom";
-import SignUpForm from "./SignUp/SignUp";
+import SignUp from "./SignUp/SignUp";
 import Login from "./Login/Login";
 import { ToastContainer } from "react-toastify";
 
@@ -13,8 +13,18 @@ const SignUpModal = ({ msg, show, children, handleClose }) => {
   const [slideClass, setSlideClass] = useState(styles.right_panel_active);
   // console.log(show);
 
+  const [pageLoading, setPageLoading] = useState(false);
+
   useEffect(() => setIsBrowser(true), []);
   useEffect(() => console.log(slideClass), [slideClass]);
+  useEffect(() => {
+    if (show) {
+      document.body.style.position = "fixed";
+      // document.body.scroll = "no";
+    } else {
+      document.body.style.position = "static";
+    }
+  }, [isBrowser, show]);
 
   const modalContent = show ? (
     <>
@@ -27,6 +37,13 @@ const SignUpModal = ({ msg, show, children, handleClose }) => {
         aria-labelledby="staticBackdropLabel"
         className={styles.body}
       >
+        {pageLoading ? (
+          <div className={styles.loading_container}>
+            <div className="spinner-border text-pink m-auto" role="status">
+              <span className="visually-hidden h-100 w-100"></span>
+            </div>
+          </div>
+        ) : null}
         <ToastContainer />
         <div className={styles.overlay} /*className="modal-dialog"*/>
           <div className={styles.modal} /*className="modal-content"*/>
@@ -34,10 +51,14 @@ const SignUpModal = ({ msg, show, children, handleClose }) => {
             <div className={styles.container} id="container">
               <div className={slideClass}>
                 <div className={styles.login_container}>
-                  <Login />
+                  <Login setPageLoading={setPageLoading} />
                 </div>
                 <div className={styles.sign_up_container}>
-                  <SignUpForm msg={msg} handleClose={handleClose} />
+                  <SignUp
+                    setPageLoading={setPageLoading}
+                    msg={msg}
+                    handleClose={handleClose}
+                  />
                 </div>
                 <div className={styles.overlay_container}>
                   <div className={styles.overlay_container_inner}>

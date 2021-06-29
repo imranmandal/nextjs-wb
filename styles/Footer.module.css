@@ -96,10 +96,6 @@
   margin-bottom: 0px !important;
 }
 
-.middot {
-  margin: auto 0.5rem;
-}
-
 @media (max-width: 768px) {
   .footer_top {
     flex-direction: column;

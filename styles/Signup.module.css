@@ -130,7 +130,7 @@
 .sign_up input,
 .sign_up select,
 .login input {
-  border-color: #e11c74;
+  border: 1px solid #e11c74;
 }
 
 .phoneInput {
@@ -138,6 +138,7 @@
   border: 1px solid #e11c74;
   border-radius: 5px;
   min-width: 230px;
+  margin: auto;
 }
 
 .phoneInput input {
@@ -159,6 +160,16 @@
   margin: 1rem;
 }
 
+.phoneInput,
+.sign_up_form input[type="email"],
+.sign_up_form input[type="password"],
+.sign_up_form select,
+.login input,
+.buttons {
+  /* width: 280.7px; */
+  width: 100%;
+}
+
 @media (max-width: 960px) {
   .phoneImg {
     padding: 10% 0 0 25%;
@@ -166,14 +177,14 @@
     height: 200px;
   }
 
-  .phoneInput,
+  /* .phoneInput,
   .sign_up_form input[type="email"],
   .sign_up_form input[type="password"],
   .sign_up_form select,
   .login input,
   .buttons {
     width: 280.7px;
-  }
+  } */
 }
 
 @media (max-width: 768px) {

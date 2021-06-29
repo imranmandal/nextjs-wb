@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import Form1 from "./Forms/SignUpForm";
+import SignUpForm from "./Forms/SignUpForm";
 import styles from "@/styles/Signup.module.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import modalStyle from "@/styles/Modal.module.css";
 
-const SignUpForm = (props) => {
+const SignUp = (props) => {
   const [formData, setFormData] = useState({
     otp: "",
     phone: "",
@@ -15,7 +14,6 @@ const SignUpForm = (props) => {
     password: "",
     cPassword: "",
   });
-  const [pageLoading, setPageLoading] = useState(false);
 
   const defaultMsg = "Truly Free, Fanatically Safe!";
 
@@ -43,11 +41,11 @@ const SignUpForm = (props) => {
             <p className="text-secondary">{props.msg || defaultMsg}</p>
           </div> */}
 
-          <Form1
+          <SignUpForm
             data={formData}
             setData={setFormData}
-            pageLoading={pageLoading}
-            setPageLoading={setPageLoading}
+            pageLoading={props.pageLoading}
+            setPageLoading={props.setPageLoading}
           />
           {/* <ToastContainer /> */}
         </div>
@@ -56,4 +54,4 @@ const SignUpForm = (props) => {
   );
 };
 
-export default SignUpForm;
+export default SignUp;

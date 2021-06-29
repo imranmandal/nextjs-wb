@@ -116,7 +116,7 @@ function Footer() {
               <a>Sitemap</a>
             </Link>
 
-            <p className={styles.middot}>&middot;</p>
+            <p className="middot">&middot;</p>
             <p>&copy;{previousYear + "-" + currentYear} wouldbee.com </p>
           </div>
         </div>

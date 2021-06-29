@@ -24,6 +24,7 @@ import modalStyles from "@/styles/Modal.module.css";
 import styles from "@/styles/Form.module.css";
 import MultipleSelect from "@/components/FormComponent/MultipleSelect";
 import { convertedValue } from "@/components/FormComponent/FormFunctions";
+import { toast } from "react-toastify";
 
 //  ------- COMPONENT
 
@@ -66,7 +67,7 @@ function Form3(props) {
 
   useEffect(() => {
     if (SavedData.data) {
-      console.log(SavedData.data);
+      // console.log(SavedData.data);
       const profile = SavedData.data?.professionalDetails;
       if (profile) {
         setData({

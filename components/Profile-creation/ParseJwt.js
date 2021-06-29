@@ -6,4 +6,5 @@ export function parseJwt(token) {
   const base64 = base64Url.replace("-", "+").replace("_", "/");
   const tokenData = JSON.parse(window.atob(base64));
   return tokenData.userId;
+  // }
 }

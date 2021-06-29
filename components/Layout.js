@@ -37,7 +37,9 @@ const Layout = ({
         />
       )}
 
-      <div className={styles.container}>{children}</div>
+      <div id="body" className={styles.container}>
+        {children}
+      </div>
 
       {router.pathname === "/" && <DownloadApp />}
       <Footer />
