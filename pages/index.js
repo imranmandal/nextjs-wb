@@ -11,7 +11,7 @@ export default function Home() {
   // const { uuId, createUuid } = useContext(AuthContext);
   const router = useRouter();
 
-  console.log(router);
+  // console.log(router);
   const [queryData, setQueryData] = useState("");
 
   const [values, setValues] = useState({

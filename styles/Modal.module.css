@@ -223,6 +223,11 @@
   transition: transform 0.6s ease-in-out;
 }
 
+.overlay_right p,
+.overlay_left p {
+  margin: 0;
+}
+
 .overlay_right {
   position: absolute;
   width: 50%;
@@ -297,20 +302,26 @@
 
   .sign_up_container {
     transform: translateX(-100%);
+    /* transform: translateY(-200%); */
     opacity: 1;
   }
 
   .login_container {
     transform: translateX(0);
+    transform: translateY(-20%);
+  }
+
+  .overlay_left,
+  .overlay_right {
+    flex-direction: row;
   }
 
   .overlay_right {
-    position: absolute;
     width: 50%;
     left: auto;
     right: 0;
     transform: translateX(0);
-    transform: translateY(-10%);
+    transform: translateY(-15%);
     transition: transform 0.6s ease-in-out;
   }
 
@@ -318,21 +329,22 @@
     width: 50%;
     right: 0;
     left: auto;
+    /* bottom: 0; */
     transform: translateX(0);
     transform: translateY(-530%);
     transition: transform 0.6s ease-in-out;
   }
 
   .overlay_container {
-    height: 20%;
+    height: 10%;
     width: 100%;
     top: 80%;
     left: 0;
-    transform: translateY(0);
+    transform: translateY(100%);
   }
 
   .overlay_inner {
-    transform: translateY(10%);
+    transform: translateY(15%);
   }
 
   /* Move signin to the right */
@@ -343,21 +355,23 @@
   /* Bring sign up over sign in */
   .right_panel_active .sign_up_container {
     transform: translateX(0);
+    transform: translateY(-20%);
   }
 
   /* Move overlay_inner to left */
   .right_panel_active .overlay_container {
-    transform: translateY(-410%);
+    transform: translateY(100%);
   }
 
   /* Move overlay back to the right */
   .right_panel_active .overlay_inner {
-    transform: translateY(70%);
+    transform: translateY(55%);
   }
 
   .right_panel_active .overlay_left {
     transform: translateX(0);
-    transform: translateY(-200%);
+    transform: translateY(-100%);
+    opacity: 1;
     height: 10%;
   }
   .right_panel_active .overlay_right {

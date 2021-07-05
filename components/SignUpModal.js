@@ -23,7 +23,7 @@ const SignUpModal = ({
   const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => setIsBrowser(true), []);
-  useEffect(() => console.log(slideClass), [slideClass]);
+  // useEffect(() => console.log(slideClass), [slideClass]);
   useEffect(() => {
     if (queryData) {
       setSlideClass(null);
@@ -81,7 +81,7 @@ const SignUpModal = ({
                     <div className={styles.overlay_inner}>
                       <div className={styles.overlay_left}>
                         {/* <h1>Welcome Back!</h1> */}
-                        <p>Already have an account?</p>
+                        <p>Already have an account?&nbsp;</p>
                         <button
                           className="ghost"
                           id="signIn"
@@ -95,7 +95,7 @@ const SignUpModal = ({
                       <div className={styles.overlay_right}>
                         {/* <h1>Hello, Friend!</h1> */}
 
-                        <p>Don't have an account?</p>
+                        <p>Don't have an account?&nbsp;</p>
                         <button
                           className="ghost"
                           id="signUp"
