@@ -8,8 +8,12 @@ import { useContext, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
-  const { uuId, createUuid } = useContext(AuthContext);
+  // const { uuId, createUuid } = useContext(AuthContext);
   const router = useRouter();
+
+  console.log(router);
+  const [queryData, setQueryData] = useState("");
+
   const [values, setValues] = useState({
     imgValues: {
       showImage: true,
@@ -22,9 +26,15 @@ export default function Home() {
   });
 
   useEffect(() => {
-    // console.log(uuidv4());
-    createUuid();
-  }, []);
+    if (router.query) {
+      setQueryData(router.query.phone);
+    }
+  });
+
+  // useEffect(() => {
+  //   // console.log(uuidv4());
+  //   createUuid();
+  // }, []);
 
   // if (router.query.q === "ALeKk00ErtDO57453vZu3qIWxu7Ss5OY6w") {
   //   return setValues((prevVal) => ({
@@ -47,7 +57,7 @@ export default function Home() {
     // >
 
     // </Layout>
-    <Layout>
+    <Layout queryData={queryData}>
       <div className={styles.container}>
         <AppOverview />
       </div>

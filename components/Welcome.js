@@ -4,9 +4,9 @@ import Image from "next/image";
 import styles from "@/styles/Welcome.module.css";
 
 function Welcome({ showVideo, showImage, vdoPath, imgPath }) {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   return (
     <section className={styles.welcome}>

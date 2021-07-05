@@ -21,7 +21,13 @@ export const form2Schema = yup.object().shape({
 
 // ---------HANDLE SUBMIT
 
-export const submitForm = (data, uid, props, saveFirstPage) => {
+export const submitForm = (
+  data,
+  uid,
+  props,
+  saveFirstPage,
+  setIsFirstScreenSaved
+) => {
   saveFirstPage({
     variables: {
       userId: uid,
@@ -43,7 +49,12 @@ export const submitForm = (data, uid, props, saveFirstPage) => {
       smoke: JSON.parse(data.smoke),
       drink: JSON.parse(data.drink),
     },
-  }).then((res) => {
-    props.nextStep();
-  });
+  })
+    .then((res) => {
+      setIsFirstScreenSaved(true);
+      props.nextStep();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

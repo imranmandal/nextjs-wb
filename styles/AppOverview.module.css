@@ -35,7 +35,7 @@
 }
 
 .phone img {
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
 .para2,
@@ -45,6 +45,7 @@
 
 .content {
   width: 400px;
+  z-index: 100;
 }
 
 .para1 .content,
@@ -89,28 +90,28 @@
 
 .filler1 {
   top: -50%;
-  left: -10%;
+  left: -7%;
 }
 
 .filler2 {
   top: -50%;
-  right: -10%;
+  right: -7%;
 }
 
 .filler3 {
   top: -50%;
-  left: -10%;
+  left: -7%;
 }
 
 .filler4 {
   top: -50%;
-  right: -10%;
+  right: -7%;
 }
 
 .filler5 {
   height: 80px;
   top: 27%;
-  left: 58%;
+  left: 50%;
 }
 
 .filler6 {
@@ -145,11 +146,14 @@
 
 @media (max-width: 1100px) {
   .phone {
-    width: 150px;
+    top: -30%;
+    width: 140px;
+    height: 270px;
   }
 
   .content {
     width: 350px;
+    margin-top: 30px;
   }
 
   .para1 .content,
@@ -166,13 +170,26 @@
 
   .filler1,
   .filler3 {
+    top: -20%;
     left: -13%;
     height: 250px;
   }
   .filler2,
   .filler4 {
+    top: -20%;
     right: -13%;
-    height: 300px;
+    height: 250px;
+  }
+
+  .filler5 {
+    top: 30%;
+    left: 40%;
+    height: 40px;
+  }
+
+  .filler6 {
+    top: 70%;
+    height: 60px;
   }
 }
 
@@ -191,13 +208,15 @@
 
   .filler1,
   .filler3 {
+    top: -20%;
     left: -15%;
     height: 250px;
   }
   .filler2,
   .filler4 {
+    top: -20%;
     right: -16%;
-    height: 300px;
+    height: 250px;
   }
 }
 

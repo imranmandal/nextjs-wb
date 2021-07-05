@@ -15,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignUpForm(props) {
-  const { data, setData } = props;
+  const { data, setData, setShowModal } = props;
   const formType = "signup";
   // const [phoneAuthToken, setPhoneAuthToken] = useState("");
   // ---- CONTEXT
@@ -136,6 +136,10 @@ function SignUpForm(props) {
 
     if (response) {
       props.setPageLoading(false);
+    }
+
+    if (response.status >= 200 && response.status < 300) {
+      setShowModal(false);
     }
 
     if (response.status > 400 && response.status < 500) {

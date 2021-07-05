@@ -63,6 +63,7 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
+  z-index: 1;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.7);
 }
@@ -105,12 +106,17 @@
   margin: 15px 0;
 }
 
-.container {
+.container,
+.confirm_modal_container {
   background: #fff;
   position: relative;
   width: 768px;
   max-width: 100%;
   min-height: 480px;
+}
+
+.confirm_modal_container {
+  width: 400px;
 }
 
 .container_inner {

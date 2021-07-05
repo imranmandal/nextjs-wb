@@ -7,6 +7,7 @@ import { parseJwt } from "../ParseJwt";
 import InputGql from "@/components/FormComponent/InputSearch";
 import Select from "@/components/FormComponent/Select";
 import { form2Schema, submitForm } from "./Form2functions";
+import ConfirmationModal from "@/components/ConfirmationModal";
 import styles from "@/styles/Form.module.css";
 import modalStyles from "@/styles/Modal.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -31,6 +32,9 @@ import {
 function Form2(props) {
   const { userToken } = useContext(AuthContext);
   const uid = parseJwt(userToken);
+
+  const [showModal, setShowModal] = useState(false);
+  const [isFirstScreenSaved, setIsFirstScreenSaved] = useState(false);
 
   // console.log(typeof parseJwt(userToken));
   const [data, setData] = useState({
@@ -104,7 +108,7 @@ function Form2(props) {
   const handleChange = (elem) => {
     const { name, value } = elem.target;
     setData((prevValue) => ({ ...prevValue, [name]: value }));
-    setValue(name, value);
+    setValue(name, value, { shouldValidate: true });
   };
 
   const SavedData = useQuery(GET_FIRST_SCREEN, {
@@ -116,9 +120,13 @@ function Form2(props) {
 
   SavedResponse?.error && console.log(SavedResponse.error);
 
-  const submit = () => {
-    // console.log(data);
-    submitForm(data, uid, props, saveFirstPage);
+  const SubmitForm = () => {
+    if (isFirstScreenSaved) {
+      // console.log(isFirstScreenSaved);
+      submitForm(data, uid, props, saveFirstPage, setIsFirstScreenSaved);
+    } else {
+      setShowModal(true);
+    }
   };
 
   useEffect(() => {
@@ -194,19 +202,23 @@ function Form2(props) {
         );
         setValue("smoke", profile?.otherProfileDetails.smoke);
         setValue("drink", profile?.otherProfileDetails.drink);
-        //
+
+        // First screen is saved
+        setIsFirstScreenSaved(true);
       }
     }
-    // console.log(profile);
   }, [SavedData]);
 
+  const handleClick = () => {
+    console.log("clicked");
+  };
   return (
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
           Step {props.currentStep} of {props.totalSteps - 1}
         </p>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(SubmitForm)}>
           <div className="form-floating d-flex flex-column">
             <Select
               label="profile managed by *"
@@ -236,11 +248,11 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder=""
-                disabled={SavedData.data?.user?.profile?.firstName}
+                disabled={isFirstScreenSaved}
                 // ref={customRegister.fname.ref}
               />
             </div>
-            <div className="p-3 w-100">
+            <div className="p-3 w-100" onClick={handleClick}>
               <div className="d-flex justify-content-between">
                 <label htmlFor="lname">Last Name *</label>
                 <p className="error-message">{errors.lname?.message}</p>
@@ -256,7 +268,7 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder=""
-                disabled={SavedData.data?.user?.profile?.lastName}
+                disabled={isFirstScreenSaved}
                 // ref={customRegister.lname.ref}
               />
             </div>
@@ -272,7 +284,7 @@ function Form2(props) {
                   checked={data.gender.maleSelected}
                   onChange={handleGenderChange}
                   id="male"
-                  disabled={SavedData.data?.user?.profile?.gender}
+                  disabled={isFirstScreenSaved}
                 />
                 <label className="my-auto" htmlFor="male">
                   male
@@ -286,7 +298,7 @@ function Form2(props) {
                   checked={data.gender.femaleSelected}
                   onChange={handleGenderChange}
                   id="female"
-                  disabled={SavedData.data?.user?.profile?.gender}
+                  disabled={isFirstScreenSaved}
                 />
                 <label className="my-auto" htmlFor="female">
                   female
@@ -307,11 +319,10 @@ function Form2(props) {
                 className="form-control w-100"
                 value={data.dob}
                 max={maxDate}
+                disabled={isFirstScreenSaved}
                 onChange={(e) => {
-                  // customRegister.dob.onChange(e);
                   handleChange(e);
                 }}
-                // ref={customRegister.dob.ref}
               />
             </div>
           </div>
@@ -325,28 +336,29 @@ function Form2(props) {
               selected={data.maritalStatus}
               setSelected={setData}
               setValue={setValue}
-              // customRegister={customRegister}
+              disabled={isFirstScreenSaved}
               errors={errors}
             />
-            <Select
-              label="mother tongue *"
-              name="motherTongue"
-              placeholder=" "
-              options={MotherTongue}
-              selected={data.motherTongue}
-              setSelected={setData}
-              setValue={setValue}
-              errors={errors}
-            />
-          </div>
-
-          <div className="form2-field-group d-flex flex-md-row flex-column">
             <Select
               label="religion *"
               name="religion"
               placeholder=" "
               options={Religion}
               selected={data.religion}
+              setSelected={setData}
+              setValue={setValue}
+              disabled={isFirstScreenSaved}
+              errors={errors}
+            />
+          </div>
+
+          <div className="form2-field-group d-flex flex-md-row flex-column">
+            <Select
+              label="mother tongue *"
+              name="motherTongue"
+              placeholder=" "
+              options={MotherTongue}
+              selected={data.motherTongue}
               setSelected={setData}
               setValue={setValue}
               errors={errors}
@@ -458,6 +470,19 @@ function Form2(props) {
           ) : null}
         </form>
       </div>
+      <ConfirmationModal
+        show={showModal}
+        setShowModal={setShowModal}
+        handleClose={() => {
+          setShowModal(false);
+        }}
+        submitForm={submitForm}
+        data={data}
+        uid={uid}
+        formProps={props}
+        saveFirstPage={saveFirstPage}
+        setIsFirstScreenSaved={setIsFirstScreenSaved}
+      />
     </>
   );
 }

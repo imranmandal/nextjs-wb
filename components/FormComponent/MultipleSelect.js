@@ -30,10 +30,10 @@ const MultipleSelect = ({
       document.getElementById(name + "-selected").innerHTML =
         sliced.toLocaleLowerCase();
 
-      setValue(name, value?.innerValue.join(" "), true);
+      setValue(name, value?.innerValue.join(" "), { shouldValidate: true });
     } else {
       document.getElementById(name + "-selected").innerHTML = "Select";
-      setValue(name, "", true);
+      setValue(name, "");
     }
   }, [value]);
 
@@ -92,7 +92,6 @@ const MultipleSelect = ({
 
   const handleClick = (e) => {
     e.preventDefault();
-
     setDisplayOptions((prevValue) => !prevValue);
   };
 

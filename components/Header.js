@@ -5,7 +5,7 @@ import styles from "@/styles/Header.module.css";
 import SignUpModal from "@/components/SignUpModal";
 import AuthContext from "context/AuthContext";
 
-function Header() {
+function Header({ queryData }) {
   const { userToken, logout } = useContext(AuthContext);
   const router = useRouter();
   const [showSignUp, setShowSignUp] = useState(false);
@@ -14,6 +14,13 @@ function Header() {
     e.preventDefault();
     !userToken ? setShowSignUp(true) : router.push("/profile-creation");
   };
+
+  useEffect(() => {
+    if (queryData) {
+      setShowSignUp(true);
+    }
+  }, [queryData]);
+
   return (
     <>
       <nav className={styles.nav}>
@@ -76,6 +83,8 @@ function Header() {
         handleClose={() => {
           setShowSignUp(false);
         }}
+        setShow={setShowSignUp}
+        queryData={queryData}
       />
     </>
   );

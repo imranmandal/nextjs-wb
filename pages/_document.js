@@ -14,6 +14,7 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <div id="modal-root"></div>
+          <div id="confirmModal-root"></div>
         </body>
       </Html>
     );

@@ -46,6 +46,7 @@ const SignUp = (props) => {
             setData={setFormData}
             pageLoading={props.pageLoading}
             setPageLoading={props.setPageLoading}
+            setShowModal={props.setShowModal}
           />
           {/* <ToastContainer /> */}
         </div>

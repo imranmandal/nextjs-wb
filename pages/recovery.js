@@ -1,27 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import styles from "@/styles/Recovery.module.css";
+import { useRouter, withRouter } from "next/router";
 import AuthContext from "context/AuthContext";
-import { useQuery } from "@apollo/client";
-// import { GET_PROFILE_CREATION_SCREEN } from "../Graphql/query/query";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { parseJwt } from "@/components/Profile-creation/ParseJwt";
 import {
   generateOtp,
   verifyOtp,
 } from "@/components/SignUp/Forms/SignUpFormFunctions";
-import { Prev } from "node_modules/react-bootstrap/esm/PageItem";
 import { FaCheckCircle } from "react-icons/fa";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_URL } from "@/config/index";
 
 const Recovery = () => {
+  const router = useRouter();
+  const {
+    query: { phone },
+  } = router;
+
   const formType = "recovery";
   const [data, setData] = useState({
     phone: "",
@@ -32,10 +32,6 @@ const Recovery = () => {
   });
 
   const { uuId, error } = useContext(AuthContext);
-  // const [phone, setPhone] = useState("");
-  // const [otp, setOtp] = useState("");
-  // const [cPassword, setCPassword] = useState("");
-  // const [password, setPassword] = useState("");
   const [timer, setTimer] = useState(60);
   const [wordCount, setWordCount] = useState(0);
   const [showRecaptcha, setShowRecaptcha] = useState(false);
@@ -43,8 +39,6 @@ const Recovery = () => {
   const [recaptchaResult, setRecaptchaResult] = useState(null);
   const [disablePhoneInput, setDisablePhoneInput] = useState(false);
   const [disableVerifyBtn, setDisableVerifyBtn] = useState(true);
-  const router = useRouter();
-  // const uid = parseJwt(userToken);
 
   const schema = yup.object().shape({
     phone: yup
@@ -53,8 +47,10 @@ const Recovery = () => {
       .transform((value) => (isNaN(value) ? undefined : value))
       .positive()
       .integer()
-      .min(10, "Phone must be at least 10 digits")
-      .required("Phone is required"),
+      .test("len", "Phone must be exactly 10 characters", (val) => {
+        return val.toString().length === 10;
+      })
+      .required("Please enter phone number and verify"),
     otp: yup
       .number("Please enter Number value")
       .typeError("Please enter Number value")
@@ -91,6 +87,24 @@ const Recovery = () => {
   useEffect(() => {
     error && toast.error(error);
   });
+
+  errors && console.groupCollapsed(errors);
+
+  useEffect(() => {
+    if (phone) {
+      setData((prevVal) => ({ ...prevVal, phone: phone }));
+      setValue("phone", phone);
+    }
+  }, [phone]);
+
+  useEffect(() => {
+    if (data.phone.length === 10) {
+      setDisableVerifyBtn(false);
+      setShowRecaptcha(true);
+      return;
+    }
+    setDisableVerifyBtn(true);
+  }, [data.phone]);
 
   useEffect(() => {
     // console.log(deviceInfo);
@@ -135,19 +149,16 @@ const Recovery = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "phone") {
-      if (value.length === 10) {
-        setDisableVerifyBtn(false);
-        setShowRecaptcha(true);
-      } else {
-        setDisableVerifyBtn(true);
-      }
-      setValue(name, e.target.value);
+      setValue("phone", e.target.value, {
+        shouldValidate: true,
+      });
       setData((prevValue) => ({ ...prevValue, [name]: value }));
       setWordCount(() => {
         return value.length;
       });
+      return;
     }
-    setValue(name, e.target.value);
+    setValue(name, e.target.value, { shouldValidate: true });
     setData((prevVal) => ({ ...prevVal, [name]: value }));
   };
 
@@ -185,6 +196,7 @@ const Recovery = () => {
 
     if (res.ok) {
       // console.log(res);
+      router.push({ pathname: "/", query: { phone: data.phone } });
       toast.success("Password changed successfully");
     } else {
       // console.log(res);
@@ -315,6 +327,7 @@ const Recovery = () => {
 
               <div className="d-flex flex-column">
                 <input
+                  formnovalidate
                   type="submit"
                   value="Reset Password"
                   className="btn btn-pink w-100 "

@@ -52,6 +52,8 @@ function Form3(props) {
     resolver: yupResolver(form3Schema),
   });
 
+  // errors && console.log(errors);
+
   useEffect(() => {
     Object.keys(errors).length > 0 &&
       toast.error("Please fill all the fields.");
@@ -69,11 +71,12 @@ function Form3(props) {
     if (SavedData.data) {
       // console.log(SavedData.data);
       const profile = SavedData.data?.professionalDetails;
-      if (profile) {
+      const degrees = profile?.degrees;
+      if (profile && degrees) {
         setData({
           degrees: {
             innerValue: [
-              ...profile?.degrees.map((degree) => {
+              ...profile?.degrees?.map((degree) => {
                 return convertedValue(degree);
               }),
             ],

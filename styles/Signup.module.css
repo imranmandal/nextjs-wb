@@ -127,8 +127,8 @@
   }
 }
 
-.sign_up input,
-.sign_up select,
+.sign_up_form input,
+.sign_up_form select,
 .login input {
   border: 1px solid #e11c74;
 }

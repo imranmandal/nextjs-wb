@@ -8,7 +8,14 @@ import { ToastContainer } from "react-toastify";
 
 // import logo from "../../Images/wouldbee1.png";
 
-const SignUpModal = ({ msg, show, children, handleClose }) => {
+const SignUpModal = ({
+  msg,
+  show,
+  setShow,
+  children,
+  handleClose,
+  queryData,
+}) => {
   const [isBrowser, setIsBrowser] = useState(false);
   const [slideClass, setSlideClass] = useState(styles.right_panel_active);
   // console.log(show);
@@ -18,11 +25,15 @@ const SignUpModal = ({ msg, show, children, handleClose }) => {
   useEffect(() => setIsBrowser(true), []);
   useEffect(() => console.log(slideClass), [slideClass]);
   useEffect(() => {
+    if (queryData) {
+      setSlideClass(null);
+    }
+  }, [queryData]);
+  useEffect(() => {
     if (show) {
-      document.body.style.position = "fixed";
-      // document.body.scroll = "no";
+      document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.position = "static";
+      document.body.style.overflowY = "auto";
     }
   }, [isBrowser, show]);
 
@@ -51,13 +62,18 @@ const SignUpModal = ({ msg, show, children, handleClose }) => {
             <div className={styles.container} id="container">
               <div className={slideClass}>
                 <div className={styles.login_container}>
-                  <Login setPageLoading={setPageLoading} />
+                  <Login
+                    queryData={queryData}
+                    setPageLoading={setPageLoading}
+                    setShowModal={setShow}
+                  />
                 </div>
                 <div className={styles.sign_up_container}>
                   <SignUp
                     setPageLoading={setPageLoading}
                     msg={msg}
                     handleClose={handleClose}
+                    setShowModal={setShow}
                   />
                 </div>
                 <div className={styles.overlay_container}>

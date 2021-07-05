@@ -62,7 +62,7 @@ function InputOccupation(props) {
     );
 
     if (!value) {
-      setValue(name, "", true);
+      setValue(name, "", { shouldValidate: true });
     }
   };
 

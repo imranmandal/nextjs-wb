@@ -9,6 +9,7 @@ export default function Select(props) {
     setSelected,
     options,
     setValue,
+    disabled,
     // customRegister,
     errors,
   } = props;
@@ -19,7 +20,9 @@ export default function Select(props) {
       ...prevVal,
       [name]: value.includes("select") ? null : value,
     }));
-    setValue(name, value.includes("select") ? null : value);
+    setValue(name, value.includes("select") ? null : value, {
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -35,6 +38,7 @@ export default function Select(props) {
           className="form-control w-100 text-capitalize"
           name={name}
           id={name}
+          disabled={disabled}
           value={selected}
           onChange={(e) => {
             // customRegister && customRegister[name].onChange(e);

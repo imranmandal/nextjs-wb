@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Signup.module.css";
 import AuthContext from "context/AuthContext";
 import { useQuery } from "@apollo/client";
@@ -11,7 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import * as yup from "yup";
 
-const Login = ({ setPageLoading }) => {
+const Login = ({ setPageLoading, queryData, setShowModal }) => {
   const { login, userToken } = useContext(AuthContext);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +56,7 @@ const Login = ({ setPageLoading }) => {
 
     if (response) {
       setPageLoading(false);
+      setShowModal(false);
       router.push({
         pathname: "/profile-creation",
         query: {
@@ -66,6 +67,15 @@ const Login = ({ setPageLoading }) => {
       setPageLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (queryData) {
+      setPhone(queryData);
+      setValue("phone", queryData, {
+        shouldValidate: true,
+      });
+    }
+  }, [queryData]);
 
   return (
     <>
@@ -106,8 +116,13 @@ const Login = ({ setPageLoading }) => {
               <p className="error-message">{errors.password?.message}</p>
 
               <div className="d-flex flex-column">
-                <Link href="/recovery">
-                  <a>
+                <Link
+                  href={{
+                    pathname: "/recovery",
+                    query: { phone: phone || "" },
+                  }}
+                >
+                  <a onClick={() => setShowModal(false)}>
                     Forgot{" "}
                     <span className="text-lowercase">your password?</span>
                   </a>
