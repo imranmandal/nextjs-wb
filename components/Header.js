@@ -58,7 +58,7 @@ function Header({ queryData }) {
                 </Link>
               </li>
 
-              <li>
+              {/* <li>
                 <Link href="#" scroll={false}>
                   <a
                     className="nav-link text-dark bg-light rounded-pill shadow-lg"
@@ -73,7 +73,7 @@ function Header({ queryData }) {
                     Logout
                   </a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
