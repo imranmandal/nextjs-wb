@@ -53,7 +53,11 @@ const ProfileCreation = () => {
           <StepWizard
             initialStep={
               count.indexOf(data?.profile?.profileCreationScreen) < 0
-                ? data?.profile?.profileCreationScreen
+                ? data?.profile?.profileCreationScreen === 4
+                  ? 4
+                  : data?.profile?.profileCreationScreen === 5
+                  ? 4
+                  : null
                 : count.indexOf(data?.profile?.profileCreationScreen) + 2
             }
           >
