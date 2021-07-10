@@ -102,8 +102,8 @@ function Form3(props) {
             name: profile?.employer?.name,
           },
           designation: {
-            id: profile?.designation.id,
-            name: profile?.designation.name,
+            id: profile?.designation?.id,
+            name: profile?.designation?.name,
           },
           income: profile?.annualIncome,
         });
@@ -112,7 +112,7 @@ function Form3(props) {
         setValue("occupation", profile?.occupation);
         setValue("employedIn", profile?.employedIn);
         setValue("emloyerName", profile?.employer?.name);
-        setValue("designation", profile?.designation.name);
+        setValue("designation", profile?.designation?.name);
         setValue("income", profile?.annualIncome);
       }
     }
