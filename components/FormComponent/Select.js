@@ -1,4 +1,5 @@
 import { convertedHeight, convertedValue } from "./FormFunctions";
+import { FaLock } from "react-icons/fa";
 
 export default function Select(props) {
   const {
@@ -33,6 +34,11 @@ export default function Select(props) {
             {label}
           </label>
           <p className="error-message">{errors && errors[name]?.message}</p>
+          {disabled && (
+            <span className="text-pink">
+              <FaLock />
+            </span>
+          )}
         </div>
         <select
           className="form-control w-100 text-capitalize"

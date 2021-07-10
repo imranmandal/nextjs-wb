@@ -17,7 +17,7 @@ export const SubmitForm3 = (uid, data, props, saveSecondScreen) => {
       degrees: [...data.degrees.value],
       employedIn: data.employedIn,
       occupation: data.occupation.value,
-      employerName: data.employerName.name,
+      employerName: data.employerName.name || null,
       designationName: data.designation.name,
       annualIncome: data.income,
     },

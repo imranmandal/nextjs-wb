@@ -287,7 +287,7 @@
   }
 
   .container {
-    height: 100vh;
+    height: 90vh;
     overflow-x: hidden;
     overflow-y: auto;
     width: 400px;
@@ -302,8 +302,9 @@
 
   .sign_up_container {
     transform: translateX(-100%);
-    /* transform: translateY(-200%); */
     opacity: 1;
+    height: 85%;
+    overflow-y: auto;
   }
 
   .login_container {
@@ -314,6 +315,7 @@
   .overlay_left,
   .overlay_right {
     flex-direction: row;
+    /* position: fixed; */
   }
 
   .overlay_right {
@@ -321,7 +323,7 @@
     left: auto;
     right: 0;
     transform: translateX(0);
-    transform: translateY(-15%);
+    transform: translateY(-20%);
     transition: transform 0.6s ease-in-out;
   }
 
@@ -329,7 +331,6 @@
     width: 50%;
     right: 0;
     left: auto;
-    /* bottom: 0; */
     transform: translateX(0);
     transform: translateY(-540%);
     transition: transform 0.6s ease-in-out;
@@ -370,7 +371,7 @@
 
   .right_panel_active .overlay_left {
     transform: translateX(0);
-    transform: translateY(-150%);
+    transform: translateY(-140%);
     opacity: 1;
     height: 10%;
   }

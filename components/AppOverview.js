@@ -1,54 +1,33 @@
 import Image from "next/image";
 import styles from "@/styles/AppOverview.module.css";
 
-const leftCornerFiller = "/Images/leftCornerFiller.png";
-const rightCornerFiller = "/Images/rightCornerFiller.png";
 const phone1 = "/Images/phone1.png";
 const phone2 = "/Images/phone2.png";
 const phone3 = "/Images/phone3.png";
 const phone4 = "/Images/phone4.png";
-const filler1 = "/Images/filler1.png";
-const filler2 = "/Images/filler2.png";
-const filler3 = "/Images/filler3.png";
-const filler4 = "/Images/filler4.png";
-const filler5 = "/Images/filler5.png";
-const filler6 = "/Images/filler6.png";
 
 const AppOverview = () => {
   return (
     <>
       <section className={styles.detail}>
         <div className={styles.leftCornerFiller}>
-          <Image
-            src={leftCornerFiller}
-            alt="leftCornerFiller"
-            layout="fill"
-            objectFit="contain"
-          />
+          <div className={styles.first}></div>
+          <div className={styles.second}></div>
+          <div className={styles.third}></div>
         </div>
         <div className={styles.rightCornerFiller}>
-          <Image
-            src={rightCornerFiller}
-            alt="rightCornerFiller"
-            layout="fill"
-            objectFit="contain"
-          />
+          <div className={styles.first}></div>
+          <div className={styles.second}></div>
+          <div className={styles.third}></div>
         </div>
         <div className={styles.filler5}>
-          <Image
-            src={filler5}
-            alt="filler5"
-            layout="fill"
-            objectFit="contain"
-          />
+          <div className={styles.first}></div>
         </div>
         <div className={styles.filler6}>
-          <Image
-            src={filler6}
-            alt="filler6"
-            layout="fill"
-            objectFit="contain"
-          />
+          <div className={styles.first}></div>
+        </div>
+        <div className={styles.filler7}>
+          <div className={styles.first}></div>
         </div>
 
         <div className={styles.para1}>
@@ -66,12 +45,8 @@ const AppOverview = () => {
             <Image src={phone1} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler1}>
-            <Image
-              src={filler1}
-              alt="filler1"
-              layout="fill"
-              objectFit="contain"
-            />
+            <div className={styles.first}></div>
+            <div className={styles.second}></div>
           </div>
         </div>
 
@@ -88,12 +63,8 @@ const AppOverview = () => {
             <Image src={phone2} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler2}>
-            <Image
-              src={filler2}
-              alt="branches"
-              layout="fill"
-              objectFit="contain"
-            />
+            <div className={styles.first}></div>
+            <div className={styles.second}></div>
           </div>
         </div>
         <div className={styles.para3}>
@@ -109,12 +80,8 @@ const AppOverview = () => {
             <Image src={phone3} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler3}>
-            <Image
-              src={filler3}
-              alt="filler3"
-              layout="fill"
-              objectFit="contain"
-            />
+            <div className={styles.first}></div>
+            <div className={styles.second}></div>
           </div>
         </div>
         <div className={styles.para4}>
@@ -130,12 +97,8 @@ const AppOverview = () => {
             <Image src={phone4} alt="phone" layout="fill" objectFit="contain" />
           </div>
           <div className={styles.filler4}>
-            <Image
-              src={filler4}
-              alt="filler4"
-              layout="fill"
-              objectFit="contain"
-            />
+            <div className={styles.first}></div>
+            <div className={styles.second}></div>
           </div>
         </div>
       </section>

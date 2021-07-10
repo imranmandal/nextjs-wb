@@ -6,6 +6,7 @@ export const form2Schema = yup.object().shape({
   managedBy: yup.string().required("required"),
   fname: yup.string().min(3).max(50).required("required"),
   lname: yup.string().min(1).required("required"),
+  gender: yup.string().required("required"),
   dob: yup.string().required("required"),
   maritalStatus: yup.string().required("required"),
   motherTongue: yup.string().required("required"),

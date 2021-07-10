@@ -9,6 +9,7 @@ import {
   AnnualIncome,
   Degrees,
   EmployedIn,
+  NotWorkingOccuptation,
   Occupation,
 } from "@/components/FormComponent/FormData";
 import { form3Schema, SubmitForm3 } from "./Form3Functions";
@@ -32,6 +33,8 @@ function Form3(props) {
   const { userToken } = useContext(AuthContext);
   const uid = parseJwt(userToken);
 
+  const [NotWorking, setNotWorking] = useState(false);
+
   const [data, setData] = useState({
     degrees: { innerValue: [], value: [] },
     employedIn: "",
@@ -53,6 +56,13 @@ function Form3(props) {
   });
 
   // errors && console.log(errors);
+
+  useEffect(() => {
+    console.log(data.employedIn);
+    data.employedIn === "NOT_WORKING"
+      ? setNotWorking(true)
+      : setNotWorking(false);
+  }, [data.employedIn]);
 
   useEffect(() => {
     Object.keys(errors).length > 0 &&
@@ -88,8 +98,8 @@ function Form3(props) {
             value: profile?.occupation,
           },
           employerName: {
-            id: profile?.employer.id,
-            name: profile?.employer.name,
+            id: profile?.employer?.id,
+            name: profile?.employer?.name,
           },
           designation: {
             id: profile?.designation.id,
@@ -101,7 +111,7 @@ function Form3(props) {
         setValue("degrees", [...profile?.degrees]);
         setValue("occupation", profile?.occupation);
         setValue("employedIn", profile?.employedIn);
-        setValue("emloyerName", profile?.employer.name);
+        setValue("emloyerName", profile?.employer?.name);
         setValue("designation", profile?.designation.name);
         setValue("income", profile?.annualIncome);
       }
@@ -132,43 +142,6 @@ function Form3(props) {
               errors={errors}
             />
 
-            <InputOccupation
-              label="occupation *"
-              name="occupation"
-              value={data.occupation.text}
-              setData={setData}
-              setValue={setValue}
-              placeholder="Select"
-              options={Occupation}
-              errors={errors}
-              setValue={setValue}
-            />
-          </div>
-
-          <div className={styles.form3_input_container}>
-            <InputGql
-              label="designation name"
-              name="designation"
-              placeholder="type to search"
-              value={data.designation}
-              setData={setData}
-              setValue={setValue}
-              QUERY_NAME={GET_DESIGNATION_NAME}
-              OUTPUT_OBJ_NAME={"designations"}
-            />
-            <InputGql
-              label="Company/Organization you work for"
-              name="employerName"
-              placeholder="type to search"
-              value={data.employerName}
-              setData={setData}
-              setValue={setValue}
-              QUERY_NAME={GET_EMPLOYER_NAME}
-              OUTPUT_OBJ_NAME={"employers"}
-            />
-          </div>
-
-          <div className={styles.form3_input_container}>
             <Select
               label="employed in *"
               name="employedIn"
@@ -179,6 +152,45 @@ function Form3(props) {
               setValue={setValue}
               errors={errors}
             />
+          </div>
+
+          <div className={styles.form3_input_container}>
+            <InputOccupation
+              label="occupation *"
+              name="occupation"
+              value={data.occupation.text}
+              setData={setData}
+              setValue={setValue}
+              placeholder="Select"
+              options={!NotWorking ? Occupation : NotWorkingOccuptation}
+              errors={errors}
+              setValue={setValue}
+            />
+            <InputGql
+              label="Company/Organization you work for"
+              name="employerName"
+              placeholder="type to search"
+              value={data.employerName}
+              setData={setData}
+              setValue={setValue}
+              disabled={NotWorking}
+              QUERY_NAME={GET_EMPLOYER_NAME}
+              OUTPUT_OBJ_NAME={"employers"}
+            />
+          </div>
+
+          <div className={styles.form3_input_container}>
+            <InputGql
+              label="designation"
+              name="designation"
+              placeholder="type to search"
+              value={data.designation}
+              setData={setData}
+              setValue={setValue}
+              QUERY_NAME={GET_DESIGNATION_NAME}
+              OUTPUT_OBJ_NAME={"designations"}
+            />
+
             <Select
               label="annual income *"
               name="income"

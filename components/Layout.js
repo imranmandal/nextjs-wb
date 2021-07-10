@@ -14,21 +14,16 @@ const Layout = ({
   children,
 
   queryData,
-
-  wideImgPath,
-  portraitImgPath,
-  // showImage,
-  // showVideo,
-  // imgPath,
-  // vdoPath,
+  img,
+  video,
 }) => {
   const router = useRouter();
   const [imgUrl, setImgUrl] = useState(null);
 
   useEffect(() => {
     window.innerWidth < 768
-      ? setImgUrl(portraitImgPath)
-      : setImgUrl(wideImgPath);
+      ? setImgUrl(img.portraitImg)
+      : setImgUrl(img.wideImg);
   });
 
   return (
@@ -41,21 +36,17 @@ const Layout = ({
 
       <Header queryData={queryData} />
 
-      {router.pathname === "/" && (
-        <Welcome
-          imgPath={imgUrl}
-          // showImage={showImage}
-          // showVideo={showVideo}
-          // imgPath={imgPath}
-          // vdoPath={vdoPath}
-        />
-      )}
+      {router.pathname === "/" || router.pathname.includes("/wb/") ? (
+        <Welcome imgPath={imgUrl} />
+      ) : null}
 
       <div id="body" className={styles.container}>
         {children}
       </div>
 
-      {router.pathname === "/" && <DownloadApp />}
+      {router.pathname === "/" || router.pathname.includes("/wb/") ? (
+        <DownloadApp />
+      ) : null}
       <Footer />
     </>
   );
@@ -66,10 +57,10 @@ Layout.defaultProps = {
     "Would Bee - Free Matrimony & Match Making, Jeevansathi Search for Shaadi in Bharat",
   description: "Truly Free, Fanatically Safe!",
   keywords: "matrimony, jeevansathi, wouldbee",
-  wideImgPath: "/Images/bg-landscape-desktop.jpg",
-  portraitImgPath: "/Images/bg-phone-portrait-small.jpg",
-  // showImage: true,
-  // imgPath: "/Images/bg-landscape-desktop.jpg",
+  img: {
+    wideImg: "/Images/bg-landscape-desktop.jpg",
+    portraitImg: "/Images/bg-phone-portrait-small.jpg",
+  },
 };
 
 export default Layout;

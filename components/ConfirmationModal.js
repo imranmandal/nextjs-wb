@@ -3,7 +3,10 @@ import { FaTimes } from "react-icons/fa";
 import styles from "@/styles/Modal.module.css";
 import ReactDOM from "react-dom";
 import { submitForm } from "./Profile-creation/Form2/Form2functions";
-import { convertedValue } from "./FormComponent/FormFunctions";
+import {
+  convertedCapitalizeValue,
+  convertedValue,
+} from "./FormComponent/FormFunctions";
 
 // import logo from "../../Images/wouldbee1.png";
 
@@ -73,13 +76,13 @@ const Confirm = ({
                 <div className="grouped">
                   <p>Marital Status</p>
                   <p className="text-center text-capitalize">
-                    {convertedValue(data.maritalStatus)}
+                    {convertedCapitalizeValue(data.maritalStatus)}
                   </p>
                 </div>
                 <div className="grouped">
                   <p>Religion</p>
                   <p className="text-center text-capitalize">
-                    {convertedValue(data.religion)}
+                    {convertedCapitalizeValue(data.religion)}
                   </p>
                 </div>
               </section>

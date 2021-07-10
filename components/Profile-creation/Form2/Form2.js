@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
+import { parseJwt } from "../ParseJwt";
+import { FaLock } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import AuthContext from "context/AuthContext";
-import { parseJwt } from "../ParseJwt";
 import InputGql from "@/components/FormComponent/InputSearch";
 import Select from "@/components/FormComponent/Select";
 import { form2Schema, submitForm } from "./Form2functions";
@@ -41,7 +42,7 @@ function Form2(props) {
     fname: "",
     lname: "",
     gender: {
-      maleSelected: true,
+      maleSelected: false,
       femaleSelected: false,
     },
     managedBy: "",
@@ -88,6 +89,7 @@ function Form2(props) {
 
   const handleGenderChange = (elem) => {
     const name = elem.target.name;
+    setValue("gender", name);
     name === "male"
       ? setData((prevValue) => ({
           ...prevValue,
@@ -185,6 +187,7 @@ function Form2(props) {
             profile?.dob.slice(8, 10)
         );
 
+        setValue("gender", profile?.gender);
         setValue("maritalStatus", profile?.maritalStatus);
         setValue("motherTongue", profile?.motherTongue);
         setValue("religion", profile?.socialDetails.religion);
@@ -236,6 +239,11 @@ function Form2(props) {
               <div className="d-flex justify-content-between">
                 <label htmlFor="fname">First Name *</label>
                 <p className="error-message">{errors.fname?.message}</p>
+                {isFirstScreenSaved && (
+                  <span className="text-pink">
+                    <FaLock />
+                  </span>
+                )}
               </div>
               <input
                 type="text"
@@ -256,6 +264,11 @@ function Form2(props) {
               <div className="d-flex justify-content-between">
                 <label htmlFor="lname">Last Name *</label>
                 <p className="error-message">{errors.lname?.message}</p>
+                {isFirstScreenSaved && (
+                  <span className="text-pink">
+                    <FaLock />
+                  </span>
+                )}
               </div>
               <input
                 type="text"
@@ -275,7 +288,16 @@ function Form2(props) {
           </div>
           <div className="d-flex flex-md-row flex-column">
             <div className={styles.gender_grp}>
-              <label className="my-auto">Gender</label>
+              <div className="d-flex justify-content-between">
+                <label className="my-auto">Gender*</label>
+                <p className="error-message">{errors.gender?.message}</p>
+                {isFirstScreenSaved && (
+                  <span className="text-pink">
+                    <FaLock />
+                  </span>
+                )}
+              </div>
+
               <div className="form-check d-flex">
                 <input
                   className="form-check-input my-auto"
@@ -311,6 +333,11 @@ function Form2(props) {
                   DOB *
                 </label>
                 <p className="error-message">{errors.dob?.message}</p>
+                {isFirstScreenSaved && (
+                  <span className="text-pink">
+                    <FaLock />
+                  </span>
+                )}
               </div>
               <input
                 type="date"

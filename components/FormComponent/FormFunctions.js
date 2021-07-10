@@ -49,19 +49,24 @@ String.prototype.allReplace = function (obj) {
 };
 
 export const convertedValue = (valueInString) => {
-  if (!valueInString) {
-    return;
+  if (!valueInString || typeof valueInString === "number") {
+    return valueInString;
   }
+  // console.log(valueInString);
   const convertedVal = valueInString.allReplace({
     DASH: "-",
+    _dash_: " - ",
     openbr_: "(",
     _closebr: ")",
     _dot_: ".",
     slash: "/",
     _TO: " -",
     _or: " /",
+    ZERO: "0",
     ONE_: "1 ",
     TWO: "2",
+    THREE: "3",
+    FOUR: "4",
     SEVENTY_FIVE: "75",
     THIRTY_FIVE: "35",
     FIVE: "5",
@@ -69,7 +74,27 @@ export const convertedValue = (valueInString) => {
     TWENTY: "20",
     THIRTY: "30",
     FIFTY: "50",
+    ONE: "1",
+    N1: "NONE",
   });
 
   return replaceUnderScore(convertedVal);
+};
+
+export const convertedCapitalizeValue = (str) => {
+  const convertedString = convertedValue(str);
+  if (convertedString) {
+    if (typeof convertedString === "string") {
+      var words = convertedString.split(" ");
+      var CapitalizedWords = [];
+      words.map((element) => {
+        CapitalizedWords.push(
+          element[0].toUpperCase() +
+            element.slice(1, element.length).toLowerCase()
+        );
+      });
+      return CapitalizedWords.join(" ");
+    }
+  }
+  return str;
 };

@@ -311,6 +311,13 @@ export const Occupation = [
   "Others",
 ];
 
+export const NotWorkingOccuptation = [
+  "Looking_For_Job",
+  "Not_Working",
+  "Retired",
+  "Student",
+];
+
 export const AnnualIncome = [
   "NO_INCOME",
   "UPTO_FIFTY_THOUSAND",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { replaceUnderScore } from "./FormFunctions";
 import styles from "@/styles/Form.module.css";
 import ComponentWrapper from "./ComponentWrapper";
@@ -17,8 +17,12 @@ function InputOccupation(props) {
   } = props;
 
   const [display, setDisplay] = useState(false);
-  const [suggestions, setSuggestions] = useState([...options.sort()]);
+  const [suggestions, setSuggestions] = useState([]);
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    setSuggestions([...options.sort()]);
+  }, [options]);
 
   const replaceSpecialChar = (option) => {
     const withoutUnderScore = replaceUnderScore(option);

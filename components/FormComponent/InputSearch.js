@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
 import styles from "@/styles/Form.module.css";
 import ComponentWrapper from "./ComponentWrapper";
-
+import { FaLock } from "react-icons/fa";
 import ClientOnly from "../ClientOnly";
 const InputGql = (props) => {
   const {
@@ -15,6 +15,7 @@ const InputGql = (props) => {
     OUTPUT_OBJ_NAME,
     setValue,
     errors,
+    disabled,
   } = props;
 
   const [display, setDisplay] = useState(false);
@@ -100,6 +101,16 @@ const InputGql = (props) => {
     setInputValue(value);
     searchSuggestion();
 
+    if (name === "designation" || name === "employerName") {
+      setData((prevVal) => ({
+        ...prevVal,
+        [name]: {
+          id: 0,
+          name: value,
+        },
+      }));
+      setValue(name, value, true);
+    }
     if (!value) {
       setValue(name, "", true);
     }
@@ -117,6 +128,11 @@ const InputGql = (props) => {
             <div className="d-flex justify-content-between">
               <label htmlFor={name}>{label}</label>
               <p className="error-message">{errors && errors[name]?.message}</p>
+              {disabled && (
+                <span className="text-pink">
+                  <FaLock />
+                </span>
+              )}
             </div>
 
             <input
@@ -126,6 +142,7 @@ const InputGql = (props) => {
               // onChange={handleChange}
               value={value.name}
               onClick={openSearch}
+              disabled={disabled}
               // id={name}
               placeholder={placeholder}
               autoComplete="new-off"
@@ -136,6 +153,7 @@ const InputGql = (props) => {
                 <div className={styles.top_suggestion}>
                   <input
                     type="text"
+                    name={name}
                     className="form-control"
                     value={inputValue}
                     onChange={handleChange}
