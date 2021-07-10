@@ -43,7 +43,7 @@ const InputGql = (props) => {
     setData((prevVal) => ({
       ...prevVal,
       [name]: {
-        id: value,
+        id: value || "",
         name: innerText,
       },
     }));
@@ -109,7 +109,6 @@ const InputGql = (props) => {
           name: value,
         },
       }));
-      setValue(name, value, true);
     }
     if (!value) {
       setValue(name, "", true);
@@ -140,7 +139,7 @@ const InputGql = (props) => {
               type="text"
               name={name}
               // onChange={handleChange}
-              value={value.name}
+              value={disabled ? "" : value.name}
               onClick={openSearch}
               disabled={disabled}
               // id={name}

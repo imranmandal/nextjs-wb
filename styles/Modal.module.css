@@ -319,6 +319,7 @@
   }
 
   .overlay_right {
+    top: -10px;
     width: 50%;
     left: auto;
     right: 0;
@@ -328,6 +329,7 @@
   }
 
   .overlay_left {
+    top: 2px;
     width: 50%;
     right: 0;
     left: auto;
