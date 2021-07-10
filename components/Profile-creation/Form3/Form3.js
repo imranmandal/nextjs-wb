@@ -59,9 +59,19 @@ function Form3(props) {
 
   useEffect(() => {
     console.log(data.employedIn);
-    data.employedIn === "NOT_WORKING"
-      ? setNotWorking(true)
-      : setNotWorking(false);
+    if (data.employedIn === "NOT_WORKING") {
+      setNotWorking(true);
+      setData((prevValue) => ({
+        ...prevValue,
+        employerName: "",
+        occupation: {
+          text: "",
+          value: "",
+        },
+      }));
+    } else {
+      setNotWorking(false);
+    }
   }, [data.employedIn]);
 
   useEffect(() => {
