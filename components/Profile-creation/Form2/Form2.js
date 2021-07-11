@@ -34,7 +34,7 @@ function Form2(props) {
   const { userToken } = useContext(AuthContext);
   const uid = parseJwt(userToken);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const [isFirstScreenSaved, setIsFirstScreenSaved] = useState(false);
 
   // console.log(typeof parseJwt(userToken));
@@ -59,7 +59,6 @@ function Form2(props) {
     drink: "",
   });
 
-  const [maxAge, setMaxAge] = useState(25);
   const [maxDate, setMaxDate] = useState(null);
 
   const {
@@ -77,8 +76,14 @@ function Form2(props) {
     const today = new Date();
     const dd = (today.getDate() < 10 ? "0" : "") + today.getDate();
     const MM = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
-    setMaxDate(`${today.getFullYear() - maxAge}` + "-" + `${MM}` + "-" + dd);
-  }, []);
+    if (data.gender.maleSelected) {
+      setMaxDate(`${today.getFullYear() - 21}` + "-" + `${MM}` + "-" + dd);
+    }
+    if (data.gender.femaleSelected) {
+      setMaxDate(`${today.getFullYear() - 18}` + "-" + `${MM}` + "-" + dd);
+    }
+    setMaxDate(`${today.getFullYear() - 25}` + "-" + `${MM}` + "-" + dd);
+  }, [data.gender]);
 
   useEffect(() => {
     Object.keys(errors).length > 0 &&
@@ -98,7 +103,8 @@ function Form2(props) {
             femaleSelected: false,
           },
         }))
-      : setData((prevValue) => ({
+      : name === "female" &&
+        setData((prevValue) => ({
           ...prevValue,
           gender: {
             maleSelected: false,
@@ -265,7 +271,7 @@ function Form2(props) {
                 <label htmlFor="lname">Last Name *</label>
                 <p className="error-message">{errors.lname?.message}</p>
                 {isFirstScreenSaved && (
-                  <span className="text-pink">
+                  <span className="text-pink mx-auto">
                     <FaLock />
                   </span>
                 )}
