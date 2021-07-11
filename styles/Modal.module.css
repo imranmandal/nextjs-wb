@@ -92,8 +92,8 @@
 }
 
 .body p {
-  font-size: 1rem;
-  font-weight: 2rem;
+  font-size: 14px;
+  font-weight: 100;
   line-height: 20px;
   letter-spacing: 0.5px;
   /* margin: 20px 0 30px; */
@@ -116,21 +116,7 @@
 }
 
 .confirm_modal_container {
-  min-height: max-content;
-  max-height: max-content;
   width: 400px;
-  font-weight: 1rem;
-  padding: 10%;
-}
-
-.confirm_modal_container h6,
-.confirm_modal_container section {
-  padding: 5% 0;
-}
-
-.confirm_modal_container section {
-  padding-top: 10%;
-  padding-bottom: 10%;
 }
 
 .container_inner {
@@ -307,10 +293,6 @@
     width: 400px;
   }
 
-  .confirm_modal_container {
-    width: 400px;
-  }
-
   .sign_up_container,
   .login_container {
     width: 100%;
@@ -326,7 +308,7 @@
   .sign_up_container {
     transform: translateX(-100%);
     opacity: 1;
-    height: 85%;
+    height: 80%;
     overflow-y: auto;
   }
 
@@ -381,7 +363,7 @@
   /* Bring sign up over sign in */
   .right_panel_active .sign_up_container {
     transform: translateX(0);
-    transform: translateY(-20%);
+    transform: translateY(-15%);
   }
 
   /* Move overlay_inner to left */
@@ -414,8 +396,7 @@
 }
 
 @media (max-width: 400px) {
-  .container,
-  .confirm_modal_container {
+  .container {
     width: 95vw;
   }
   .sign_up_container form,

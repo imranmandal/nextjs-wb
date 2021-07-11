@@ -11,7 +11,11 @@ import { form2Schema, submitForm } from "./Form2functions";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import styles from "@/styles/Form.module.css";
 import modalStyles from "@/styles/Modal.module.css";
+import formStyles from "@/styles/Form.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { AiFillWarning } from "react-icons/ai";
+import "@mobiscroll/react/dist/css/mobiscroll.min.css";
+import { Datepicker, setOptions } from "@mobiscroll/react";
 import {
   GET_CITY_NAME,
   GET_FIRST_SCREEN,
@@ -45,6 +49,7 @@ function Form2(props) {
       maleSelected: false,
       femaleSelected: false,
     },
+    dob: null,
     managedBy: "",
     maritalStatus: "",
     motherTongue: "",
@@ -60,6 +65,7 @@ function Form2(props) {
   });
 
   const [maxDate, setMaxDate] = useState(null);
+  const [dateError, setDateError] = useState("");
 
   const {
     handleSubmit,
@@ -77,13 +83,29 @@ function Form2(props) {
     const dd = (today.getDate() < 10 ? "0" : "") + today.getDate();
     const MM = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
     if (data.gender.maleSelected) {
-      setMaxDate(`${today.getFullYear() - 21}` + "-" + `${MM}` + "-" + dd);
+      const date = `${today.getFullYear() - 21}` + "-" + `${MM}` + "-" + dd;
+      if (data.dob > date) {
+        setDateError(
+          "For Male minimum age must be 21years and for Female minimum age must be 18years!"
+        );
+      } else {
+        setDateError("");
+      }
+      return setMaxDate(date);
     }
     if (data.gender.femaleSelected) {
-      setMaxDate(`${today.getFullYear() - 18}` + "-" + `${MM}` + "-" + dd);
+      const date = `${today.getFullYear() - 18}` + "-" + `${MM}` + "-" + dd;
+      if (data.dob > date) {
+        setDateError(
+          "For Male minimum age must be 21years and for Female minimum age must be 18years!"
+        );
+      } else {
+        setDateError("");
+      }
+      return setMaxDate(date);
     }
-    setMaxDate(`${today.getFullYear() - 25}` + "-" + `${MM}` + "-" + dd);
-  }, [data.gender]);
+    return setMaxDate(`${today.getFullYear() - 18}` + "-" + `${MM}` + "-" + dd);
+  }, [data.gender, data.dob]);
 
   useEffect(() => {
     Object.keys(errors).length > 0 &&
@@ -91,6 +113,7 @@ function Form2(props) {
   }, [errors]);
 
   // ---- MAX AGE END
+  // console.log(data.dob > maxDate);
 
   const handleGenderChange = (elem) => {
     const name = elem.target.name;
@@ -221,13 +244,26 @@ function Form2(props) {
   const handleClick = () => {
     console.log("clicked");
   };
+
+  // useEffect(() => {
+  //   console.log(data.dob, maxDate, data.dob > maxDate);
+  //   // console.log(data.dob > maxDate);
+
+  // }, [data.dob, data.gender.maleSelected]);
+
   return (
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
           Step {props.currentStep} of {props.totalSteps - 1}
         </p>
-        <form onSubmit={handleSubmit(SubmitForm)}>
+        {/* <form onSubmit={handleSubmit(SubmitForm)}> */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            SubmitForm();
+          }}
+        >
           <div className="form-floating d-flex flex-column">
             <Select
               label="profile managed by *"
@@ -333,7 +369,7 @@ function Form2(props) {
                 </label>
               </div>
             </div>
-            <div className="d-flex flex-column justify-content-between p-3 w-100">
+            <div className="d-flex flex-column justify-content-between p-3 w-100 position-relative">
               <div className="d-flex justify-content-between">
                 <label className="my-auto" htmlFor="dob">
                   DOB *
@@ -356,7 +392,21 @@ function Form2(props) {
                 onChange={(e) => {
                   handleChange(e);
                 }}
+                data-bs-placement="bottom"
+                title="Tooltip on bottom"
               />
+              {dateError && (
+                <p className={formStyles.error_msg}>
+                  <AiFillWarning className="text-warning fs-5 d-block" />
+                  {dateError}
+                </p>
+              )}
+              {/* <Datepicker
+                controls={["date"]}
+                display="inline"
+                min="1920-01-01"
+                max="2050-01-01"
+              /> */}
             </div>
           </div>
 
