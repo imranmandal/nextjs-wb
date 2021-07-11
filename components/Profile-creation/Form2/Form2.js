@@ -34,7 +34,7 @@ function Form2(props) {
   const { userToken } = useContext(AuthContext);
   const uid = parseJwt(userToken);
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isFirstScreenSaved, setIsFirstScreenSaved] = useState(false);
 
   // console.log(typeof parseJwt(userToken));

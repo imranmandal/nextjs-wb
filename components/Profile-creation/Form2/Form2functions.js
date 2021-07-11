@@ -4,8 +4,15 @@ import * as yup from "yup";
 
 export const form2Schema = yup.object().shape({
   managedBy: yup.string().required("required"),
-  fname: yup.string().min(3).max(50).required("required"),
-  lname: yup.string().min(1).required("required"),
+  fname: yup
+    .string()
+    .min(3, "First name must be at least 3 characters")
+    .max(50, "First name must be maximum 50 characters")
+    .required("required"),
+  lname: yup
+    .string()
+    .min(1, "Last name must be at least 1 characters")
+    .required("required"),
   gender: yup.string().required("required"),
   dob: yup.string().required("required"),
   maritalStatus: yup.string().required("required"),

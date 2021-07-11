@@ -52,11 +52,11 @@ const Confirm = ({
           <div className={styles.modal}>
             <FaTimes className={styles.closeBtn} onClick={handleClose} />
             <div className={styles.confirm_modal_container} id="container">
-              <h6 className="px-5 pt-5">
+              <h6>
                 Please confirm the below details. These cannot be changed once
                 saved
               </h6>
-              <section className="p-5">
+              <section>
                 <div className="grouped">
                   <p>Full Name</p>
                   <p className="text-center text-capitalize">
@@ -90,7 +90,7 @@ const Confirm = ({
                   </p>
                 </div>
               </section>
-              <div className="grouped px-5">
+              <div className="grouped">
                 <button
                   onClick={handleConfirm}
                   className="w-100 btn btn-sm btn-pink text-light"
