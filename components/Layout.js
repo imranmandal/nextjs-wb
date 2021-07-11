@@ -57,7 +57,10 @@ const Layout = ({
         <meta property="og:image:alt" content="Would Bee" />
         <meta property="og:site_name" content="Wouldbee.com" />
         <meta property="fb:app_id" content="3074679522638036" />
-        <link rel="image_src" href={NEXT_URL + img.wideImg} />
+        <link
+          rel="image_src"
+          href={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+        />
         <link
           rel="apple-touch-icon"
           sizes="32x32"
