@@ -281,7 +281,7 @@
       opacity: 0;
     }
     to {
-      top: 0px;
+      top: 5vh;
       opacity: 1;
     }
   }
@@ -298,6 +298,11 @@
     width: 100%;
     top: 20%;
     height: fit-content;
+  }
+
+  .sign_up_container form,
+  .login_container form {
+    padding: 0 2rem;
   }
 
   .sign_up_container {
@@ -387,5 +392,15 @@
     position: absolute;
     top: 3%;
     right: 10%;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 95vw;
+  }
+  .sign_up_container form,
+  .login_container form {
+    padding: 0 1rem;
   }
 }

@@ -66,7 +66,11 @@ const Confirm = ({
                 <div className="grouped">
                   <p>Gender</p>
                   <p className="text-center">
-                    {data.gender.maleSelected ? "Male" : "Female"}
+                    {data.gender.maleSelected
+                      ? "Male"
+                      : data.gender.femaleSelected
+                      ? "Female"
+                      : ""}
                   </p>
                 </div>
                 <div className="grouped">
