@@ -104,14 +104,35 @@
 .filler6 div,
 .filler7 div {
   position: absolute;
-  background: linear-gradient(180deg, rgb(246 162 182), rgb(225 28 116)),
+  /* background: linear-gradient(180deg, rgb(246 162 182), rgb(225 28 116)),
     linear-gradient(
       180deg,
       rgba(225, 28, 116, 0.4588235294117647),
       rgb(225 30 117)
-    );
+    ); */
+  background: hsla(333, 78%, 50%, 1);
 
-  opacity: 0.7;
+  background: linear-gradient(
+    45deg,
+    hsla(333, 78%, 50%, 1) 0%,
+    hsla(333, 53%, 73%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    45deg,
+    hsla(333, 78%, 50%, 1) 0%,
+    hsla(333, 53%, 73%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    45deg,
+    hsla(333, 78%, 50%, 1) 0%,
+    hsla(333, 53%, 73%, 1) 100%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#E11C74", endColorstr="#DE95B6", GradientType=1 );
+
+  opacity: 0.9;
   border-radius: 50%;
 }
 
@@ -180,18 +201,18 @@
 }
 
 .filler5 {
-  top: 27%;
-  left: 50%;
+  top: 10%;
+  left: 65%;
 }
 
 .filler6 {
-  top: 63%;
-  left: 40%;
+  top: 45%;
+  left: 50%;
 }
 
 .filler7 {
   top: 83%;
-  left: 30%;
+  left: 25%;
 }
 
 .filler1 .first,
