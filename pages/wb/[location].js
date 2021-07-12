@@ -11,8 +11,11 @@ export async function getStaticPaths() {
     "/wb/landing-page",
     "/wb/punjabi",
     "/wb/baniya",
+    "/wb/jain",
     "/wb/marathi",
     "/wb/south",
+    "/wb/muslim",
+    "/wb/christian",
   ];
 
   return {
@@ -37,7 +40,7 @@ export async function getStaticProps({ params: { location } }) {
         },
         revalidate: 1,
       }
-    : location === "baniya"
+    : location === "baniya" || location === "jain"
     ? {
         props: {
           wideImg: "/Images/baniya-landscape.png",
