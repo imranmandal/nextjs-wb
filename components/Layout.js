@@ -21,7 +21,7 @@ const Layout = ({
   const [imgUrl, setImgUrl] = useState(null);
 
   useEffect(() => {
-    console.log(NEXT_URL + img.wideImg);
+    // console.log(NEXT_URL + img.wideImg);
     window.innerWidth < 768
       ? setImgUrl(img.portraitImg)
       : setImgUrl(img.wideImg);
@@ -141,8 +141,8 @@ Layout.defaultProps = {
   description: "Truly Free, Fanatically Safe!",
   keywords: "matrimony, jeevansathi, wouldbee",
   img: {
-    wideImg: "/Images/bg-landscape-desktop.jpg",
-    portraitImg: "/Images/bg-phone-portrait-small.jpg",
+    wideImg: "/Images/landing-page-landscape.png",
+    portraitImg: "/Images/landing-page-phone-portrait.png",
   },
 };
 

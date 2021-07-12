@@ -12,8 +12,8 @@ export default function Home({ wideImg, portraitImg }) {
   const [values, setValues] = useState({
     imgValues: {
       showImage: true,
-      wideImg: wideImg || "/Images/bg-landscape-desktop.jpg",
-      portraitImg: portraitImg || "/Images/bg-phone-portrait.jpg",
+      wideImg: wideImg || "/Images/landing-page-landscape.png",
+      portraitImg: portraitImg || "/Images/landing-page-phone-portrait.png",
     },
     vdoValues: {
       showVideo: false,

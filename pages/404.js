@@ -7,13 +7,15 @@ const NotFound = () => {
     <>
       <Layout title="404!! Not Found">
         <div className={styles.container}>
-          <h1 className={styles.heading}>404!!</h1>
-          <h5>Not Found</h5>
-          <Link href="/">
-            <button className="btn btn-lg btn-pink rounded-pill shadow">
-              Take me home
-            </button>
-          </Link>
+          <div>
+            <h1 className={styles.heading}>404!!</h1>
+            <h5>Not Found</h5>
+            <Link href="/">
+              <button className="btn btn-lg btn-pink rounded-pill shadow">
+                Take me home
+              </button>
+            </Link>
+          </div>
         </div>
       </Layout>
     </>
