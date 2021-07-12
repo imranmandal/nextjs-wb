@@ -308,7 +308,7 @@
   .sign_up_container {
     transform: translateX(-100%);
     opacity: 1;
-    height: 80%;
+    height: 81%;
     overflow-y: auto;
   }
 

@@ -33,7 +33,6 @@ const Layout = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
-
         <meta property="og:title" content={title} />
         <meta property="og:url" content={NEXT_URL + router.pathname} />
         <meta property="og:type" content="website" />
@@ -115,6 +114,7 @@ const Layout = ({
           href={NEXT_URL + "/favicon-17.png"}
         />
         {/* <link rel="apple-touch-icon" href={NEXT_URL + "/favicon-17.png"} /> */}
+        .
       </Head>
 
       <Header queryData={queryData} />

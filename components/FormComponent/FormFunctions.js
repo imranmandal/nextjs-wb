@@ -98,3 +98,31 @@ export const convertedCapitalizeValue = (str) => {
   }
   return str;
 };
+
+export const getMonthAndDate = (date) => {
+  const dd = (date.getDate() < 10 ? "0" : "") + date.getDate();
+  const MM = (date.getMonth() + 1 < 10 ? "0" : "") + (date.getMonth() + 1);
+  return {
+    dd,
+    MM,
+  };
+};
+
+export const getFullDate = (date, maxAge) => {
+  if (!date) {
+    return "";
+  }
+  const dateFormat = new Date(date);
+  const age = maxAge || 0;
+
+  const monthAndDate = getMonthAndDate(dateFormat);
+  const fullDate =
+    dateFormat.getFullYear() -
+    age +
+    "-" +
+    monthAndDate.MM +
+    "-" +
+    monthAndDate.dd;
+
+  return fullDate;
+};

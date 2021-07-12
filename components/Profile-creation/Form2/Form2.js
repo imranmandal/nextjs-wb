@@ -11,11 +11,9 @@ import { form2Schema, submitForm } from "./Form2functions";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import styles from "@/styles/Form.module.css";
 import modalStyles from "@/styles/Modal.module.css";
-import formStyles from "@/styles/Form.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AiFillWarning } from "react-icons/ai";
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
-import { Datepicker, setOptions } from "@mobiscroll/react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   GET_CITY_NAME,
   GET_FIRST_SCREEN,
@@ -32,6 +30,7 @@ import {
   ProfileManagedBy,
   Religion,
 } from "../../FormComponent/FormData";
+import { getFullDate } from "@/components/FormComponent/FormFunctions";
 
 // Component start
 function Form2(props) {
@@ -41,7 +40,6 @@ function Form2(props) {
   const [showModal, setShowModal] = useState(false);
   const [isFirstScreenSaved, setIsFirstScreenSaved] = useState(false);
 
-  // console.log(typeof parseJwt(userToken));
   const [data, setData] = useState({
     fname: "",
     lname: "",
@@ -65,7 +63,6 @@ function Form2(props) {
   });
 
   const [maxDate, setMaxDate] = useState(null);
-  const [dateError, setDateError] = useState("");
 
   const {
     handleSubmit,
@@ -80,31 +77,23 @@ function Form2(props) {
 
   useEffect(() => {
     const today = new Date();
-    const dd = (today.getDate() < 10 ? "0" : "") + today.getDate();
-    const MM = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
+
     if (data.gender.maleSelected) {
-      const date = `${today.getFullYear() - 21}` + "-" + `${MM}` + "-" + dd;
+      const date = getFullDate(today, 21);
       if (data.dob > date) {
-        setDateError(
-          "For Male minimum age must be 21years and for Female minimum age must be 18years!"
+        toast.error(
+          "Age must be minimum 21 years for Male and 18 years for Female"
         );
-      } else {
-        setDateError("");
       }
-      return setMaxDate(date);
+      return setMaxDate(new Date(date.replaceAll("-", ",")));
     }
     if (data.gender.femaleSelected) {
-      const date = `${today.getFullYear() - 18}` + "-" + `${MM}` + "-" + dd;
-      if (data.dob > date) {
-        setDateError(
-          "For Male minimum age must be 21years and for Female minimum age must be 18years!"
-        );
-      } else {
-        setDateError("");
-      }
-      return setMaxDate(date);
+      const date = getFullDate(today, 18);
+      return setMaxDate(new Date(date.replaceAll("-", ",")));
     }
-    return setMaxDate(`${today.getFullYear() - 18}` + "-" + `${MM}` + "-" + dd);
+
+    const date = getFullDate(today, 18);
+    return setMaxDate(new Date(date.replaceAll("-", ",")));
   }, [data.gender, data.dob]);
 
   useEffect(() => {
@@ -113,11 +102,10 @@ function Form2(props) {
   }, [errors]);
 
   // ---- MAX AGE END
-  // console.log(data.dob > maxDate);
 
   const handleGenderChange = (elem) => {
     const name = elem.target.name;
-    setValue("gender", name);
+    setValue("gender", name, { shouldValidate: true });
     name === "male"
       ? setData((prevValue) => ({
           ...prevValue,
@@ -138,6 +126,7 @@ function Form2(props) {
 
   const handleChange = (elem) => {
     const { name, value } = elem.target;
+    console.log(value);
     setData((prevValue) => ({ ...prevValue, [name]: value }));
     setValue(name, value, { shouldValidate: true });
   };
@@ -152,8 +141,14 @@ function Form2(props) {
   SavedResponse?.error && console.log(SavedResponse.error);
 
   const SubmitForm = () => {
+    console.log(data.dob, getFullDate(maxDate));
+    if (data.dob > getFullDate(maxDate)) {
+      toast.error(
+        "Age must be minimum 21 years for Male and 18 years for Female"
+      );
+      return;
+    }
     if (isFirstScreenSaved) {
-      // console.log(isFirstScreenSaved);
       submitForm(data, uid, props, saveFirstPage, setIsFirstScreenSaved);
     } else {
       setShowModal(true);
@@ -207,15 +202,7 @@ function Form2(props) {
         setValue("managedBy", profile?.profileManagedBy);
         setValue("fname", profile?.firstName);
         setValue("lname", profile?.lastName);
-        setValue(
-          "dob",
-          profile?.dob.slice(0, 4) +
-            "-" +
-            profile?.dob.slice(5, 7) +
-            "-" +
-            profile?.dob.slice(8, 10)
-        );
-
+        setValue("dob", profile?.dob);
         setValue("gender", profile?.gender);
         setValue("maritalStatus", profile?.maritalStatus);
         setValue("motherTongue", profile?.motherTongue);
@@ -224,14 +211,7 @@ function Form2(props) {
         setValue("disability", [...profile?.otherProfileDetails.disabilities]);
         setValue("disease", [...profile?.otherProfileDetails.majorDiseases]);
         setValue("diet", profile?.otherProfileDetails.diet);
-        setValue(
-          "city",
-          profile?.city.name +
-            ", " +
-            profile?.city.state.name +
-            ", " +
-            profile?.city.state.country.name
-        );
+        setValue("city", profile?.city.name);
         setValue("smoke", profile?.otherProfileDetails.smoke);
         setValue("drink", profile?.otherProfileDetails.drink);
 
@@ -245,25 +225,13 @@ function Form2(props) {
     console.log("clicked");
   };
 
-  // useEffect(() => {
-  //   console.log(data.dob, maxDate, data.dob > maxDate);
-  //   // console.log(data.dob > maxDate);
-
-  // }, [data.dob, data.gender.maleSelected]);
-
   return (
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
           Step {props.currentStep} of {props.totalSteps - 1}
         </p>
-        {/* <form onSubmit={handleSubmit(SubmitForm)}> */}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            SubmitForm();
-          }}
-        >
+        <form onSubmit={handleSubmit(SubmitForm)} novalidate>
           <div className="form-floating d-flex flex-column">
             <Select
               label="profile managed by *"
@@ -294,12 +262,10 @@ function Form2(props) {
                 className="form-control"
                 value={data.fname}
                 onChange={(e) => {
-                  // customRegister.fname.onChange(e);
                   handleChange(e);
                 }}
                 placeholder=""
                 disabled={isFirstScreenSaved}
-                // ref={customRegister.fname.ref}
               />
             </div>
             <div className="p-3 w-100" onClick={handleClick}>
@@ -307,7 +273,7 @@ function Form2(props) {
                 <label htmlFor="lname">Last Name *</label>
                 <p className="error-message">{errors.lname?.message}</p>
                 {isFirstScreenSaved && (
-                  <span className="text-pink mx-auto">
+                  <span className="text-pink">
                     <FaLock />
                   </span>
                 )}
@@ -319,12 +285,10 @@ function Form2(props) {
                 className="form-control"
                 value={data.lname}
                 onChange={(e) => {
-                  // customRegister.lname.onChange(e);
                   handleChange(e);
                 }}
                 placeholder=""
                 disabled={isFirstScreenSaved}
-                // ref={customRegister.lname.ref}
               />
             </div>
           </div>
@@ -380,33 +344,32 @@ function Form2(props) {
                     <FaLock />
                   </span>
                 )}
+                <div class="invalid-feedback">Please choose a username.</div>
               </div>
-              <input
-                type="date"
+              <DatePicker
                 id="dob"
                 name="dob"
-                className="form-control w-100"
-                value={data.dob}
-                max={maxDate}
-                disabled={isFirstScreenSaved}
-                onChange={(e) => {
-                  handleChange(e);
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD-MM-YYYY"
+                selected={
+                  data.dob ? new Date(data.dob?.replaceAll("-", ",")) : null
+                }
+                onChange={(date) => {
+                  setData((prevData) => {
+                    console.log(date.getDate());
+                    return { ...prevData, dob: getFullDate(date) };
+                  });
+                  setValue("dob", getFullDate(date), { shouldValidate: true });
                 }}
-                data-bs-placement="bottom"
-                title="Tooltip on bottom"
+                openToDate={
+                  new Date(getFullDate(new Date(), 25).replaceAll("-", ","))
+                }
+                maxDate={maxDate}
+                disabled={isFirstScreenSaved}
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
               />
-              {dateError && (
-                <p className={formStyles.error_msg}>
-                  <AiFillWarning className="text-warning fs-5 d-block" />
-                  {dateError}
-                </p>
-              )}
-              {/* <Datepicker
-                controls={["date"]}
-                display="inline"
-                min="1920-01-01"
-                max="2050-01-01"
-              /> */}
             </div>
           </div>
 
@@ -477,7 +440,6 @@ function Form2(props) {
               data={data}
               setData={setData}
               setValue={setValue}
-              // refs={register}
               options={MajorDisease}
               errors={errors}
             />
@@ -492,7 +454,6 @@ function Form2(props) {
               placeholder="type to search"
               QUERY_NAME={GET_CITY_NAME}
               OUTPUT_OBJ_NAME="cities"
-              // customRegister={customRegister}
               setValue={setValue}
               errors={errors}
             />

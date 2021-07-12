@@ -14,6 +14,13 @@
   border-color: #e11c74;
 }
 
+.container input[name="dob"] {
+  padding: 5px;
+  border: 1px solid #e11c74;
+  border-radius: 4px;
+  width: 100%;
+}
+
 .gender_grp {
   width: 100%;
   padding: 1rem;

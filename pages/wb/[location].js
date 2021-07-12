@@ -32,24 +32,24 @@ export async function getStaticProps({ params: { location } }) {
     : location === "punjabi"
     ? {
         props: {
-          wideImg: "/Images/punjabi_landscape.png",
-          portraitImg: "/Images/punjabi_mobile.png",
+          wideImg: "/Images/punjabi-landscape.png",
+          portraitImg: "/Images/punjabi-phone-portrait.png",
         },
         revalidate: 1,
       }
     : location === "baniya"
     ? {
         props: {
-          wideImg: "/Images/baniya_landscape.png",
-          portraitImg: "/Images/baniya_phone.png",
+          wideImg: "/Images/baniya-landscape.png",
+          portraitImg: "/Images/baniya-phone-portrait.png",
         },
         revalidate: 1,
       }
     : location === "marathi"
     ? {
         props: {
-          wideImg: "/Images/marathi_landscape.png",
-          portraitImg: "/Images/marathi_phone.png",
+          wideImg: "/Images/marathi-landscape.png",
+          portraitImg: "/Images/marathi-phone-portrait.png",
         },
         revalidate: 1,
       }
@@ -58,6 +58,22 @@ export async function getStaticProps({ params: { location } }) {
         props: {
           wideImg: "/Images/south-india.jpg",
           portraitImg: "/Images/bg-phone-portrait-south.jpeg",
+        },
+        revalidate: 1,
+      }
+    : location === "muslim"
+    ? {
+        props: {
+          wideImg: "/Images/muslim-landscape.png",
+          portraitImg: "/Images/muslim-phone-portrait.png",
+        },
+        revalidate: 1,
+      }
+    : location === "christian"
+    ? {
+        props: {
+          wideImg: "/Images/christian-landscape.png",
+          portraitImg: "/Images/christian-phone-portrait.png",
         },
         revalidate: 1,
       }

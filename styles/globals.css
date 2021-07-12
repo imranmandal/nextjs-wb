@@ -92,7 +92,8 @@ select:disabled {
   background-color: #fff !important;
 }
 
-input::placeholder {
+input::placeholder,
+select::placeholder {
   text-transform: capitalize;
   color: grey;
 }
