@@ -10,8 +10,21 @@ export default async (req, res) => {
 
     const { token } = cookie.parse(req.headers.cookie);
 
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const tokenStatusRes = await fetch(`${API_URL}/auth/is-valid-token`, {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    });
+
     if (token) {
-      res.status(200).json({ token });
+      if (tokenStatusRes.ok) {
+        res.status(200).json({ token });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
     } else {
       res.status(403).json({ message: "User forbidden" });
     }

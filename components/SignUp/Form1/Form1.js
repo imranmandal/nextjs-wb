@@ -173,6 +173,21 @@ function Form1(props) {
             <form onSubmit={handleSubmit(submitForm)}>
               <div className="form-floating my-3 mx-1 mx-sm-3">
                 <div className={styles.phoneInput}>
+                  {/* <NumberFormat
+                    value={phone}
+                    onChange={(e) => {
+                      setValue(
+                        "phone",
+                        e.target.value.slice(4, e.target.value.length),
+                        { shouldValidate: true }
+                      );
+                      handleChange(e);
+                    }}
+                    className="form-control"
+                    placeholder="Phone"
+                    type="tel"
+                    prefix={"+91 "}
+                  /> */}
                   <label value="+91" disabled>
                     +91
                   </label>

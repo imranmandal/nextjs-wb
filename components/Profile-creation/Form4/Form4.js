@@ -47,9 +47,9 @@ function Form4(props) {
         setShowBackPageInput(false);
         return;
       }
-      if (data.verificationDocFile.frontPage.name) {
-        setShowBackPageInput(true);
-      }
+      // if (data.verificationDocFile.frontPage.name) {
+      //   setShowBackPageInput(true);
+      // }
       return setDisableFileInput(false);
     } else {
       setData((prevVal) => ({
@@ -68,7 +68,11 @@ function Form4(props) {
       if (data.verificationDocName === "PAN" || !data.verificationDocName) {
         return setShowBackPageInput(false);
       }
-      setShowBackPageInput(true);
+      if (data.verificationDocFile.frontPage.name) {
+        setShowBackPageInput(true);
+      }
+    } else {
+      setShowBackPageInput(false);
     }
   }, [data.verificationDocFile.frontPage]);
 
@@ -112,30 +116,48 @@ function Form4(props) {
       if (name === "frontPage") {
         setValue(name, files, true);
       }
-      // console.log(files[0]);
+      console.log(files[0]);
       setLoading(true);
-      new Compressor(files[0], {
-        quality: 0.6,
-        success: (blob) => {
-          const myFile = new File([blob], blob.name);
+      if (files[0].type === "application/pdf") {
+        if (files[0].size > 10000000) {
+          return toast.error("Document must be smaller than 10Mb");
+        }
+        setData((prevVal) => ({
+          ...prevVal,
+          verificationDocFile: {
+            ...prevVal.verificationDocFile,
+            [name]: files[0],
+          },
+        }));
+        setLoading(false);
+        return;
+      }
+      if (files[0].type === "image/jpg" || files[0].type === "image/png") {
+        new Compressor(files[0], {
+          quality: 0.6,
+          success: (blob) => {
+            const myFile = new File([blob], blob.name.slice(0, 100));
 
-          setData((prevVal) => ({
-            ...prevVal,
-            verificationDocFile: {
-              ...prevVal.verificationDocFile,
-              [name]: myFile,
-            },
-          }));
-          setLoading(false);
-        },
-      });
+            setData((prevVal) => ({
+              ...prevVal,
+              verificationDocFile: {
+                ...prevVal.verificationDocFile,
+                [name]: myFile,
+              },
+            }));
+            setLoading(false);
+          },
+        });
+      } else {
+        setLoading(false);
+        return toast.error("Please select JPG or PNG images or PDF file");
+      }
     }
   };
 
   const removeSelectedDoc = (e) => {
     e.preventDefault();
     const { name } = e.target;
-    console.log(name);
     if (name === "frontPage") {
       if (data.verificationDocFile.backPage.name) {
         // setValue("frontPage", data.verificationDocFile.backPage);

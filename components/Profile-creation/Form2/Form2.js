@@ -264,7 +264,7 @@ function Form2(props) {
                 onChange={(e) => {
                   handleChange(e);
                 }}
-                placeholder=""
+                placeholder="First Name"
                 disabled={isFirstScreenSaved}
               />
             </div>
@@ -287,7 +287,7 @@ function Form2(props) {
                 onChange={(e) => {
                   handleChange(e);
                 }}
-                placeholder=""
+                placeholder="Last Name"
                 disabled={isFirstScreenSaved}
               />
             </div>
@@ -356,13 +356,15 @@ function Form2(props) {
                 }
                 onChange={(date) => {
                   setData((prevData) => {
-                    console.log(date.getDate());
+                    // console.log(date.getDate());
                     return { ...prevData, dob: getFullDate(date) };
                   });
                   setValue("dob", getFullDate(date), { shouldValidate: true });
                 }}
                 openToDate={
-                  new Date(getFullDate(new Date(), 25).replaceAll("-", ","))
+                  data.dob
+                    ? new Date(data.dob?.replaceAll("-", ","))
+                    : new Date(getFullDate(new Date(), 25).replaceAll("-", ","))
                 }
                 maxDate={maxDate}
                 disabled={isFirstScreenSaved}

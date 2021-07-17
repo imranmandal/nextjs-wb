@@ -14,12 +14,15 @@ function Header({ queryData }) {
     e.preventDefault();
     !userToken ? setShowSignUp(true) : router.push("/profile-creation");
   };
-
   useEffect(() => {
     if (queryData) {
       setShowSignUp(true);
     }
   }, [queryData]);
+
+  useEffect(() => {
+    router.prefetch("/profile-creation");
+  }, []);
 
   return (
     <>

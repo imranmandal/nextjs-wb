@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import NumberFormat from "react-number-format";
 import Link from "next/link";
 import * as yup from "yup";
 
@@ -52,6 +53,13 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
 
   const handleLogin = async () => {
     setPageLoading(true);
+
+    if (phone.length > 10 || phone.length < 10) {
+      toast.error("Please check the phone number");
+      setPageLoading(false);
+      return;
+    }
+
     const response = await login({ phone, password });
 
     if (response) {
@@ -65,6 +73,8 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
       });
     } else {
       setPageLoading(false);
+
+      console.log(response);
     }
   };
 
@@ -90,7 +100,7 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
 
             <div className="my-3 mx-1 mx-sm-3 w-100">
               <div className="d-flex flex-column my-2 w-100">
-                <input
+                {/* <input
                   type="text"
                   value={phone}
                   onChange={(e) => {
@@ -99,6 +109,20 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
                   }}
                   className="form-control"
                   placeholder="Phone"
+                /> */}
+                <NumberFormat
+                  value={phone}
+                  onChange={(e) => {
+                    setValue(
+                      "phone",
+                      e.target.value.slice(4, e.target.value.length)
+                    );
+                    setPhone(e.target.value.slice(4, e.target.value.length));
+                  }}
+                  className="form-control"
+                  placeholder="Phone"
+                  type="tel"
+                  prefix={"+91 "}
                 />
                 <p className="error-message">{errors.phone?.message}</p>
               </div>

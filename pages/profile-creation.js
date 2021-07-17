@@ -1,3 +1,4 @@
+import { useContext, useEffect } from "react";
 import Form2 from "@/components/Profile-creation/Form2/Form2";
 import Form3 from "@/components/Profile-creation/Form3/Form3";
 import Form4 from "@/components/Profile-creation/Form4/Form4";
@@ -8,16 +9,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Signup.module.css";
-import Head from "next/head";
-import { useContext } from "react";
 import { useQuery } from "@apollo/client";
+import Head from "next/head";
 import { GET_PROFILE_CREATION_SCREEN } from "@/components/Graphql/query/query";
 import { parseJwt } from "@/components/Profile-creation/ParseJwt";
+import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
 
 const ProfileCreation = () => {
   const count = [1, 2];
-  const { userToken } = useContext(AuthContext);
+  const router = useRouter();
+  const { userToken, serverLoading } = useContext(AuthContext);
 
   const uid = parseJwt(userToken);
 
@@ -26,6 +28,14 @@ const ProfileCreation = () => {
       id: uid,
     },
   });
+
+  useEffect(() => {
+    if (!serverLoading) {
+      if (!userToken) {
+        router.back();
+      }
+    }
+  }, [serverLoading]);
 
   return (
     <>
@@ -73,3 +83,17 @@ const ProfileCreation = () => {
 };
 
 export default ProfileCreation;
+
+// export const getServerSideProps = (query) => {
+//   console.log(query);
+//   return {
+//     props: {
+//       query: "",
+//     },
+//   };
+// };
+
+export const getStaticProps = ({ query }) => {
+  console.log(query);
+  return { props: {} };
+};

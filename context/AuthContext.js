@@ -20,11 +20,12 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [uuId, setUuId] = useState(null);
   const [error, setError] = useState(null);
+  const [serverLoading, setServerLoading] = useState(true);
 
   useEffect(() => {
     checkUserLoggedIn();
     createUuid();
-  });
+  }, []);
 
   const router = useRouter();
 
@@ -96,6 +97,7 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       setUserToken(null);
+      setUuId(null);
       router.push("/");
     }
   };
@@ -109,8 +111,11 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       setUserToken(data.token);
+      setServerLoading(false);
     } else {
       setUserToken(null);
+      setServerLoading(false);
+      logout();
     }
   };
 
@@ -178,7 +183,16 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ userToken, uuId, error, login, signUp, logout, createUuid }}
+      value={{
+        userToken,
+        uuId,
+        error,
+        serverLoading,
+        login,
+        signUp,
+        logout,
+        createUuid,
+      }}
     >
       <ApolloProvider client={client}>{children}</ApolloProvider>
     </AuthContext.Provider>

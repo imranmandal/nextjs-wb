@@ -12,6 +12,7 @@ import { convertedValue } from "@/components/FormComponent/FormFunctions";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
+import NumberFormat from "react-number-format";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignUpForm(props) {
@@ -107,7 +108,10 @@ function SignUpForm(props) {
       } else {
         setDisableVerifyBtn(true);
       }
-      setData((prevValue) => ({ ...prevValue, [name]: value }));
+      setData((prevValue) => ({
+        ...prevValue,
+        [name]: value.slice(4, value.length),
+      }));
       setWordCount(() => {
         return value.length;
       });
@@ -172,11 +176,19 @@ function SignUpForm(props) {
         {/* <sign_upContent /> */}
         <div className={styles.sign_up_form}>
           <div className="w-100">
-            <form onSubmit={handleSubmit(submitForm)}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!data.phoneAuthToken) {
+                  return toast.error("Please verify phone number.");
+                }
+                handleSubmit(submitForm);
+              }}
+            >
               <h2 className="text-center p-3 text-pink">Sign Up</h2>
               <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
-                  <label value="+91" disabled>
+                  {/* <label value="+91" disabled>
                     +91
                   </label>
                   <input
@@ -189,6 +201,21 @@ function SignUpForm(props) {
                     className="form-control"
                     placeholder="Phone"
                     disabled={disablePhoneInput}
+                  /> */}
+                  <NumberFormat
+                    name="phone"
+                    // value={phone}
+                    onChange={(e) => {
+                      setValue(
+                        "phone",
+                        e.target.value.slice(4, e.target.value.length)
+                      );
+                      handleChange(e);
+                    }}
+                    className="form-control"
+                    placeholder="Phone"
+                    type="tel"
+                    prefix={"+91 "}
                   />
                   <div className="d-flex">
                     {!showOtpInput ? (

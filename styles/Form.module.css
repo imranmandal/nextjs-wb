@@ -208,16 +208,27 @@
 
 /* ---------- Form 5 --------- */
 
+.container_form5 {
+  padding-top: 2%;
+  padding-right: 15%;
+  padding-left: 15%;
+  padding-bottom: 0;
+  text-transform: capitalize;
+  overflow-y: hidden;
+  min-height: fit-content;
+  max-height: fit-content;
+}
+
 .check {
   font-size: 5rem;
   color: #e11c74;
-  margin: 1.5rem;
+  margin: 1.4rem;
 }
 
 .form5_field_content {
   min-height: 40vh;
   max-height: fit-content;
-  padding: 7%;
+  /* padding: 7%; */
 }
 
 .downloadBtn {
@@ -240,8 +251,18 @@
   padding: 0 5px;
 }
 
+.logoutBtn {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.logoutBtn a {
+  box-shadow: 0 0 10px #acacac;
+}
+
 @media (max-width: 768px) {
-  .container {
+  .container,
+  .container_form5 {
     padding: 5%;
   }
   .top_suggestion {
