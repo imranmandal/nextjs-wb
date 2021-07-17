@@ -101,8 +101,9 @@ function SignUpForm(props) {
   // ------- HANDLE CHANGE
   const handleChange = (elem) => {
     const { name, value } = elem.target;
+    const slicedValue = value.slice(4, value.length);
     if (name === "phone") {
-      if (value.length === 10) {
+      if (slicedValue.length === 10) {
         setDisableVerifyBtn(false);
         setShowRecaptcha(true);
       } else {
@@ -110,10 +111,10 @@ function SignUpForm(props) {
       }
       setData((prevValue) => ({
         ...prevValue,
-        [name]: value.slice(4, value.length),
+        [name]: slicedValue,
       }));
       setWordCount(() => {
-        return value.length;
+        return slicedValue.length;
       });
     }
     setData((prevValue) => ({ ...prevValue, [name]: value }));
