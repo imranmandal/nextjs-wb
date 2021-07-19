@@ -132,7 +132,11 @@ function Form4(props) {
         setLoading(false);
         return;
       }
-      if (files[0].type === "image/jpg" || files[0].type === "image/png") {
+      if (
+        files[0].type === "image/jpg" ||
+        files[0].type === "image/jpeg" ||
+        files[0].type === "image/png"
+      ) {
         new Compressor(files[0], {
           quality: 0.6,
           success: (blob) => {

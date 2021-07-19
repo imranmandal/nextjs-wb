@@ -20,7 +20,11 @@ export const handleProfileChange = (e, setData, setLoading) => {
   console.log(file);
   if (file) {
     setLoading(true);
-    if (file.type === "image/jpg" || file.type === "image/png") {
+    if (
+      file.type === "image/jpg" ||
+      file.type === "image/jpeg" ||
+      file.type === "image/png"
+    ) {
       new Compressor(file, {
         quality: 0.6,
         success: (blob) => {
@@ -36,7 +40,7 @@ export const handleProfileChange = (e, setData, setLoading) => {
       });
     } else {
       setLoading(false);
-      return toast.error("Please select JPG or PNG images");
+      return toast.error("Please select JPG, JPEG or PNG images");
     }
   }
   setData((prevVal) => ({ ...prevVal }));
