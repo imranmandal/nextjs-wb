@@ -89,6 +89,10 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     }
   }, [queryData]);
 
+  useEffect(() => {
+    router.prefetch("/profile-creation");
+  }, []);
+
   console.log(phone);
 
   const MAX_VAL = 9999999999;

@@ -14,10 +14,12 @@ import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import NumberFormat from "react-number-format";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 function SignUpForm(props) {
   const { data, setData, setShowModal } = props;
   const formType = "signup";
+  const router = useRouter();
 
   // ---- CONTEXT
   const { signUp, userToken, uuId, error } = useContext(AuthContext);
@@ -170,6 +172,10 @@ function SignUpForm(props) {
       recaptchaResult
     );
   };
+
+  useEffect(() => {
+    router.prefetch("/profile-creation");
+  }, []);
 
   // console.log(errors);
 
