@@ -6,7 +6,7 @@ import * as yup from "yup";
 
 // ------- FORM SCHEMA
 export const schema = yup.object().shape({
-  email: yup.string().required(),
+  email: yup.string().email().required(),
   phone: yup
     .number()
     .typeError("you must specify a number")

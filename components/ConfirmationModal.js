@@ -38,6 +38,15 @@ const Confirm = ({
     setShowModal(false);
   };
 
+  function formatDate(input) {
+    var datePart = input.match(/\d+/g),
+      year = datePart[0].substring(2), // get only two digits
+      month = datePart[1],
+      day = datePart[2];
+
+    return day + "-" + month + "-" + year;
+  }
+
   const modalContent = show ? (
     <>
       <div
@@ -75,7 +84,7 @@ const Confirm = ({
                 </div>
                 <div className="grouped">
                   <p>DOB</p>
-                  <p className="text-center">{data.dob}</p>
+                  <p className="text-center">{formatDate(data.dob)}</p>
                 </div>
                 <div className="grouped">
                   <p>Marital Status</p>

@@ -128,7 +128,7 @@ function Form2(props) {
     const { name, value } = elem.target;
     console.log(value);
     setData((prevValue) => ({ ...prevValue, [name]: value }));
-    setValue(name, value, { shouldValidate: true });
+    setValue(name, value);
   };
 
   const SavedData = useQuery(GET_FIRST_SCREEN, {
@@ -221,8 +221,10 @@ function Form2(props) {
     }
   }, [SavedData]);
 
-  const handleClick = () => {
-    console.log("clicked");
+  const AvoidSpace = (event) => {
+    var k = event ? event.which : window.event.keyCode;
+    console.log(k);
+    if (k == 32) return false;
   };
 
   return (
@@ -262,13 +264,15 @@ function Form2(props) {
                 className="form-control"
                 value={data.fname}
                 onChange={(e) => {
+                  var reg = new RegExp("^[0-9`~!@#$%^&*/)(+=._-]$");
+                  if (reg.test(e.nativeEvent.data)) return false;
                   handleChange(e);
                 }}
                 placeholder="First Name"
                 disabled={isFirstScreenSaved}
               />
             </div>
-            <div className="p-3 w-100" onClick={handleClick}>
+            <div className="p-3 w-100">
               <div className="d-flex justify-content-between">
                 <label htmlFor="lname">Last Name *</label>
                 <p className="error-message">{errors.lname?.message}</p>
@@ -284,8 +288,14 @@ function Form2(props) {
                 name="lname"
                 className="form-control"
                 value={data.lname}
-                onChange={(e) => {
-                  handleChange(e);
+                onChange={(event) => {
+                  var reg = new RegExp("^[0-9]$");
+                  if (
+                    event.nativeEvent.data === " " ||
+                    reg.test(event.nativeEvent.data)
+                  )
+                    return false;
+                  handleChange(event);
                 }}
                 placeholder="Last Name"
                 disabled={isFirstScreenSaved}

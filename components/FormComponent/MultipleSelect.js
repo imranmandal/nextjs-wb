@@ -3,6 +3,7 @@ import styled from "styled-components";
 import styles from "@/styles/Form.module.css";
 import { convertedValue, replaceUnderScore } from "./FormFunctions";
 import ComponentWrapper from "./ComponentWrapper";
+import { FaCheck } from "react-icons/fa";
 
 const MultipleSelect = ({
   name,
@@ -116,7 +117,7 @@ const MultipleSelect = ({
 
                   {options.map((option, index) => {
                     return (
-                      <div key={index} className="d-flex">
+                      <div key={index} className={styles.checkbox}>
                         <input
                           id={option + name}
                           type="checkbox"
@@ -131,10 +132,10 @@ const MultipleSelect = ({
                               : false
                           }
                         />{" "}
-                        <label
-                          className="w-100 my-auto mx-2 p-1"
-                          htmlFor={option + name}
-                        >
+                        <span className={styles.cr}>
+                          <FaCheck className={styles.cr_icon} />
+                        </span>
+                        <label className="" htmlFor={option + name}>
                           {name === "degrees"
                             ? convertedValue(option)
                             : convertedValue(option).toLocaleLowerCase()}
@@ -153,7 +154,8 @@ const MultipleSelect = ({
 };
 
 const Select = styled.div`
-  color: #000;
+  color: #212529;
+  /* color: #000; */
   background-color: #fff;
   border: 1px solid #e11c74;
   border-radius: 5px;

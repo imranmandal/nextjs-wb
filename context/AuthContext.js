@@ -77,13 +77,13 @@ export const AuthProvider = ({ children }) => {
         deviceInfo: deviceInfo,
       })
       .then((res) => {
-        console.log(res);
-        router.push({
-          pathname: "/profile-creation",
-          query: {
-            userToken: res.data.accessToken,
-          },
-        });
+        // console.log(res);
+
+        router.push(
+          `/profile-creation/?token=${res.data.accessToken}`,
+          `/profile-creation`,
+          { shallow: true }
+        );
         setUserToken(res.data.accessToken);
         return res;
       })
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     if (res.ok) {
       setUserToken(null);
       setUuId(null);
-      router.push("/");
+      router.replace("/");
     }
   };
 

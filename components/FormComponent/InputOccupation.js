@@ -66,7 +66,7 @@ function InputOccupation(props) {
     );
 
     if (!value) {
-      setValue(name, "", { shouldValidate: true });
+      setValue("occupation", null, { shouldValidate: true });
     }
   };
 

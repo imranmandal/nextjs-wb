@@ -196,7 +196,7 @@ const Recovery = () => {
 
     if (res.ok) {
       // console.log(res);
-      router.push({ pathname: "/", query: { phone: data.phone } });
+      router.replace({ pathname: "/", query: { phone: data.phone } });
       toast.success("Password changed successfully");
     } else {
       // console.log(res);

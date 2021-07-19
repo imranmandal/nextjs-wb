@@ -65,17 +65,15 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     if (response) {
       setPageLoading(false);
       setShowModal(false);
-      console.log(response);
-      router.push({
-        pathname: "/profile-creation",
-        query: {
-          currentPage: data?.profile.profileCreationScreen || 1,
-          userToken: response.token,
-        },
-      });
+      // console.log(response);
+
+      router.push(
+        `/profile-creation/?token=${response.token}`,
+        `/profile-creation`,
+        { shallow: true }
+      );
     } else {
       setPageLoading(false);
-
       console.log(response);
     }
   };

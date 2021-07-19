@@ -26,6 +26,6 @@ export const SubmitForm3 = (uid, data, props, saveSecondScreen) => {
       props.nextStep();
     })
     .catch((error) => {
-      toast.error(error.message);
+      toast.error("Something went wrong!");
     });
 };

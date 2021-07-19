@@ -47,6 +47,8 @@ function Form3(props) {
     income: "",
   });
 
+  const [saveSecondScreen, SavedResponse] = useMutation(SAVE_SECOND_SCREEN);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -58,7 +60,7 @@ function Form3(props) {
   // errors && console.log(errors);
 
   useEffect(() => {
-    console.log(data.employedIn);
+    // console.log(data.employedIn);
     if (data.employedIn === "NOT_WORKING") {
       setNotWorking(true);
       setData((prevValue) => ({
@@ -69,6 +71,7 @@ function Form3(props) {
           value: "",
         },
       }));
+      setValue("occupation", "");
     } else {
       setNotWorking(false);
     }
@@ -84,8 +87,6 @@ function Form3(props) {
       id: uid,
     },
   });
-
-  const [saveSecondScreen, SavedResponse] = useMutation(SAVE_SECOND_SCREEN);
 
   useEffect(() => {
     if (SavedData.data) {
@@ -119,8 +120,8 @@ function Form3(props) {
         });
 
         setValue("degrees", [...profile?.degrees]);
-        setValue("occupation", profile?.occupation);
         setValue("employedIn", profile?.employedIn);
+        setValue("occupation", profile?.occupation);
         setValue("emloyerName", profile?.employer?.name);
         setValue("designation", profile?.designation?.name);
         setValue("income", profile?.annualIncome);
