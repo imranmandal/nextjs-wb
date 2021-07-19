@@ -65,10 +65,12 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     if (response) {
       setPageLoading(false);
       setShowModal(false);
+      console.log(response);
       router.push({
         pathname: "/profile-creation",
         query: {
           currentPage: data?.profile.profileCreationScreen || 1,
+          userToken: response.token,
         },
       });
     } else {
@@ -87,6 +89,11 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     }
   }, [queryData]);
 
+  console.log(phone);
+
+  const MAX_VAL = 9999999999;
+  const withValueLimit = ({ value }) => value <= MAX_VAL;
+
   return (
     <>
       <div className="container my-4 mx-auto text-left">
@@ -100,30 +107,29 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
 
             <div className="my-3 mx-1 mx-sm-3 w-100">
               <div className="d-flex flex-column my-2 w-100">
-                {/* <input
-                  type="text"
-                  value={phone}
-                  onChange={(e) => {
-                    setValue("phone", e.target.value);
-                    setPhone(e.target.value);
-                  }}
-                  className="form-control"
-                  placeholder="Phone"
-                /> */}
-                <NumberFormat
-                  value={phone}
-                  onChange={(e) => {
-                    setValue(
-                      "phone",
-                      e.target.value.slice(4, e.target.value.length)
-                    );
-                    setPhone(e.target.value.slice(4, e.target.value.length));
-                  }}
-                  className="form-control"
-                  placeholder="Phone"
-                  type="tel"
-                  prefix={"+91 "}
-                />
+                <div className={styles.phoneInput}>
+                  <label value="+91" disabled>
+                    +91
+                  </label>
+                  <NumberFormat
+                    name="phone"
+                    value={phone}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setValue("phone", value);
+                      // setPhone((prevValue) =>
+                      //   prevValue.length === 10 ? prevValue : value
+                      // );
+                    }}
+                    onValueChange={({ value }) => {
+                      setPhone(() => value);
+                    }}
+                    isAllowed={withValueLimit}
+                    className="form-control"
+                    placeholder="Phone"
+                    type="tel"
+                  />
+                </div>
                 <p className="error-message">{errors.phone?.message}</p>
               </div>
 
@@ -139,16 +145,19 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
               />
               <p className="error-message">{errors.password?.message}</p>
 
-              <div className="d-flex flex-column">
+              <div className="d-flex flex-column align-items-center">
                 <Link
                   href={{
                     pathname: "/recovery",
                     query: { phone: phone || "" },
                   }}
                 >
-                  <a onClick={() => setShowModal(false)}>
+                  <a
+                    className={styles.forgotPassTxt}
+                    onClick={() => setShowModal(false)}
+                  >
                     Forgot{" "}
-                    <span className="text-lowercase">your password?</span>
+                    <span className="text-lowercase">your password? </span>
                   </a>
                 </Link>
                 <input

@@ -12,7 +12,14 @@ function Header({ queryData }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    !userToken ? setShowSignUp(true) : router.push("/profile-creation");
+    !userToken
+      ? setShowSignUp(true)
+      : router.push({
+          pathname: "/profile-creation",
+          query: {
+            userToken,
+          },
+        });
   };
   useEffect(() => {
     if (queryData) {

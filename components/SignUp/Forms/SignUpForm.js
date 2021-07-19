@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 function SignUpForm(props) {
   const { data, setData, setShowModal } = props;
   const formType = "signup";
-  // const [phoneAuthToken, setPhoneAuthToken] = useState("");
+
   // ---- CONTEXT
   const { signUp, userToken, uuId, error } = useContext(AuthContext);
 
@@ -30,14 +30,6 @@ function SignUpForm(props) {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const customRegister = {
-    email: register("email"),
-    phone: register("phone"),
-    otp: register("otp"),
-    password: register("password"),
-    cPassword: register("cPassword"),
-  };
 
   const [timer, setTimer] = useState(60);
   const [wordCount, setWordCount] = useState(0);
@@ -56,6 +48,18 @@ function SignUpForm(props) {
   useEffect(() => {
     error && toast.error(error);
   });
+
+  useEffect(() => {
+    errors.phoneAuthToken && toast.error(errors.phoneAuthToken.message);
+  }, [errors.phoneAuthToken]);
+
+  useEffect(() => {
+    if (data.phoneAuthToken) {
+      setValue("phoneAuthToken", data.phoneAuthToken);
+    } else {
+      setValue("phoneAuthToken", "");
+    }
+  }, [data.phoneAuthToken]);
 
   useEffect(() => {
     // console.log(deviceInfo);
@@ -90,6 +94,7 @@ function SignUpForm(props) {
       setTimer(60);
       // setData((prevValue) => ({ ...prevValue, otp: "" }));
       setDisablePhoneInput(false);
+      setDisableVerifyBtn(false);
     }
   };
 
@@ -101,26 +106,22 @@ function SignUpForm(props) {
   // ------- HANDLE CHANGE
   const handleChange = (elem) => {
     const { name, value } = elem.target;
-    const slicedValue = value.slice(4, value.length);
     if (name === "phone") {
-      if (slicedValue.length === 10) {
+      if (value.length === 10) {
         setDisableVerifyBtn(false);
         setShowRecaptcha(true);
       } else {
         setDisableVerifyBtn(true);
       }
-      setData((prevValue) => ({
-        ...prevValue,
-        [name]: slicedValue,
-      }));
-      setWordCount(() => {
-        return slicedValue.length;
-      });
+      setWordCount(() => value.length);
     }
+    setValue(name, value, { shouldValidate: true });
     setData((prevValue) => ({ ...prevValue, [name]: value }));
   };
+
   // ---- SUBMIT
   const submitForm = async () => {
+    console.log("sokdlf");
     if (!data.phoneAuthToken) {
       return toast.error("Please verify Phone Number");
     }
@@ -170,53 +171,35 @@ function SignUpForm(props) {
     );
   };
 
+  // console.log(errors);
+
+  const MAX_VAL = 9999999999;
+  const withValueLimit = ({ value }) => value <= MAX_VAL;
+  const MAX_OTP_VAL = 999999;
+  const withOtpLimit = ({ value }) => value <= MAX_OTP_VAL;
+
   return (
     <>
-      {/* <ToastContainer /> */}
       <div>
-        {/* <sign_upContent /> */}
         <div className={styles.sign_up_form}>
           <div className="w-100">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!data.phoneAuthToken) {
-                  return toast.error("Please verify phone number.");
-                }
-                handleSubmit(submitForm);
-              }}
-            >
+            <form onSubmit={handleSubmit(submitForm)} noValidate>
               <h2 className="text-center p-3 text-pink">Sign Up</h2>
               <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
-                  {/* <label value="+91" disabled>
+                  <label value="+91" disabled>
                     +91
                   </label>
-                  <input
-                    type="text"
-                    name="phone"
-                    onChange={(e) => {
-                      setValue("phone", e.target.value, true);
-                      handleChange(e);
-                    }}
-                    className="form-control"
-                    placeholder="Phone"
-                    disabled={disablePhoneInput}
-                  /> */}
+
                   <NumberFormat
                     name="phone"
-                    // value={phone}
-                    onChange={(e) => {
-                      setValue(
-                        "phone",
-                        e.target.value.slice(4, e.target.value.length)
-                      );
-                      handleChange(e);
-                    }}
+                    value={data.phone}
+                    onChange={handleChange}
+                    isAllowed={withValueLimit}
                     className="form-control"
                     placeholder="Phone"
                     type="tel"
-                    prefix={"+91 "}
+                    disabled={disablePhoneInput}
                   />
                   <div className="d-flex">
                     {!showOtpInput ? (
@@ -237,6 +220,7 @@ function SignUpForm(props) {
                             );
                             setShowRecaptcha(true);
                             setDisableVerifyBtn(true);
+                            setDisablePhoneInput(true);
                           }}
                           disabled={disableVerifyBtn}
                         >
@@ -269,14 +253,12 @@ function SignUpForm(props) {
                 {showOtpInput ? (
                   <div className="d-flex">
                     <div className="d-flex flex-column my-2 w-100">
-                      <input
+                      <NumberFormat
                         type="text"
                         name="otp"
-                        onChange={(e) => {
-                          customRegister.otp.onChange(e);
-                          handleChange(e);
-                        }}
-                        ref={customRegister.otp.ref}
+                        value={data.otp}
+                        onChange={handleChange}
+                        isAllowed={withOtpLimit}
                         className="form-control"
                         placeholder="OTP"
                       />
@@ -296,31 +278,25 @@ function SignUpForm(props) {
               {/* ------------------ PASSWORD and Other fields */}
               {data.phoneAuthToken ? (
                 <div className={styles.otherDetails}>
-                  <div className="">
+                  <div>
                     <input
                       type="email"
                       name="email"
-                      onChange={(e) => {
-                        customRegister.email.onChange(e);
-                        handleChange(e);
-                      }}
+                      value={data.email}
+                      onChange={handleChange}
                       className="form-control"
                       placeholder="Email"
-                      ref={customRegister.email.ref}
                     />
                     <p className="error-message">{errors.email?.message}</p>
                   </div>
-                  <div className="my-3">
+                  <div className="my-3 mx-0 w-100">
                     <input
                       className="form-control"
                       type="password"
                       name="password"
+                      value={data.password}
                       placeholder="Password"
-                      onChange={(e) => {
-                        customRegister.password.onChange(e);
-                        handleChange(e);
-                      }}
-                      ref={customRegister.password.ref}
+                      onChange={handleChange}
                     />
                     <p className="error-message">{errors.password?.message}</p>
                   </div>
@@ -329,12 +305,9 @@ function SignUpForm(props) {
                       className="form-control"
                       type="password"
                       name="cPassword"
+                      value={data.cPassword}
                       placeholder="Confirm password"
-                      onChange={(e) => {
-                        customRegister.cPassword.onChange(e);
-                        handleChange(e);
-                      }}
-                      ref={customRegister.cPassword.ref}
+                      onChange={handleChange}
                     />
                     <p className="error-message">{errors.cPassword?.message}</p>
                   </div>

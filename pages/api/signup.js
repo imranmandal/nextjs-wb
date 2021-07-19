@@ -36,7 +36,7 @@ export default async (req, res) => {
         })
       );
 
-      res.status(200).json({ user: data.user });
+      res.status(200).json({ accessToken: data.accessToken });
     } else {
       res.status(data.statusCode).json({
         message: data.message,

@@ -87,10 +87,6 @@
   bottom: 0%;
 }
 
-.sign_up {
-  /* padding: 0 10%; */
-}
-
 .sign_up_form,
 .login_form {
   /* background: rgb(225 28 116 / 32%); */
@@ -112,6 +108,8 @@
 .otherDetails {
   position: relative;
   padding: 0;
+  margin: 0;
+  width: 100%;
   transition: all 0.3s ease;
   animation: otherDetailsEnter 0.3s ease-in;
 }
@@ -170,12 +168,20 @@
   width: 100%;
 }
 
+.forgotPassTxt {
+  width: max-content;
+}
+
 @media (max-width: 960px) {
   .phoneImg {
     padding: 10% 0 0 25%;
     width: 150px;
     height: 200px;
   }
+
+  /* .phoneInput {
+    width: 280.97px;
+  } */
 
   /* .phoneInput,
   .sign_up_form input[type="email"],

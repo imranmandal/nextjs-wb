@@ -77,8 +77,14 @@ export const AuthProvider = ({ children }) => {
         deviceInfo: deviceInfo,
       })
       .then((res) => {
-        // console.log(res);
-        router.push("/profile-creation");
+        console.log(res);
+        router.push({
+          pathname: "/profile-creation",
+          query: {
+            userToken: res.data.accessToken,
+          },
+        });
+        setUserToken(res.data.accessToken);
         return res;
       })
       .catch((error) => {
@@ -110,12 +116,22 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
 
     if (res.ok) {
+      // token exist
       setUserToken(data.token);
       setServerLoading(false);
     } else {
-      setUserToken(null);
-      setServerLoading(false);
-      logout();
+      // token expired
+      const logoutRes = await fetch(`${NEXT_URL}/api/logout`, {
+        method: "POST",
+      });
+
+      if (logoutRes.ok) {
+        setUuId(null);
+        setUserToken(null);
+        setServerLoading(false);
+      } else {
+        setServerLoading(false);
+      }
     }
   };
 

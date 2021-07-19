@@ -16,11 +16,9 @@ export const schema = yup.object().shape({
     .min(10, "Phone must be at least 10 digits")
     .required("Phone is required"),
   otp: yup
-    .number("Please enter Number value")
-    .typeError("Please enter Number value")
-    .positive("Please enter Number value")
-    .integer("Please enter Number value")
-    .min(6)
+    .string()
+    .min(6, "Otp must be equal to 6 digits")
+    .max(6, "Otp must be equal to 6 digits")
     .required("Please enter OTP"),
   password: yup
     .string()
@@ -31,6 +29,7 @@ export const schema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
+  phoneAuthToken: yup.string().required("Please verify phone number"),
 });
 
 // ------- CHECK NUMBER ALREADY EXISTS

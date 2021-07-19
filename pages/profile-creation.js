@@ -16,10 +16,10 @@ import { parseJwt } from "@/components/Profile-creation/ParseJwt";
 import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
 
-const ProfileCreation = () => {
+const ProfileCreation = ({ query: { userToken } }) => {
   const count = [1, 2];
   const router = useRouter();
-  const { userToken, serverLoading } = useContext(AuthContext);
+  const { serverLoading } = useContext(AuthContext);
 
   const uid = parseJwt(userToken);
 
@@ -30,70 +30,67 @@ const ProfileCreation = () => {
   });
 
   useEffect(() => {
-    if (!serverLoading) {
-      if (!userToken) {
-        router.back();
-      }
+    if (!userToken) {
+      router.back();
+      return;
     }
-  }, [serverLoading]);
+  }, [userToken]);
 
   return (
     <>
       <Head>
         <title>Profile Creation</title>
       </Head>
-      <div className={styles.profileCreation}>
-        <div className={styles.logo_lg}>
-          <Link href="/">
-            <Image
-              src="/Images/wouldbee1.png"
-              alt="Wouldbee"
-              layout="intrinsic"
-              height="93"
-              width="300"
-            />
-          </Link>
-        </div>
-        <ToastContainer />
-        {loading ? (
-          <div className="container d-flex">
-            <h5 className="m-auto h-100 text-secondary">Loading...</h5>
+      {userToken && (
+        <div className={styles.profileCreation}>
+          <div className={styles.logo_lg}>
+            <Link href="/">
+              <Image
+                src="/Images/wouldbee1.png"
+                alt="Wouldbee"
+                layout="intrinsic"
+                height="93"
+                width="300"
+              />
+            </Link>
           </div>
-        ) : (
-          <StepWizard
-            initialStep={
-              count.indexOf(data?.profile?.profileCreationScreen) < 0
-                ? data?.profile?.profileCreationScreen === 4
-                  ? 4
-                  : data?.profile?.profileCreationScreen === 5
-                  ? 4
-                  : null
-                : count.indexOf(data?.profile?.profileCreationScreen) + 2
-            }
-          >
-            <Form2 />
-            <Form3 />
-            <Form4 />
-            <Form5 />
-          </StepWizard>
-        )}
-      </div>
+          <ToastContainer />
+
+          {loading ? (
+            <div className="container d-flex">
+              <h5 className="m-auto h-100 text-secondary">Loading...</h5>
+            </div>
+          ) : (
+            <StepWizard
+              initialStep={
+                count.indexOf(data?.profile?.profileCreationScreen) < 0
+                  ? data?.profile?.profileCreationScreen === 4
+                    ? 4
+                    : data?.profile?.profileCreationScreen === 5
+                    ? 4
+                    : null
+                  : count.indexOf(data?.profile?.profileCreationScreen) + 2
+              }
+            >
+              <Form2 />
+              <Form3 />
+              <Form4 />
+              <Form5 />
+            </StepWizard>
+          )}
+        </div>
+      )}
     </>
   );
 };
 
 export default ProfileCreation;
 
-// export const getServerSideProps = (query) => {
-//   console.log(query);
-//   return {
-//     props: {
-//       query: "",
-//     },
-//   };
-// };
-
-export const getStaticProps = ({ query }) => {
+export const getServerSideProps = ({ query }) => {
   console.log(query);
-  return { props: {} };
+  return {
+    props: {
+      query: query,
+    },
+  };
 };

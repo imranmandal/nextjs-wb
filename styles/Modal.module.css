@@ -208,6 +208,10 @@
   transition: transform 0.6s ease-in-out;
 }
 
+.overlay_inner p {
+  line-height: 2rem;
+}
+
 .overlay_right,
 .overlay_left {
   position: absolute;
