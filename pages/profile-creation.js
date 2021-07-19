@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Form2 from "@/components/Profile-creation/Form2/Form2";
 import Form3 from "@/components/Profile-creation/Form3/Form3";
 import Form4 from "@/components/Profile-creation/Form4/Form4";
@@ -20,8 +20,7 @@ const ProfileCreation = ({ query: { userToken } }) => {
   const count = [1, 2];
   const router = useRouter();
   const { serverLoading } = useContext(AuthContext);
-
-  const uid = parseJwt(userToken);
+  const [uid, setUid] = useState("");
 
   const { data, error, loading } = useQuery(GET_PROFILE_CREATION_SCREEN, {
     variables: {
@@ -34,6 +33,7 @@ const ProfileCreation = ({ query: { userToken } }) => {
       router.back();
       return;
     }
+    setUid(parseJwt(userToken));
   }, [userToken]);
 
   return (
