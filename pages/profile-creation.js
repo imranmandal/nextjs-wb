@@ -85,21 +85,20 @@ const ProfileCreation = ({ query: { token } }) => {
           ) : (
             <StepWizard
               initialStep={
-                // count.indexOf(
-                //   getProfileCreationScreen.data?.profile?.profileCreationScreen
-                // ) < 0
-                //   ? getProfileCreationScreen.data?.profile
-                //       ?.profileCreationScreen === 4
-                //     ? 4
-                //     : getProfileCreationScreen.data?.profile
-                //         ?.profileCreationScreen === 5
-                //     ? 4
-                //     : null
-                //   : count.indexOf(
-                //       getProfileCreationScreen.data?.profile
-                //         ?.profileCreationScreen
-                //     ) + 2
-                3
+                count.indexOf(
+                  getProfileCreationScreen.data?.profile?.profileCreationScreen
+                ) < 0
+                  ? getProfileCreationScreen.data?.profile
+                      ?.profileCreationScreen === 4
+                    ? 4
+                    : getProfileCreationScreen.data?.profile
+                        ?.profileCreationScreen === 5
+                    ? 4
+                    : null
+                  : count.indexOf(
+                      getProfileCreationScreen.data?.profile
+                        ?.profileCreationScreen
+                    ) + 2
               }
             >
               <Form2 />
@@ -117,8 +116,6 @@ const ProfileCreation = ({ query: { token } }) => {
 export default ProfileCreation;
 
 export const getServerSideProps = ({ query }) => {
-  console.log(query);
-
   return {
     props: {
       query: query,

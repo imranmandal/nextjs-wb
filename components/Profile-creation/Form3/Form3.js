@@ -63,6 +63,9 @@ function Form3(props) {
     // console.log(data.employedIn);
     if (data.employedIn === "NOT_WORKING") {
       setNotWorking(true);
+      if (NotWorkingOccuptation.includes(data.occupation.value)) {
+        return;
+      }
       setData((prevValue) => ({
         ...prevValue,
         employerName: "",
