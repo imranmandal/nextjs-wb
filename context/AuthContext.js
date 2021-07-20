@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
         router.push(
           `/profile-creation/?token=${res.data.accessToken}`,
           `/profile-creation`,
-          { shallow: true }
+          { shallow: false }
         );
         setUserToken(res.data.accessToken);
         return res;

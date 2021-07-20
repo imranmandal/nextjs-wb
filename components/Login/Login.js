@@ -70,7 +70,7 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
       router.push(
         `/profile-creation/?token=${response.token}`,
         `/profile-creation`,
-        { shallow: true }
+        { shallow: false }
       );
     } else {
       setPageLoading(false);
