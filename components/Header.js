@@ -27,7 +27,7 @@ function Header({ queryData }) {
   }, [queryData]);
 
   useEffect(() => {
-    router.prefetch(`/profile-creation/?token=${userToken}`);
+    router.prefetch(`/profile-creation`);
   }, []);
 
   return (
