@@ -234,7 +234,7 @@ function Form2(props) {
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep} of {props.totalSteps - 1}
+          Step {props.currentStep} of {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(SubmitForm)} novalidate>
           <div className="form-floating d-flex flex-column">

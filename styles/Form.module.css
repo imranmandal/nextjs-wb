@@ -333,6 +333,8 @@
   .container,
   .container_form5 {
     padding: 5%;
+  }
+  .container_form5 {
     min-height: fit-content;
     height: 90vh;
   }
@@ -353,7 +355,7 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-height: 600px) {
   .container_form5 {
     height: auto;
   }

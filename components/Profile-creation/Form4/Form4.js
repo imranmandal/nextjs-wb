@@ -195,7 +195,7 @@ function Form4(props) {
       <div className={styles.container}>
         <ToastContainer />
         <p className={styles.stepCount}>
-          Step {props.currentStep} of {props.totalSteps - 1}
+          Step {props.currentStep} of {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(submit)}>
           <div className="d-flex flex-md-row flex-column">

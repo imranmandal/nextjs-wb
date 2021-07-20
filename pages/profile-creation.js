@@ -20,7 +20,7 @@ import AuthContext from "context/AuthContext";
 
 const ProfileCreation = ({ query: { token } }) => {
   const [userToken, setUserToken] = useState(token);
-  const count = [1, 2];
+  const count = [0, 1, 2];
   const router = useRouter();
   const [showForm, setShowForm] = useState(false);
 
@@ -50,10 +50,10 @@ const ProfileCreation = ({ query: { token } }) => {
   }, [userToken]);
 
   useEffect(() => {
-    if (data?.profile) {
+    if (!loading) {
       setShowForm(true);
     }
-  }, [data]);
+  }, [loading]);
 
   // useEffect(() => {
   //   window.onlostpointercapture = (event) => {
@@ -95,15 +95,18 @@ const ProfileCreation = ({ query: { token } }) => {
           {showForm && !loading && (
             <StepWizard
               initialStep={
-                count.indexOf(data?.profile?.profileCreationScreen) < 0
-                  ? data?.profile?.profileCreationScreen === 4
-                    ? 4
-                    : data?.profile?.profileCreationScreen === 5
-                    ? 4
-                    : null
-                  : count.indexOf(data?.profile?.profileCreationScreen) + 2
+                data?.profile?.profileCreationScreen
+                  ? count.indexOf(data?.profile?.profileCreationScreen) < 0
+                    ? data?.profile?.profileCreationScreen === 4
+                      ? 5
+                      : data?.profile?.profileCreationScreen === 5
+                      ? 5
+                      : 1
+                    : count.indexOf(data?.profile?.profileCreationScreen) + 2
+                  : 2
               }
             >
+              <div></div>
               <Form2 />
               <Form3 />
               <Form4 />

@@ -155,7 +155,7 @@ function Form3(props) {
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep} of {props.totalSteps - 1}
+          Step {props.currentStep} of {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(submitForm3)}>
           <div className={styles.form3_input_container}>
