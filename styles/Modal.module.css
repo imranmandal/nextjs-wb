@@ -164,19 +164,25 @@
 }
 
 .loading_container,
-.overlay_container {
+.overlay_container,
+.loading_container_no_overlay {
   height: 100%;
   overflow: hidden;
   transition: transform 0.6s ease-in-out;
   z-index: 100;
 }
 
-.loading_container {
+.loading_container,
+.loading_container_no_overlay {
   position: fixed;
   top: 0;
   width: 100%;
   display: flex;
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.loading_container_no_overlay {
+  background: none;
 }
 
 .overlay_container {

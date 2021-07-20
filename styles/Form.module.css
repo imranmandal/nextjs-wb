@@ -219,6 +219,13 @@
   max-height: fit-content;
 }
 
+.container_inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .check {
   font-size: 5rem;
   color: #e11c74;
@@ -326,6 +333,11 @@
   .container,
   .container_form5 {
     padding: 5%;
+    min-height: fit-content;
+    height: 90vh;
+  }
+  .container_inner {
+    height: 100%;
   }
   .top_suggestion {
     max-height: 240px;
@@ -338,5 +350,11 @@
 @media (max-width: 767px) {
   .form3_input_container {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .container_form5 {
+    height: auto;
   }
 }

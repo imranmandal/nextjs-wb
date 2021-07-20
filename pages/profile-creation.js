@@ -43,11 +43,17 @@ const ProfileCreation = ({ query: { token } }) => {
         router.back();
         return;
       }
-      setShowForm(true);
+
       setUserToken(resData.token);
     }
     data && console.log(data);
   }, [userToken]);
+
+  useEffect(() => {
+    if (data?.profile) {
+      setShowForm(true);
+    }
+  }, [data]);
 
   // useEffect(() => {
   //   window.onlostpointercapture = (event) => {
@@ -80,13 +86,13 @@ const ProfileCreation = ({ query: { token } }) => {
           {/* <ToastContainer /> */}
 
           {loading && (
-            <div className={modalStyle.loading_container}>
+            <div className={modalStyle.loading_container_no_overlay}>
               <div className="spinner-border text-pink m-auto" role="status">
                 <span className="visually-hidden h-100 w-100"></span>
               </div>
             </div>
           )}
-          {setShowForm && !loading && (
+          {showForm && !loading && (
             <StepWizard
               initialStep={
                 count.indexOf(data?.profile?.profileCreationScreen) < 0
