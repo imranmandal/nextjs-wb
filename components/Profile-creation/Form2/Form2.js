@@ -224,17 +224,11 @@ function Form2(props) {
     }
   }, [SavedData]);
 
-  const AvoidSpace = (event) => {
-    var k = event ? event.which : window.event.keyCode;
-    console.log(k);
-    if (k == 32) return false;
-  };
-
   return (
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep} of {props.totalSteps - 2}
+          Step {props.currentStep - 1} of {props.totalSteps - 1}
         </p>
         <form onSubmit={handleSubmit(SubmitForm)} novalidate>
           <div className="form-floating d-flex flex-column">
@@ -292,7 +286,7 @@ function Form2(props) {
                 className="form-control"
                 value={data.lname}
                 onChange={(event) => {
-                  var reg = new RegExp("^[0-9]$");
+                  var reg = new RegExp("^[0-9`~!@#$%^&*/)(+=._-]$");
                   if (
                     event.nativeEvent.data === " " ||
                     reg.test(event.nativeEvent.data)

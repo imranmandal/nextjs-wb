@@ -328,6 +328,12 @@
 .checkbox input[type="checkbox"]:disabled + .cr {
   opacity: 0.5;
 }
+.form5_field_content .para1 {
+  font-size: medium;
+}
+.form5_field_content .para2 {
+  font-size: 1.2rem;
+}
 
 @media (max-width: 768px) {
   .container,
@@ -347,16 +353,25 @@
   .top_suggestion .options {
     max-height: 180px;
   }
+  .form5_field_content .para2 {
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 767px) {
   .form3_input_container {
     grid-template-columns: 1fr;
   }
+  .form5_field_content .para1 {
+    font-size: small;
+  }
 }
 
 @media (max-height: 600px) {
   .container_form5 {
     height: auto;
+  }
+  .check {
+    height: 60px;
   }
 }

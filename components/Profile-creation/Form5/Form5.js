@@ -17,14 +17,14 @@ export default function Form5(props) {
             <div className={styles.form5_field_content}>
               <FaCheckCircle className={styles.check} />
               <h1>Thank you for registration.</h1>
-              <p>
+              <p className={styles.para1}>
                 we{" "}
                 <span className="text-lowercase">
                   will verify your profile and notify you shortly.
                 </span>
               </p>
               <div className="d-flex flex-column my-4">
-                <p style={{ fontSize: "1.1rem" }}>
+                <p className={styles.para2}>
                   Meanwhile,{" "}
                   <span className="text-lowercase">
                     please install our app to view your matches.

@@ -60,3 +60,9 @@
     height: 100px;
   }
 }
+
+@media (max-width: 350px) {
+  .logo {
+    height: 90px;
+  }
+}
