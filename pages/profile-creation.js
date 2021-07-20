@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Signup.module.css";
+import modalStyle from "@/styles/Modal.module.css";
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import { GET_PROFILE_CREATION_SCREEN } from "@/components/Graphql/query/query";
@@ -21,14 +22,15 @@ const ProfileCreation = ({ query: { token } }) => {
   const [userToken, setUserToken] = useState(token);
   const count = [1, 2];
   const router = useRouter();
-  const { serverLoading } = useContext(AuthContext);
-  const [uid, setUid] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
-  const getProfileCreationScreen = useQuery(GET_PROFILE_CREATION_SCREEN, {
+  const { data, error, loading } = useQuery(GET_PROFILE_CREATION_SCREEN, {
     variables: {
       id: parseJwt(userToken),
     },
   });
+
+  console.log(data);
 
   useEffect(async () => {
     if (!userToken) {
@@ -41,11 +43,10 @@ const ProfileCreation = ({ query: { token } }) => {
         router.back();
         return;
       }
+      setShowForm(true);
       setUserToken(resData.token);
     }
-    getProfileCreationScreen.data && console.log(getProfileCreationScreen.data);
-
-    setUid(parseJwt(userToken));
+    data && console.log(data);
   }, [userToken]);
 
   // useEffect(() => {
@@ -76,29 +77,25 @@ const ProfileCreation = ({ query: { token } }) => {
               />
             </Link>
           </div>
-          <ToastContainer />
+          {/* <ToastContainer /> */}
 
-          {getProfileCreationScreen.loading ? (
-            <div className="container d-flex">
-              <h5 className="m-auto h-100 text-secondary">Loading...</h5>
+          {loading && (
+            <div className={modalStyle.loading_container}>
+              <div className="spinner-border text-pink m-auto" role="status">
+                <span className="visually-hidden h-100 w-100"></span>
+              </div>
             </div>
-          ) : (
+          )}
+          {setShowForm && !loading && (
             <StepWizard
               initialStep={
-                count.indexOf(
-                  getProfileCreationScreen.data?.profile?.profileCreationScreen
-                ) < 0
-                  ? getProfileCreationScreen.data?.profile
-                      ?.profileCreationScreen === 4
+                count.indexOf(data?.profile?.profileCreationScreen) < 0
+                  ? data?.profile?.profileCreationScreen === 4
                     ? 4
-                    : getProfileCreationScreen.data?.profile
-                        ?.profileCreationScreen === 5
+                    : data?.profile?.profileCreationScreen === 5
                     ? 4
                     : null
-                  : count.indexOf(
-                      getProfileCreationScreen.data?.profile
-                        ?.profileCreationScreen
-                    ) + 2
+                  : count.indexOf(data?.profile?.profileCreationScreen) + 2
               }
             >
               <Form2 />

@@ -42,8 +42,14 @@ function Form3(props) {
       text: "",
       value: "",
     },
-    employerName: "",
-    designation: "",
+    employerName: {
+      id: 0,
+      name: "",
+    },
+    designation: {
+      id: 0,
+      name: "",
+    },
     income: "",
   });
 
@@ -63,6 +69,14 @@ function Form3(props) {
     // console.log(data.employedIn);
     if (data.employedIn === "NOT_WORKING") {
       setNotWorking(true);
+      setData((prevValue) => ({
+        ...prevValue,
+        designation: {
+          id: 0,
+          name: "",
+        },
+      }));
+      setValue("designation", "");
       if (NotWorkingOccuptation.includes(data.occupation.value)) {
         return;
       }
@@ -201,6 +215,7 @@ function Form3(props) {
               value={data.designation}
               setData={setData}
               setValue={setValue}
+              disabled={NotWorking}
               QUERY_NAME={GET_DESIGNATION_NAME}
               OUTPUT_OBJ_NAME={"designations"}
             />

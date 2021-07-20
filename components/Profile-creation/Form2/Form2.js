@@ -127,7 +127,10 @@ function Form2(props) {
   const handleChange = (elem) => {
     const { name, value } = elem.target;
     console.log(value);
-    setData((prevValue) => ({ ...prevValue, [name]: value }));
+    setData((prevValue) => ({
+      ...prevValue,
+      [name]: value.replace(/  +/g, " "),
+    }));
     setValue(name, value);
   };
 

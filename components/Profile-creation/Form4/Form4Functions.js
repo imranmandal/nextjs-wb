@@ -10,7 +10,7 @@ import { parseJwt } from "../ParseJwt";
 export const form4Schema = yup.object().shape({
   bio: yup.string().min(0).max(2000),
   verificationDocName: yup.string(),
-  profilePic: yup.mixed().required("Please select a profile pic."),
+  profilePic: yup.mixed().required("Please select a profile picture."),
   frontPage: yup.mixed(),
 });
 
@@ -69,6 +69,7 @@ export const submitForm4 = async (
   }
 
   formData.append("id", uid);
+
   if (data.verificationDocName) {
     if (data.verificationDocFile.frontPage.name) {
       formData.append(
@@ -77,7 +78,8 @@ export const submitForm4 = async (
         data.verificationDocFile.frontPage.name
       );
     } else {
-      return toast.error("Please upload the selected Govt. ID Proof");
+      toast.error("Please upload the selected Govt. ID Proof");
+      return;
     }
     if (showBackPageInput && data.verificationDocFile.backPage.name) {
       formData.append(

@@ -95,7 +95,7 @@ function Form4(props) {
 
   const submit = (validatedData) => {
     if (validatedData.profilePic.length === 0) {
-      return toast.error("Please select the profile pic");
+      return toast.error("Please select the profile picture");
     }
     // console.log(validatedData);
     // console.log(data);
