@@ -204,8 +204,17 @@
   margin-left: 0.5rem;
   height: 30px;
   width: 30px;
+}
 
-  /* font-size: 1.3rem; */
+.IDProofSelectorModal .attachLabelContainer,
+.IDProofSelectorModal div div {
+  margin: 0;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.IDProofSelectorModal .attachDocLabel label {
+  display: flex;
 }
 
 /* ---------- Form 5 --------- */

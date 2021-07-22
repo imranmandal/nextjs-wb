@@ -64,8 +64,12 @@ export default function Select(props) {
             : name === "height"
             ? options.map((option, index) => {
                 return (
-                  <option key={index} value={option}>
-                    {convertedHeight(option)}
+                  <option className="text-lowercase" key={index} value={option}>
+                    {index === 0
+                      ? convertedHeight(option) + " or less"
+                      : index === options.length - 1
+                      ? convertedHeight(option) + " or more"
+                      : convertedHeight(option)}
                   </option>
                 );
               })

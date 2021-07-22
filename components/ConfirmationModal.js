@@ -6,20 +6,12 @@ import { submitForm } from "./Profile-creation/Form2/Form2functions";
 import {
   convertedCapitalizeValue,
   convertedValue,
+  formatDate,
 } from "./FormComponent/FormFunctions";
 
 // import logo from "../../Images/wouldbee1.png";
 
-const Confirm = ({
-  show,
-  handleClose,
-  data,
-  uid,
-  formProps,
-  saveFirstPage,
-  setShowModal,
-  setIsFirstScreenSaved,
-}) => {
+const Confirm = ({ show, handleClose, component }) => {
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => setIsBrowser(true), []);
@@ -31,21 +23,6 @@ const Confirm = ({
       document.body.style.overflowY = "auto";
     }
   }, [isBrowser, show]);
-
-  const handleConfirm = (e) => {
-    e.preventDefault();
-    submitForm(data, uid, formProps, saveFirstPage, setIsFirstScreenSaved);
-    setShowModal(false);
-  };
-
-  function formatDate(input) {
-    var datePart = input.match(/\d+/g),
-      year = datePart[0].substring(2), // get only two digits
-      month = datePart[1],
-      day = datePart[2];
-
-    return day + "-" + month + "-" + year;
-  }
 
   const modalContent = show ? (
     <>
@@ -59,63 +36,9 @@ const Confirm = ({
       >
         <div className={styles.overlay}>
           <div className={styles.modal}>
-            <FaTimes className={styles.closeBtn} onClick={handleClose} />
             <div className={styles.confirm_modal_container} id="container">
-              <h6 className="px-5 pt-5">
-                Please confirm the below details. These cannot be changed once
-                saved
-              </h6>
-              <section className="p-5">
-                <div className="grouped">
-                  <p>Full Name</p>
-                  <p className="text-center text-capitalize">
-                    {data.fname + " " + data.lname}
-                  </p>
-                </div>
-                <div className="grouped">
-                  <p>Gender</p>
-                  <p className="text-center">
-                    {data.gender.maleSelected
-                      ? "Male"
-                      : data.gender.femaleSelected
-                      ? "Female"
-                      : ""}
-                  </p>
-                </div>
-                <div className="grouped">
-                  <p>DOB</p>
-                  <p className="text-center">{formatDate(data.dob)}</p>
-                </div>
-                <div className="grouped">
-                  <p>Marital Status</p>
-                  <p className="text-center text-capitalize">
-                    {convertedCapitalizeValue(data.maritalStatus)}
-                  </p>
-                </div>
-                <div className="grouped">
-                  <p>Religion</p>
-                  <p className="text-center text-capitalize">
-                    {convertedCapitalizeValue(data.religion)}
-                  </p>
-                </div>
-              </section>
-              <div className="grouped px-5">
-                <button
-                  onClick={handleConfirm}
-                  className="w-100 btn btn-sm btn-pink text-light"
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClose();
-                  }}
-                  className="w-100 btn btn-sm btn-pink text-light"
-                >
-                  Cancel
-                </button>
-              </div>
+              <FaTimes className={styles.closeBtn} onClick={handleClose} />
+              {component}
             </div>
           </div>
         </div>

@@ -100,7 +100,7 @@ const ProfileCreation = ({ query: { token } }) => {
             </div>
           )}
           {activePage && (
-            <StepWizard initialStep={activePage}>
+            <StepWizard initialStep={2}>
               <div></div>
               <Form2 />
               <Form3 />

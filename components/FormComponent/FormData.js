@@ -4,7 +4,7 @@ export const MaritalStatus = [
   "NEVER_MARRIED",
   "DIVORCED",
   "WIDOWED",
-  // "ANNULLED",
+  "ANULLED",
   "AWAITING_DIVORCE",
 ];
 
@@ -40,13 +40,13 @@ export const MotherTongue = [
   "TAMIL",
   "TELUGU",
   "URDU",
-  // "GERMAN",
-  // "SPANISH",
-  // "FRENCH",
-  // "MANDARIN",
-  // "RUSSIAN",
-  // "JAPANESE",
-  // "PORTUGUESE",
+  "GERMAN",
+  "SPANISH",
+  "FRENCH",
+  "MANDARIN",
+  "RUSSIAN",
+  "JAPANESE",
+  "PORTUGUESE",
   "OTHER",
 ];
 

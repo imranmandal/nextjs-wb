@@ -74,6 +74,7 @@
 .footer_top {
   text-transform: capitalize;
   display: flex;
+  justify-content: space-between;
 }
 
 .footer_bottom {

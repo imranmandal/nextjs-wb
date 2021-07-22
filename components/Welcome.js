@@ -3,7 +3,7 @@ import { IoLogoGooglePlaystore } from "react-icons/io5";
 import Image from "next/image";
 import styles from "@/styles/Welcome.module.css";
 
-function Welcome({ showVideo, showImage, vdoPath, imgPath }) {
+function Welcome({ showVideo, showImage, vdoPath, imgPath, communityName }) {
   return (
     <section className={styles.welcome}>
       <div className={styles.container}>
@@ -31,7 +31,10 @@ function Welcome({ showVideo, showImage, vdoPath, imgPath }) {
             <div>
               <h1> Would Bee Matrimony</h1>
               <h4>Truly free, Fanatically safe!</h4>
-              <p>Join our rapidly growing community Today...</p>
+              <p>
+                Join our rapidly growing{" "}
+                {communityName ? communityName + " " : ""}community Today...
+              </p>
 
               <div className={styles.downloadBtn}>
                 <a

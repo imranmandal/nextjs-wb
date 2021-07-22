@@ -15,7 +15,12 @@ export const form4Schema = yup.object().shape({
 });
 
 // ------ HANDLE PROFILE CHANGE
-export const handleProfileChange = (e, setData, setLoading) => {
+export const handleProfileChange = (
+  e,
+  setData,
+  setLoading,
+  setShowProfilePicModal
+) => {
   const file = e.target.files[0];
   console.log(file);
   if (file) {
@@ -35,6 +40,7 @@ export const handleProfileChange = (e, setData, setLoading) => {
             profilePic: URL.createObjectURL(myFile),
             profilePicData: myFile,
           }));
+          setShowProfilePicModal(false);
           setLoading(false);
         },
       });
@@ -53,7 +59,8 @@ export const submitForm4 = async (
   data,
   setLoading,
   props,
-  showBackPageInput
+  showBackPageInput,
+  showIdProofModal
 ) => {
   const uid = parseJwt(userToken);
   const proofTypeId = TypeOfIdProof.indexOf(data.verificationDocName) + 1;
@@ -79,6 +86,7 @@ export const submitForm4 = async (
       );
     } else {
       toast.error("Please upload the selected Govt. ID Proof");
+      showIdProofModal(true);
       return;
     }
     if (showBackPageInput && data.verificationDocFile.backPage.name) {

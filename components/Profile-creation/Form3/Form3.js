@@ -150,7 +150,9 @@ function Form3(props) {
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep - 1} of {props.totalSteps - 2}
+          Step {props.currentStep - 1}
+          <span className="text-lowercase"> of </span>
+          {props.totalSteps - 2}
         </p>
         <form
           onSubmit={handleSubmit(submitForm3)}

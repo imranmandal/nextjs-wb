@@ -4,7 +4,7 @@ import AppOverview from "components/AppOverview";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function Home({ wideImg, portraitImg }) {
+export default function Home({ communityName, wideImg, portraitImg }) {
   const router = useRouter();
 
   const [queryData, setQueryData] = useState("");
@@ -32,6 +32,7 @@ export default function Home({ wideImg, portraitImg }) {
       img={values.imgValues}
       video={values.vdoValues}
       queryData={queryData}
+      communityName={communityName}
     >
       <div className={styles.container}>
         <AppOverview />

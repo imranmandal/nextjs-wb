@@ -16,6 +16,7 @@ const Layout = ({
   queryData,
   img,
   video,
+  communityName,
 }) => {
   const router = useRouter();
   const [imgUrl, setImgUrl] = useState(null);
@@ -119,15 +120,15 @@ const Layout = ({
 
       <Header queryData={queryData} />
 
-      {router.pathname === "/" || router.pathname.includes("/wb/") ? (
-        <Welcome imgPath={imgUrl} />
+      {router.pathname === "/" || router.pathname.includes("/landing/") ? (
+        <Welcome imgPath={imgUrl} communityName={communityName} />
       ) : null}
 
       <div id="body" className={styles.container}>
         {children}
       </div>
 
-      {router.pathname === "/" || router.pathname.includes("/wb/") ? (
+      {router.pathname === "/" || router.pathname.includes("/landing/") ? (
         <DownloadApp />
       ) : null}
       <Footer />

@@ -30,7 +30,11 @@ import {
   ProfileManagedBy,
   Religion,
 } from "../../FormComponent/FormData";
-import { getFullDate } from "@/components/FormComponent/FormFunctions";
+import {
+  getFullDate,
+  formatDate,
+  convertedCapitalizeValue,
+} from "@/components/FormComponent/FormFunctions";
 
 // Component start
 function Form2(props) {
@@ -152,6 +156,7 @@ function Form2(props) {
     }
     if (isFirstScreenSaved) {
       submitForm(data, uid, props, saveFirstPage, setIsFirstScreenSaved);
+      setShowModal(false);
     } else {
       setShowModal(true);
     }
@@ -223,11 +228,22 @@ function Form2(props) {
     }
   }, [SavedData]);
 
+  // const handleConfirm = (e) => {
+  //   e.preventDefault();
+  //   submitForm(data, uid, saveFirstPage, setIsFirstScreenSaved);
+  //   setShowModal(false);
+  // };
+
+  // TODO: Handle foreign languages
+  // TODO: show options in height like 4'0" or less 7'0" or more
+
   return (
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep - 1} of {props.totalSteps - 2}
+          Step {props.currentStep - 1}
+          <span className="text-lowercase"> of </span>
+          {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(SubmitForm)} noValidate autoComplete="off">
           <div className="form-floating d-flex flex-column">
@@ -543,16 +559,79 @@ function Form2(props) {
       </div>
       <ConfirmationModal
         show={showModal}
-        setShowModal={setShowModal}
         handleClose={() => {
           setShowModal(false);
         }}
-        submitForm={submitForm}
-        data={data}
-        uid={uid}
-        formProps={props}
-        saveFirstPage={saveFirstPage}
-        setIsFirstScreenSaved={setIsFirstScreenSaved}
+        component={
+          <>
+            <h6 className="px-5 pt-5">
+              Please confirm the below details. These cannot be changed once
+              saved
+            </h6>
+            <section className="p-5">
+              <div className="grouped">
+                <p>Full Name</p>
+                <p className="text-center text-capitalize">
+                  {data.fname + " " + data.lname}
+                </p>
+              </div>
+              <div className="grouped">
+                <p>Gender</p>
+                <p className="text-center">
+                  {data.gender.maleSelected
+                    ? "Male"
+                    : data.gender.femaleSelected
+                    ? "Female"
+                    : ""}
+                </p>
+              </div>
+              <div className="grouped">
+                <p>DOB</p>
+                <p className="text-center">
+                  {data.dob && formatDate(data.dob)}
+                </p>
+              </div>
+              <div className="grouped">
+                <p>Marital Status</p>
+                <p className="text-center text-capitalize">
+                  {convertedCapitalizeValue(data.maritalStatus)}
+                </p>
+              </div>
+              <div className="grouped">
+                <p>Religion</p>
+                <p className="text-center text-capitalize">
+                  {convertedCapitalizeValue(data.religion)}
+                </p>
+              </div>
+            </section>
+            <div className="grouped px-5">
+              <button
+                onClick={() => {
+                  submitForm(
+                    data,
+                    uid,
+                    props,
+                    saveFirstPage,
+                    setIsFirstScreenSaved
+                  );
+                  setShowModal(false);
+                }}
+                className="w-100 btn btn-sm btn-pink text-light"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowModal(false);
+                }}
+                className="w-100 btn btn-sm btn-pink text-light"
+              >
+                Cancel
+              </button>
+            </div>
+          </>
+        }
       />
     </>
   );

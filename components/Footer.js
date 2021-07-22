@@ -17,7 +17,7 @@ function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footer_top}>
-        <div className="col-md-3">
+        <div>
           <h5>would bee</h5>
           <ul className={styles.ul}>
             <li>
@@ -36,7 +36,7 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div className="col-md-3">
+        <div>
           <h5>help</h5>
           <ul className={styles.ul}>
             <li>
@@ -55,7 +55,7 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div className="col-md-3">
+        <div>
           <h5 className="text-capitalize">channels</h5>
           <ul className={styles.ul}>
             <li>
@@ -80,7 +80,37 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div className="col-md-3">
+        <div>
+          <h5>Community</h5>
+          <ul className={styles.ul}>
+            <li>
+              <Link href="/landing/jain-matrimony">
+                <a>Jain Matrimony</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/landing/baniya-matrimony">Baniya Matrimony</Link>
+            </li>
+            <li>
+              <Link href="/landing/marathi-matrimony">Marathi Matrimony</Link>
+            </li>
+            <li>
+              <Link href="/landing/muslim-matrimony">Muslim Matrimony</Link>
+            </li>
+            <li>
+              <Link href="/landing/christian-matrimony">
+                Christian Matrimony
+              </Link>
+            </li>
+            <li>
+              <Link href="/landing/punjabi-matrimony">Punjabi Matrimony</Link>
+            </li>
+            <li>
+              <Link href="/landing/south-matrimony">South Matrimony</Link>
+            </li>
+          </ul>
+        </div>
+        <div>
           <h5 className={styles.social_h5}>follow us</h5>
           <div className={styles.social}>
             <Link href="https://www.facebook.com/WouldBeeFB">
