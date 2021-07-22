@@ -126,7 +126,7 @@ function Form2(props) {
 
   const handleChange = (elem) => {
     const { name, value } = elem.target;
-    console.log(value);
+    // console.log(value);
     setData((prevValue) => ({
       ...prevValue,
       [name]: value.replace(/  +/g, " "),
@@ -141,10 +141,9 @@ function Form2(props) {
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
 
-  SavedResponse?.error && console.log(SavedResponse.error);
+  // SavedResponse?.error && console.log(SavedResponse.error);
 
   const SubmitForm = () => {
-    console.log(data.dob, getFullDate(maxDate));
     if (data.dob > getFullDate(maxDate)) {
       toast.error(
         "Age must be minimum 21 years for Male and 18 years for Female"
@@ -228,7 +227,7 @@ function Form2(props) {
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep - 1} of {props.totalSteps - 1}
+          Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(SubmitForm)} novalidate>
           <div className="form-floating d-flex flex-column">
@@ -363,7 +362,6 @@ function Form2(props) {
                 }
                 onChange={(date) => {
                   setData((prevData) => {
-                    // console.log(date.getDate());
                     return { ...prevData, dob: getFullDate(date) };
                   });
                   setValue("dob", getFullDate(date), { shouldValidate: true });
@@ -511,6 +509,7 @@ function Form2(props) {
               type="submit"
               value="Next"
               className="w-100 btn btn-lg btn-pink text-light"
+              disabled={!props.isActive}
             />
           </div>
 

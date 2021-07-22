@@ -63,10 +63,7 @@ function Form3(props) {
     resolver: yupResolver(form3Schema),
   });
 
-  // errors && console.log(errors);
-
   useEffect(() => {
-    // console.log(data.employedIn);
     if (data.employedIn === "NOT_WORKING") {
       setNotWorking(true);
       setData((prevValue) => ({
@@ -107,7 +104,6 @@ function Form3(props) {
 
   useEffect(() => {
     if (SavedData.data) {
-      // console.log(SavedData.data);
       const profile = SavedData.data?.professionalDetails;
       const degrees = profile?.degrees;
       if (profile && degrees) {
@@ -147,7 +143,6 @@ function Form3(props) {
   }, [SavedData.data]);
 
   const submitForm3 = () => {
-    // console.log(data);
     SubmitForm3(uid, data, props, saveSecondScreen);
   };
 
@@ -155,7 +150,7 @@ function Form3(props) {
     <>
       <div className={styles.container}>
         <p className={styles.stepCount}>
-          Step {props.currentStep} of {props.totalSteps - 2}
+          Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(submitForm3)}>
           <div className={styles.form3_input_container}>
@@ -239,6 +234,7 @@ function Form3(props) {
                 props.previousStep();
               }}
               className="w-100 btn btn-lg btn-pink text-light"
+              disabled={!props.isActive}
             >
               Previous
             </button>
@@ -246,6 +242,7 @@ function Form3(props) {
               type="submit"
               value="Next"
               className="w-100 btn btn-lg btn-pink text-light"
+              disabled={!props.isActive}
             />
           </div>
         </form>

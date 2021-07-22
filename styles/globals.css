@@ -95,7 +95,11 @@ select:disabled {
 input::placeholder,
 select::placeholder {
   text-transform: capitalize;
-  color: grey;
+  /* color: grey; */
+}
+
+img {
+  border: 0;
 }
 
 .error-message {

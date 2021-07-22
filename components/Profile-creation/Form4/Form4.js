@@ -47,9 +47,6 @@ function Form4(props) {
         setShowBackPageInput(false);
         return;
       }
-      // if (data.verificationDocFile.frontPage.name) {
-      //   setShowBackPageInput(true);
-      // }
       return setDisableFileInput(false);
     } else {
       setData((prevVal) => ({
@@ -97,8 +94,6 @@ function Form4(props) {
     if (validatedData.profilePic.length === 0) {
       return toast.error("Please select the profile picture");
     }
-    // console.log(validatedData);
-    // console.log(data);
     submitForm4(userToken, data, setLoading, props, showBackPageInput);
   };
 
@@ -116,7 +111,6 @@ function Form4(props) {
       if (name === "frontPage") {
         setValue(name, files, true);
       }
-      console.log(files[0]);
       setLoading(true);
       if (files[0].type === "application/pdf") {
         if (files[0].size > 10000000) {
@@ -164,7 +158,6 @@ function Form4(props) {
     const { name } = e.target;
     if (name === "frontPage") {
       if (data.verificationDocFile.backPage.name) {
-        // setValue("frontPage", data.verificationDocFile.backPage);
         setData((prevVal) => ({
           ...prevVal,
           verificationDocFile: {
@@ -187,21 +180,31 @@ function Form4(props) {
     }));
   };
 
-  // customRegister.profilePic?.ref && console.log(customRegister.profilePic.ref);
-  // errors && console.log(errors);
-
   return (
     <>
       <div className={styles.container}>
         <ToastContainer />
         <p className={styles.stepCount}>
-          Step {props.currentStep} of {props.totalSteps - 2}
+          Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>
         <form onSubmit={handleSubmit(submit)}>
-          <div className="d-flex flex-md-row flex-column">
-            <div className="my-auto px-3 d-flex flex-column justify-content-around w-100">
+          <div className="d-flex flex-md-row flex-column border-0">
+            <div className="my-auto px-3 d-flex flex-column justify-content-around w-100 border-0">
               <label htmlFor="profilePic" className={styles.profilePreview}>
-                <img src={data.profilePic} alt="" />
+                <img
+                  id="picPreview"
+                  src={data.profilePic}
+                  alt=""
+                  onError={(e) => {
+                    document.getElementById("picPreview").style.display =
+                      "none";
+                  }}
+                  onLoad={() => {
+                    document.getElementById("picPreview").style.display =
+                      "inline-block";
+                  }}
+                />
+
                 <div className={styles.profilePicIcon}>
                   <FaCamera />
                   <p>Select</p>
@@ -360,14 +363,15 @@ function Form4(props) {
                 props.previousStep();
               }}
               className="w-100 btn btn-lg btn-pink text-light"
-              type="submit"
+              disabled={!props.isActive}
             >
               Previous
             </button>
             <input
-              className="w-100 btn btn-lg btn-pink text-light"
               type="submit"
               value="Submit"
+              className="w-100 btn btn-lg btn-pink text-light"
+              disabled={!props.isActive}
             />
           </div>
         </form>
