@@ -54,25 +54,25 @@ const Profile = ({
     country,
   ];
 
-  console.log({
-    uid,
-    id,
-    lastName,
-    gender,
-    age,
-    motherTongue,
-    maritalStatus,
-    height,
-    religion,
-    degree,
-    degrees,
-    occupation,
-    income,
-    city,
-    state,
-    country,
-    displayPictureUrl,
-  });
+  // console.log({
+  //   uid,
+  //   id,
+  //   lastName,
+  //   gender,
+  //   age,
+  //   motherTongue,
+  //   maritalStatus,
+  //   height,
+  //   religion,
+  //   degree,
+  //   degrees,
+  //   occupation,
+  //   income,
+  //   city,
+  //   state,
+  //   country,
+  //   displayPictureUrl,
+  // });
 
   const [description, setDescription] = useState(
     details
