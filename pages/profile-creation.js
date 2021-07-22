@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Form2 from "@/components/Profile-creation/Form2/Form2";
 import Form3 from "@/components/Profile-creation/Form3/Form3";
 import Form4 from "@/components/Profile-creation/Form4/Form4";
@@ -20,7 +20,6 @@ const ProfileCreation = ({ query: { token } }) => {
   const [userToken, setUserToken] = useState(token);
   const count = [0, 1, 2];
   const router = useRouter();
-  const [showForm, setShowForm] = useState(false);
   const [activePage, setActivePage] = useState(null);
 
   const { data, error, loading } = useQuery(GET_PROFILE_CREATION_SCREEN, {
@@ -32,19 +31,27 @@ const ProfileCreation = ({ query: { token } }) => {
   useEffect(() => {
     if (data?.profile?.profileCreationScreen) {
       setActivePage(
-        data?.profile?.profileCreationScreen
-          ? count.indexOf(data?.profile?.profileCreationScreen) < 0
-            ? data?.profile?.profileCreationScreen === 4
-              ? 5
-              : data?.profile?.profileCreationScreen === 5
-              ? 5
-              : 1
-            : count.indexOf(data?.profile?.profileCreationScreen) + 2
-          : 2
+        count.indexOf(data?.profile?.profileCreationScreen) < 0
+          ? data?.profile?.profileCreationScreen === 4
+            ? 5
+            : data?.profile?.profileCreationScreen === 5
+            ? 5
+            : 1
+          : count.indexOf(data?.profile?.profileCreationScreen) + 2
       );
       return;
     }
   }, [data]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!data?.profile?.profileCreationScreen) {
+        setActivePage(2);
+      }
+    }, 2000);
+
+    return clearTimeout();
+  }, []);
 
   useEffect(async () => {
     if (!userToken) {
@@ -60,14 +67,6 @@ const ProfileCreation = ({ query: { token } }) => {
       setUserToken(resData.token);
     }
   }, [userToken]);
-
-  useEffect(() => {
-    if (!loading) {
-      setShowForm(true);
-    } else {
-      setShowForm(false);
-    }
-  }, [loading]);
 
   return (
     <>
@@ -96,7 +95,7 @@ const ProfileCreation = ({ query: { token } }) => {
               ></div>
             </div>
           )}
-          {showForm && !loading && (
+          {activePage && (
             <StepWizard initialStep={activePage}>
               <div></div>
               <Form2 />

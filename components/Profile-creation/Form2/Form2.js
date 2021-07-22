@@ -229,7 +229,7 @@ function Form2(props) {
         <p className={styles.stepCount}>
           Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>
-        <form onSubmit={handleSubmit(SubmitForm)} novalidate>
+        <form onSubmit={handleSubmit(SubmitForm)} noValidate>
           <div className="form-floating d-flex flex-column">
             <Select
               label="profile managed by *"
@@ -350,7 +350,9 @@ function Form2(props) {
                     <FaLock />
                   </span>
                 )}
-                <div class="invalid-feedback">Please choose a username.</div>
+                <div className="invalid-feedback">
+                  Please choose a username.
+                </div>
               </div>
               <DatePicker
                 id="dob"

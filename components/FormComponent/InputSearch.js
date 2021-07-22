@@ -138,11 +138,9 @@ const InputGql = (props) => {
               className="form-control w-100"
               type="text"
               name={name}
-              // onChange={handleChange}
-              value={disabled ? "" : value.name}
+              defaultValue={disabled ? "" : value.name}
               onClick={openSearch}
               disabled={disabled}
-              // id={name}
               placeholder={placeholder}
               autoComplete="new-off"
             />

@@ -87,7 +87,8 @@ function InputOccupation(props) {
             className="form-control w-100"
             type="text"
             name={name}
-            value={value}
+            // value={value}
+            defaultValue={value}
             onClick={openSearch}
             placeholder={placeholder}
             autoComplete="new-off"
