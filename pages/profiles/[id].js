@@ -10,6 +10,7 @@ import {
   Religion,
 } from "@/components/FormComponent/FormData";
 import {
+  convertedCapitalizeValue,
   convertedHeight,
   convertedValue,
 } from "@/components/FormComponent/FormFunctions";
@@ -41,17 +42,37 @@ const Profile = ({
   const details = [
     lastName,
     Gender[gender - 1],
-    `Age ${age}`,
-    convertedHeight(height),
-    convertedValue(Religion[religion - 1]),
-    convertedValue(MaritalStatus[maritalStatus - 1]),
+    age ? `Age ${age}` : null,
+    height ? convertedHeight(height) : null,
+    convertedCapitalizeValue(Religion[religion - 1]),
+    convertedCapitalizeValue(MaritalStatus[maritalStatus - 1]),
     convertedValue(degrees),
-    convertedValue(AnnualIncome[income - 1]),
+    convertedCapitalizeValue(AnnualIncome[income - 1]),
     convertedValue(Occupation[occupation]),
     city,
     state,
     country,
   ];
+
+  console.log({
+    uid,
+    id,
+    lastName,
+    gender,
+    age,
+    motherTongue,
+    maritalStatus,
+    height,
+    religion,
+    degree,
+    degrees,
+    occupation,
+    income,
+    city,
+    state,
+    country,
+    displayPictureUrl,
+  });
 
   const [description, setDescription] = useState(
     details
@@ -122,11 +143,14 @@ const Profile = ({
       </Head>
       <div className="d-flex justify-content-around mx-auto">
         <div className="page my-5 py-5 text-center bg-light shadow-lg rounded w-75 w-sm-50">
-          <h1>{id}</h1>
+          {Object.keys(details).map((data) => {
+            return <p>{details[data]}</p>;
+          })}
+          {/* <h1>{id}</h1>
           <h3>{lastName}</h3>
           <p>{city}</p>
           <p>{state}</p>
-          <p>{country}</p>
+          <p>{country}</p> */}
         </div>
       </div>
     </>
@@ -173,10 +197,21 @@ export async function getServerSideProps({ params: { id } }) {
       uid: id,
       id: data.id,
       lastName: data.lastName,
+      gender: data.gender,
+      age: data.age,
+      motherTongue: data.motherTongue,
+      maritalStatus: data.maritalStatus,
+      height: data.height,
+      religion: data.religion,
+      degree: data.degree,
+      occupation: data.occupation,
+      income: data.income,
       city: data.city,
       state: data.state,
       country: data.country,
       displayPictureUrl: data.displayPictureUrl,
+      // uid: id,
+      // data,
     },
   };
 }
