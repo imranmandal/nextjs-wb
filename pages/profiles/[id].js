@@ -129,7 +129,7 @@ const Profile = ({
         <meta property="og:image:width" content="256" />
         <meta property="og:image:height" content="256" />
         <meta property="og:image:alt" content="Profile Picture" />
-        <meta property="og:site_name" content="Wouldbee.com" />
+        <meta property="og:site_name" content="wouldbee.com" />
         <meta property="fb:app_id" content="3074679522638036" />
         <link
           rel="image_src"
