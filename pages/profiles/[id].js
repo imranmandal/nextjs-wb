@@ -1,6 +1,18 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { API_URL, NEXT_URL } from "@/config/index";
+import {
+  AnnualIncome,
+  Degrees,
+  gender as Gender,
+  MaritalStatus,
+  Occupation,
+  Religion,
+} from "@/components/FormComponent/FormData";
+import {
+  convertedHeight,
+  convertedValue,
+} from "@/components/FormComponent/FormFunctions";
 
 const Profile = ({
   title,
@@ -28,16 +40,12 @@ const Profile = ({
 }) => {
   const details = [
     lastName,
-    Gender[gender],
     Gender[gender - 1],
     `Age ${age}`,
     convertedHeight(height),
-    convertedValue(Religion[religion]),
-    convertedValue(MaritalStatus[maritalStatus]),
     convertedValue(Religion[religion - 1]),
     convertedValue(MaritalStatus[maritalStatus - 1]),
     convertedValue(degrees),
-    convertedValue(AnnualIncome[income]),
     convertedValue(AnnualIncome[income - 1]),
     convertedValue(Occupation[occupation]),
     city,
@@ -55,7 +63,7 @@ const Profile = ({
       .join(" | ")
   );
 
-  useEffect(() => console.log(id));
+  // useEffect(() => console.log(id));
 
   return (
     <>
@@ -72,34 +80,44 @@ const Profile = ({
         <meta
           property="og:image"
           itemProp="image"
-          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
+          }
         />
         <meta
           property="og:image"
           itemProp="image"
-          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl ||
+            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+          }
         />
 
         <meta
           property="og:image:secure_url"
-          content={`${NEXT_URL}/Images/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
+          }
         />
         <meta
           property="og:image:secure_url"
-          content={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+          content={
+            displayPictureUrl ||
+            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+          }
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="256" />
         <meta property="og:image:height" content="256" />
-        <meta
-          property="og:image:alt"
-          content="A shiny red apple with a bite taken out"
-        />
+        <meta property="og:image:alt" content="Profile Picture" />
         <meta property="og:site_name" content="Wouldbee.com" />
         <meta property="fb:app_id" content="3074679522638036" />
         <link
           rel="image_src"
-          href={`${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`}
+          href={
+            displayPictureUrl ||
+            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+          }
         />
       </Head>
       <div className="d-flex justify-content-around mx-auto">
@@ -158,6 +176,7 @@ export async function getServerSideProps({ params: { id } }) {
       city: data.city,
       state: data.state,
       country: data.country,
+      displayPictureUrl: data.displayPictureUrl,
     },
   };
 }
