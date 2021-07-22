@@ -7,13 +7,54 @@ const Profile = ({
   ogTitle,
   ogImage,
   ogDescription,
+  // data,
   uid,
   id,
   lastName,
+  gender,
+  age,
+  motherTongue,
+  maritalStatus,
+  height,
+  religion,
+  degree,
+  degrees,
+  occupation,
+  income,
   city,
   state,
   country,
+  displayPictureUrl,
 }) => {
+  const details = [
+    lastName,
+    Gender[gender],
+    Gender[gender - 1],
+    `Age ${age}`,
+    convertedHeight(height),
+    convertedValue(Religion[religion]),
+    convertedValue(MaritalStatus[maritalStatus]),
+    convertedValue(Religion[religion - 1]),
+    convertedValue(MaritalStatus[maritalStatus - 1]),
+    convertedValue(degrees),
+    convertedValue(AnnualIncome[income]),
+    convertedValue(AnnualIncome[income - 1]),
+    convertedValue(Occupation[occupation]),
+    city,
+    state,
+    country,
+  ];
+
+  const [description, setDescription] = useState(
+    details
+      .filter((detail) => {
+        if (detail) {
+          return detail;
+        }
+      })
+      .join(" | ")
+  );
+
   useEffect(() => console.log(id));
 
   return (
@@ -26,7 +67,7 @@ const Profile = ({
           content={`https://wouldbee.vercel.app/profiles/${uid}`}
         />
         <meta property="og:type" content="website" />
-        <meta property="og:description" content={ogDescription} />
+        <meta property="og:description" content={description} />
         <meta property="og:locale" content="en_US" />
         <meta
           property="og:image"
@@ -83,8 +124,7 @@ Profile.defaultProps = {
 
   ogImage:
     "https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png",
-  ogDescription:
-    "Learn about 13 features that set Ahrefs apart from the competition.",
+  ogDescription: "",
 };
 
 export default Profile;
@@ -108,7 +148,7 @@ export async function getServerSideProps({ params: { id } }) {
   const res = await fetch(`${API_URL}/profiles/${id}`);
 
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
 
   return {
     props: {

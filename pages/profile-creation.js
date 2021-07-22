@@ -60,7 +60,9 @@ const ProfileCreation = ({ query: { token } }) => {
       });
       const resData = await res.json();
       if (!resData.token) {
-        router.back();
+        Object.keys(router.components).length === 2
+          ? router.replace("/", undefined, { shallow: false })
+          : router.back();
         return;
       }
 
