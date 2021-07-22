@@ -152,7 +152,22 @@ function Form3(props) {
         <p className={styles.stepCount}>
           Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>
-        <form onSubmit={handleSubmit(submitForm3)}>
+        <form
+          onSubmit={handleSubmit(submitForm3)}
+          noValidate
+          autoComplete="new-off"
+        >
+          {/* For autoComplete */}
+          <input
+            type="text"
+            id="disabled"
+            name="organization"
+            className="form-control"
+            placeholder="degrees"
+            autoComplete="off"
+            style={{ display: "none" }}
+          />
+
           <div className={styles.form3_input_container}>
             <MultipleSelect
               label="degrees *"

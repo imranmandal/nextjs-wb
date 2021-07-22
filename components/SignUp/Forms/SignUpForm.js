@@ -206,6 +206,7 @@ function SignUpForm(props) {
                     placeholder="Phone"
                     type="tel"
                     disabled={disablePhoneInput}
+                    autoComplete="new-off"
                   />
                   <div className="d-flex">
                     {!showOtpInput ? (
@@ -267,6 +268,7 @@ function SignUpForm(props) {
                         isAllowed={withOtpLimit}
                         className="form-control"
                         placeholder="OTP"
+                        autoComplete="new-off"
                       />
                       <p className="error-message">{errors.otp?.message}</p>
                     </div>
@@ -292,6 +294,7 @@ function SignUpForm(props) {
                       onChange={handleChange}
                       className="form-control"
                       placeholder="Email"
+                      autoComplete="new-off"
                     />
                     <p className="error-message">{errors.email?.message}</p>
                   </div>
@@ -303,6 +306,7 @@ function SignUpForm(props) {
                       value={data.password}
                       placeholder="Password"
                       onChange={handleChange}
+                      autoComplete="new-off"
                     />
                     <p className="error-message">{errors.password?.message}</p>
                   </div>
@@ -314,6 +318,7 @@ function SignUpForm(props) {
                       value={data.cPassword}
                       placeholder="Confirm password"
                       onChange={handleChange}
+                      autoComplete="new-off"
                     />
                     <p className="error-message">{errors.cPassword?.message}</p>
                   </div>

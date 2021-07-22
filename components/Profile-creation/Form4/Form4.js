@@ -15,8 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import modalStyles from "@/styles/Modal.module.css";
 import styles from "@/styles/Form.module.css";
 import AuthContext from "context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 // ----- COMPONENT BEGIN
 function Form4(props) {
@@ -183,7 +182,6 @@ function Form4(props) {
   return (
     <>
       <div className={styles.container}>
-        <ToastContainer />
         <p className={styles.stepCount}>
           Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>

@@ -5,7 +5,6 @@ import Form4 from "@/components/Profile-creation/Form4/Form4";
 import Form5 from "@/components/Profile-creation/Form5/Form5";
 import StepWizard from "react-step-wizard";
 import { NEXT_URL } from "@/config/index";
-import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "@/styles/Signup.module.css";
@@ -15,6 +14,8 @@ import Head from "next/head";
 import { GET_PROFILE_CREATION_SCREEN } from "@/components/Graphql/query/query";
 import { parseJwt } from "@/components/Profile-creation/ParseJwt";
 import { useRouter } from "next/router";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProfileCreation = ({ query: { token } }) => {
   const [userToken, setUserToken] = useState(token);
@@ -75,6 +76,7 @@ const ProfileCreation = ({ query: { token } }) => {
       <Head>
         <title>Profile Creation</title>
       </Head>
+      <ToastContainer />
       {userToken && (
         <div className={styles.profileCreation}>
           <div className={styles.logo_lg}>

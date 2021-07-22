@@ -130,6 +130,7 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
                     className="form-control"
                     placeholder="Phone"
                     type="tel"
+                    autoComplete="new-off"
                   />
                 </div>
                 <p className="error-message">{errors.phone?.message}</p>

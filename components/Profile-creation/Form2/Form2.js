@@ -229,7 +229,7 @@ function Form2(props) {
         <p className={styles.stepCount}>
           Step {props.currentStep - 1} of {props.totalSteps - 2}
         </p>
-        <form onSubmit={handleSubmit(SubmitForm)} noValidate>
+        <form onSubmit={handleSubmit(SubmitForm)} noValidate autoComplete="off">
           <div className="form-floating d-flex flex-column">
             <Select
               label="profile managed by *"
@@ -265,7 +265,20 @@ function Form2(props) {
                   handleChange(e);
                 }}
                 placeholder="First Name"
+                autoComplete="off"
                 disabled={isFirstScreenSaved}
+              />
+
+              {/* For autoComplete */}
+              <input
+                type="text"
+                id="disabled"
+                name="disabled"
+                className="form-control"
+                placeholder="First Name"
+                autoComplete="off"
+                disabled={isFirstScreenSaved}
+                style={{ display: "none" }}
               />
             </div>
             <div className="p-3 w-100">
@@ -294,6 +307,7 @@ function Form2(props) {
                   handleChange(event);
                 }}
                 placeholder="Last Name"
+                autoComplete="new-off"
                 disabled={isFirstScreenSaved}
               />
             </div>
@@ -319,6 +333,7 @@ function Form2(props) {
                   onChange={handleGenderChange}
                   id="male"
                   disabled={isFirstScreenSaved}
+                  autoComplete="new-off"
                 />
                 <label className="my-auto" htmlFor="male">
                   male
@@ -333,6 +348,7 @@ function Form2(props) {
                   onChange={handleGenderChange}
                   id="female"
                   disabled={isFirstScreenSaved}
+                  autoComplete="new-off"
                 />
                 <label className="my-auto" htmlFor="female">
                   female
@@ -378,6 +394,7 @@ function Form2(props) {
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
+                autoComplete="new-off"
               />
             </div>
           </div>

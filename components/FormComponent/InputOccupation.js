@@ -65,9 +65,7 @@ function InputOccupation(props) {
       })
     );
 
-    if (!value) {
-      setValue("occupation", null, { shouldValidate: true });
-    }
+    // setValue("occupation", "", { shouldValidate: true });
   };
 
   const openSearch = () => {
@@ -91,7 +89,7 @@ function InputOccupation(props) {
             defaultValue={value}
             onClick={openSearch}
             placeholder={placeholder}
-            autoComplete="new-off"
+            // autoComplete="new-off"
           />
           {display ? (
             <div className="position-relative">
@@ -102,6 +100,7 @@ function InputOccupation(props) {
                   value={inputValue}
                   onChange={handleChange}
                   autoFocus
+                  autoComplete="new-off"
                 />
                 <div className="position-relative">
                   <div className={styles.options}>

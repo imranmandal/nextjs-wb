@@ -109,9 +109,8 @@ const InputGql = (props) => {
           name: value,
         },
       }));
-    }
-    if (!value) {
-      setValue(name, "", true);
+
+      setValue(name, value || "", true);
     }
   };
 
@@ -142,7 +141,6 @@ const InputGql = (props) => {
               onClick={openSearch}
               disabled={disabled}
               placeholder={placeholder}
-              autoComplete="new-off"
             />
 
             {display ? (
@@ -155,7 +153,9 @@ const InputGql = (props) => {
                     value={inputValue}
                     onChange={handleChange}
                     autoFocus
+                    autoComplete="new-off"
                   />
+
                   <div className="position-relative">
                     <div onScroll={handleScroll} className={styles.options}>
                       {suggestions.length > 0 ? (
