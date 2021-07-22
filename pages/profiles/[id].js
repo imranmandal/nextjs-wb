@@ -43,7 +43,7 @@ const Profile = ({
     lastName,
     Gender[gender - 1],
     age ? `Age ${age}` : null,
-    height ? convertedHeight(height) : null,
+    convertedHeight(height),
     convertedCapitalizeValue(Religion[religion - 1]),
     convertedCapitalizeValue(MaritalStatus[maritalStatus - 1]),
     convertedValue(degrees),
@@ -54,25 +54,25 @@ const Profile = ({
     country,
   ];
 
-  // console.log({
-  //   uid,
-  //   id,
-  //   lastName,
-  //   gender,
-  //   age,
-  //   motherTongue,
-  //   maritalStatus,
-  //   height,
-  //   religion,
-  //   degree,
-  //   degrees,
-  //   occupation,
-  //   income,
-  //   city,
-  //   state,
-  //   country,
-  //   displayPictureUrl,
-  // });
+  console.log({
+    uid,
+    id,
+    lastName,
+    gender,
+    age,
+    motherTongue,
+    maritalStatus,
+    height,
+    religion,
+    degree,
+    degrees,
+    occupation,
+    income,
+    city,
+    state,
+    country,
+    displayPictureUrl,
+  });
 
   const [description, setDescription] = useState(
     details
@@ -139,6 +139,59 @@ const Profile = ({
             displayPictureUrl ||
             `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
           }
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="32x32"
+          href={NEXT_URL + "/favicon-06.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="48x48"
+          href={NEXT_URL + "/favicon-09.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="72x72"
+          href={NEXT_URL + "/favicon-10.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="96x96"
+          href={NEXT_URL + "/favicon-11.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href={NEXT_URL + "/favicon-13.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={NEXT_URL + "/favicon-14.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="144x144"
+          href={NEXT_URL + "/favicon-15.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="196x196"
+          href={NEXT_URL + "/favicon-16.png"}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="72x72"
+          href={NEXT_URL + "/favicon-17.png"}
         />
       </Head>
       <div className="d-flex justify-content-around mx-auto">
