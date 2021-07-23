@@ -189,7 +189,11 @@ function SignUpForm(props) {
       <div>
         <div className={styles.sign_up_form}>
           <div className="w-100">
-            <form onSubmit={handleSubmit(submitForm)} noValidate>
+            <form
+              onSubmit={handleSubmit(submitForm)}
+              noValidate
+              autoComplete="new-off"
+            >
               <h2 className="text-center p-3 text-pink">Sign Up</h2>
               <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
@@ -206,8 +210,21 @@ function SignUpForm(props) {
                     placeholder="Phone"
                     type="tel"
                     disabled={disablePhoneInput}
-                    autoComplete="new-off"
+                    autoComplete="off"
                   />
+
+                  {/* For autoComplete */}
+                  <input
+                    type="text"
+                    id="disabled"
+                    name="disabled"
+                    className="form-control"
+                    placeholder="First Name"
+                    autoComplete="off"
+                    // disabled={isFirstScreenSaved}
+                    style={{ display: "none" }}
+                  />
+
                   <div className="d-flex">
                     {!showOtpInput ? (
                       !data.phoneAuthToken ? (
@@ -258,8 +275,8 @@ function SignUpForm(props) {
 
                 {/* ------------- OTP input field */}
                 {showOtpInput ? (
-                  <div className="d-flex">
-                    <div className="d-flex flex-column my-2 w-100">
+                  <div className="d-flex flex-column">
+                    <div className="d-flex my-2 w-100">
                       <NumberFormat
                         type="text"
                         name="otp"
@@ -267,18 +284,18 @@ function SignUpForm(props) {
                         onChange={handleChange}
                         isAllowed={withOtpLimit}
                         className="form-control"
+                        // style={{ height: "38px" }}
                         placeholder="OTP"
-                        autoComplete="new-off"
+                        autoComplete="off"
                       />
-                      <p className="error-message">{errors.otp?.message}</p>
+                      <button
+                        className="btn btn-pink w-50 sign_up_btn"
+                        onClick={otpVerify}
+                      >
+                        <span className={styles.buttons}>verify otp</span>
+                      </button>
                     </div>
-
-                    <button
-                      className="btn btn-pink w-50 mt-2 sign_up_btn"
-                      onClick={otpVerify}
-                    >
-                      <span className={styles.buttons}>verify otp</span>
-                    </button>
+                    <p className="error-message">{errors.otp?.message}</p>
                   </div>
                 ) : null}
               </div>
@@ -306,7 +323,7 @@ function SignUpForm(props) {
                       value={data.password}
                       placeholder="Password"
                       onChange={handleChange}
-                      autoComplete="new-off"
+                      autoComplete="off"
                     />
                     <p className="error-message">{errors.password?.message}</p>
                   </div>
@@ -318,7 +335,7 @@ function SignUpForm(props) {
                       value={data.cPassword}
                       placeholder="Confirm password"
                       onChange={handleChange}
-                      autoComplete="new-off"
+                      autoComplete="off"
                     />
                     <p className="error-message">{errors.cPassword?.message}</p>
                   </div>

@@ -10,14 +10,13 @@ export default async (req, res) => {
     { url: "/FAQ", changefreq: "never", priority: 0.3 },
     { url: "/privacy", changefreq: "never", priority: 0.3 },
     { url: "/terms", changefreq: "never", priority: 0.3 },
-    { url: "/wb/landing-page", changefreq: "never", priority: 0.3 },
-    { url: "/wb/baniya", changefreq: "never", priority: 0.3 },
-    { url: "/wb/jain", changefreq: "never", priority: 0.3 },
-    { url: "/wb/muslim", changefreq: "never", priority: 0.3 },
-    { url: "/wb/punjabi", changefreq: "never", priority: 0.3 },
-    { url: "/wb/christian", changefreq: "never", priority: 0.3 },
-    { url: "/wb/marathi", changefreq: "never", priority: 0.3 },
-    { url: "/wb/south", changefreq: "never", priority: 0.3 },
+    { url: "/landing/baniya", changefreq: "never", priority: 0.3 },
+    { url: "/landing/jain", changefreq: "never", priority: 0.3 },
+    { url: "/landing/muslim", changefreq: "never", priority: 0.3 },
+    { url: "/landing/punjabi", changefreq: "never", priority: 0.3 },
+    { url: "/landing/christian", changefreq: "never", priority: 0.3 },
+    { url: "/landing/marathi", changefreq: "never", priority: 0.3 },
+    { url: "/landing/south", changefreq: "never", priority: 0.3 },
   ];
 
   // Create a stream to write to

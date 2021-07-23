@@ -84,29 +84,39 @@ function Footer() {
           <h5>Community</h5>
           <ul className={styles.ul}>
             <li>
-              <Link href="/landing/jain-matrimony">
-                <a>Jain Matrimony</a>
-              </Link>
+              <a href="/landing/jain-matrimony" target="_blank">
+                Jain Matrimony
+              </a>
             </li>
             <li>
-              <Link href="/landing/baniya-matrimony">Baniya Matrimony</Link>
+              <a href="/landing/baniya-matrimony" target="_blank">
+                Baniya Matrimony
+              </a>
             </li>
             <li>
-              <Link href="/landing/marathi-matrimony">Marathi Matrimony</Link>
+              <a href="/landing/marathi-matrimony" target="_blank">
+                Marathi Matrimony
+              </a>
             </li>
             <li>
-              <Link href="/landing/muslim-matrimony">Muslim Matrimony</Link>
+              <a href="/landing/muslim-matrimony" target="_blank">
+                Muslim Matrimony
+              </a>
             </li>
             <li>
-              <Link href="/landing/christian-matrimony">
+              <a href="/landing/christian-matrimony" target="_blank">
                 Christian Matrimony
-              </Link>
+              </a>
             </li>
             <li>
-              <Link href="/landing/punjabi-matrimony">Punjabi Matrimony</Link>
+              <a href="/landing/punjabi-matrimony" target="_blank">
+                Punjabi Matrimony
+              </a>
             </li>
             <li>
-              <Link href="/landing/south-matrimony">South Matrimony</Link>
+              <a href="/landing/south-matrimony" target="_blank">
+                South Matrimony
+              </a>
             </li>
           </ul>
         </div>
@@ -142,9 +152,9 @@ function Footer() {
       <div className={styles.footer_bottom}>
         <div className={styles.copyright}>
           <div className="mx-auto d-flex">
-            <Link href="/api/sitemap">
-              <a>Sitemap</a>
-            </Link>
+            <a href="/api/sitemap" target="_blank">
+              Sitemap
+            </a>
 
             <p className="middot">&middot;</p>
             <p>&copy;{previousYear + "-" + currentYear} wouldbee.com </p>

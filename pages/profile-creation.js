@@ -49,7 +49,7 @@ const ProfileCreation = ({ query: { token } }) => {
       if (!data?.profile?.profileCreationScreen) {
         setActivePage(2);
       }
-    }, 2000);
+    }, 2300);
 
     return clearTimeout();
   }, []);
@@ -100,7 +100,7 @@ const ProfileCreation = ({ query: { token } }) => {
             </div>
           )}
           {activePage && (
-            <StepWizard initialStep={2}>
+            <StepWizard initialStep={activePage}>
               <div></div>
               <Form2 />
               <Form3 />

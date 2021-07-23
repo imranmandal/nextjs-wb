@@ -138,9 +138,10 @@ const InputGql = (props) => {
               type="text"
               name={name}
               defaultValue={disabled ? "" : value.name}
-              onClick={openSearch}
+              onFocus={openSearch}
               disabled={disabled}
               placeholder={placeholder}
+              autoComplete="new-off"
             />
 
             {display ? (

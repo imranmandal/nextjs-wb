@@ -81,6 +81,11 @@ li {
   box-shadow: none;
   border: 1px solid #e11c74;
 }
+
+textarea {
+  resize: none;
+}
+
 /* input[name="otp"]:focus */
 input[name="phone"]:focus {
   border: none;

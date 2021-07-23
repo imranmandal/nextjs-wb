@@ -89,7 +89,7 @@ function InputOccupation(props) {
             defaultValue={value}
             onClick={openSearch}
             placeholder={placeholder}
-            // autoComplete="new-off"
+            autoComplete="off"
           />
           {display ? (
             <div className="position-relative">

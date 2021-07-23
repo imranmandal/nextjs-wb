@@ -73,6 +73,16 @@ export default function Select(props) {
                   </option>
                 );
               })
+            : name === "motherTongue"
+            ? options.map((option, index) => {
+                return index >= 31 && index < 38 ? null : (
+                  <option key={index} value={option}>
+                    {name === "verificationDocName"
+                      ? convertedValue(option)
+                      : convertedValue(option).toLowerCase()}
+                  </option>
+                );
+              })
             : options.map((option, index) => {
                 return (
                   <option key={index} value={option}>

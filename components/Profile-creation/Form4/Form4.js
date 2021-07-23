@@ -488,26 +488,4 @@ function Form4(props) {
   );
 }
 
-// export const ProfilePicDialog = (
-//   <>
-//     <h6 className="px-5 pt-5">Please select profile picture</h6>
-//     <div className="grouped px-5">
-//       <button
-//         onClick={() => {}}
-//         className="w-100 btn btn-sm btn-pink text-light"
-//       >
-//         cancel
-//       </button>
-//       <button
-//         onClick={(e) => {
-//           e.preventDefault();
-//         }}
-//         className="w-100 btn btn-sm btn-pink text-light"
-//       >
-//         Select
-//       </button>
-//     </div>
-//   </>
-// );
-
 export default Form4;
