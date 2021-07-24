@@ -40,7 +40,6 @@ const Profile = ({
   displayPictureUrl,
 }) => {
   const details = [
-    lastName,
     Gender[gender - 1],
     age ? `Age ${age}` : null,
     convertedHeight(height),
@@ -53,26 +52,6 @@ const Profile = ({
     state,
     country,
   ];
-
-  console.log({
-    uid,
-    id,
-    lastName,
-    gender,
-    age,
-    motherTongue,
-    maritalStatus,
-    height,
-    religion,
-    degree,
-    degrees,
-    occupation,
-    income,
-    city,
-    state,
-    country,
-    displayPictureUrl,
-  });
 
   const [description, setDescription] = useState(
     details
@@ -194,8 +173,8 @@ const Profile = ({
       </Head>
       <div className="d-flex justify-content-around mx-auto">
         <div className="page my-5 py-5 text-center bg-light shadow-lg rounded w-75 w-sm-50">
-          {Object.keys(details).map((data) => {
-            return <p>{details[data]}</p>;
+          {Object.keys(details).map((data, index) => {
+            return <p key={index}>{details[data]}</p>;
           })}
           {/* <h1>{id}</h1>
           <h3>{lastName}</h3>
@@ -241,7 +220,7 @@ export async function getServerSideProps({ params: { id } }) {
   const res = await fetch(`${API_URL}/profiles/${id}`);
 
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
 
   return {
     props: {
@@ -261,8 +240,6 @@ export async function getServerSideProps({ params: { id } }) {
       state: data.state,
       country: data.country,
       displayPictureUrl: data.displayPictureUrl,
-      // uid: id,
-      // data,
     },
   };
 }

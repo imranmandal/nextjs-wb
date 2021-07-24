@@ -76,6 +76,7 @@ export const generateOtp = (
           );
         } else {
           setDisableVerifyBtn(false);
+          setDisablePhoneInput(false);
           toast.error("Account with this phone number already exists.");
         }
       });
