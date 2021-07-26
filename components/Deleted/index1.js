@@ -1,4 +1,4 @@
-import Home from "../index";
+import Home from "../../pages/index";
 
 function AlternateLandingPage() {
   return <Home showVideo={true} />;

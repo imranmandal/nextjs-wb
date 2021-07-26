@@ -72,7 +72,7 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
               muted
               loop
             >
-              <source src={vdoName} type="video/mp4" />
+              <source src={vdoPath} type="video/mp4" />
             </video>
           </div>
         )}
