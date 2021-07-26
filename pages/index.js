@@ -18,7 +18,7 @@ export default function Home({
     imgValues: {
       showImage: true,
       wideImg: wideImg || "landing-page-landscape",
-      portraitImg: portraitImg || "/Images/landing-page-phone-portrait.png",
+      portraitImg: portraitImg || "landing-page-phone-portrait",
     },
     vdoValues: {
       showVideo: false,

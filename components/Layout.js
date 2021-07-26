@@ -155,7 +155,7 @@ Layout.defaultProps = {
   keywords: "matrimony, jeevansathi, wouldbee",
   img: {
     wideImg: "landing-page-landscape",
-    portraitImg: "/Images/landing-page-phone-portrait.png",
+    portraitImg: "landing-page-phone-portrait",
   },
 };
 

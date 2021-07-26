@@ -12,14 +12,14 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
 
   useEffect(() => {
     if (imgName) {
+      const url = buildUrl(imgName, {
+        cloud: {
+          cloudName: "ddcqufse9",
+        },
+      });
       setTimeout(() => {
-        const url = buildUrl(imgName, {
-          cloud: {
-            cloudName: "ddcqufse9",
-          },
-        });
         setImgUrl(url);
-      }, 2000);
+      }, 1000);
 
       const urlBlurred = buildUrl(imgName, {
         cloud: {
