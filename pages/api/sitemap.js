@@ -1,6 +1,6 @@
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { Readable } = require("stream");
-
+// TODO:add -matrimony
 export default async (req, res) => {
   // An array with your links
   const links = [

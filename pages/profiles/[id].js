@@ -39,6 +39,7 @@ const Profile = ({
   country,
   displayPictureUrl,
 }) => {
+  // TODO: commit profilesharing page and sitemap
   const details = [
     Gender[gender - 1],
     age ? `Age ${age}` : null,

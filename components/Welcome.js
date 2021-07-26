@@ -1,27 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import Image from "next/image";
 import styles from "@/styles/Welcome.module.css";
+import { buildUrl } from "cloudinary-build-url";
+import { NEXT_URL } from "@/config/index";
 
-function Welcome({ showVideo, showImage, vdoPath, imgPath, communityName }) {
+function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
+  // console.log(imgName);
+  const [imgUrl, setImgUrl] = useState();
+  const [blurredImgUrl, setBlurredImgUrl] = useState();
+
+  useEffect(() => {
+    if (imgName) {
+      setTimeout(() => {
+        const url = buildUrl(imgName, {
+          cloud: {
+            cloudName: "ddcqufse9",
+          },
+        });
+        setImgUrl(url);
+      }, 2000);
+
+      const urlBlurred = buildUrl(imgName, {
+        cloud: {
+          cloudName: "ddcqufse9",
+        },
+        transformations: {
+          effect: "blur:1000",
+          quality: 1,
+        },
+      });
+
+      setBlurredImgUrl(urlBlurred);
+    }
+    return clearTimeout();
+  }, [imgName]);
+
   return (
     <section className={styles.welcome}>
       <div className={styles.container}>
         {showImage && (
-          <div className={styles.bgWrap}>
-            <Image
-              src={imgPath || "/Images/landing-page-landscape.png"}
-              layout="fill"
-              objectFit="cover"
-              quality={100}
-            />
+          <div
+            className={styles.bgWrap}
+            style={{
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundImage: `url(${blurredImgUrl})`,
+            }}
+          >
+            {imgUrl && (
+              <Image
+                src={imgUrl || "/Images/landing-page-landscape.png"}
+                layout="fill"
+                objectFit="cover"
+                quality={75}
+                unoptimized={true}
+              />
+              // <div></div>
+            )}
           </div>
         )}
 
         {showVideo && (
-          <div className="fullscreen-video-wrap">
-            <video id="video" className="bg" autoPlay playsinline muted loop>
-              <source src={vdoPath} type="video/mp4" />
+          <div className={styles.bgWrap}>
+            <video
+              id="video"
+              className="bg"
+              style={{ objectFit: "cover" }}
+              autoPlay
+              muted
+              loop
+            >
+              <source src={vdoName} type="video/mp4" />
             </video>
           </div>
         )}
@@ -56,7 +107,7 @@ function Welcome({ showVideo, showImage, vdoPath, imgPath, communityName }) {
 
 Welcome.defaultProps = {
   showImage: true,
-  imgPath: "/Images/landing-page-landscape.png",
+  imgName: "/Images/landing-page-landscape.png",
 };
 
 export default Welcome;

@@ -1,11 +1,12 @@
 import Home from "../index";
 
-function AlternateHomePage({ wideImg, portraitImg, communityName }) {
+function AlternateHomePage({ wideImg, portraitImg, communityName, showVideo }) {
   return (
     <Home
       communityName={communityName}
       wideImg={wideImg}
       portraitImg={portraitImg}
+      showVideo={showVideo}
     />
   );
 }
@@ -32,9 +33,10 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { location } }) {
   return {
     props: {
-      wideImg: `/Images/${location}-landscape.png`,
-      portraitImg: `/Images/${location}-phone-portrait.png`,
+      wideImg: `${location}-landscape`,
+      portraitImg: `${location}-phone-portrait`,
       communityName: `${location.split("-")[0]}`,
+      showVideo: false,
     },
     revalidate: 1,
   };

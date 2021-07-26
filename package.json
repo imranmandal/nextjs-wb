@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^2.5.2",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
+    "cloudinary-build-url": "^0.2.1",
     "compressorjs": "^1.0.7",
     "cookie": "^0.4.1",
     "firebase": "^8.6.5",

@@ -7,6 +7,20 @@
   z-index: -1;
 }
 
+.bgWrap img {
+  animation: bgImg 0.3s ease-in;
+}
+
+@keyframes bgImg {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
 .bgText {
   margin: 0;
   margin-top: -130px;

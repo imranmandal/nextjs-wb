@@ -17,15 +17,22 @@ const Layout = ({
   img,
   video,
   communityName,
+  showImage,
+  showVideo,
 }) => {
   const router = useRouter();
-  const [imgUrl, setImgUrl] = useState(null);
+  const [imgName, setImgName] = useState(null);
+  const [vdoPath, setVdoPath] = useState(null);
 
   useEffect(() => {
     // console.log(NEXT_URL + img.wideImg);
-    window.innerWidth < 768
-      ? setImgUrl(img.portraitImg)
-      : setImgUrl(img.wideImg);
+    if (window.innerWidth < 768) {
+      setImgName(img.portraitImg);
+      setVdoPath("/Images/wouldbee.mp4");
+    } else {
+      setImgName(img.wideImg);
+      setVdoPath("/Images/wouldbeeMobile.mp4");
+    }
   });
 
   return (
@@ -115,13 +122,18 @@ const Layout = ({
           href={NEXT_URL + "/favicon-17.png"}
         />
         {/* <link rel="apple-touch-icon" href={NEXT_URL + "/favicon-17.png"} /> */}
-        .
       </Head>
 
       <Header queryData={queryData} />
 
-      {router.pathname === "/" || router.pathname.includes("/landing/") ? (
-        <Welcome imgPath={imgUrl} communityName={communityName} />
+      {router.pathname === "/" || router.pathname.includes("/landing") ? (
+        <Welcome
+          imgName={imgName}
+          vdoPath={vdoPath}
+          communityName={communityName}
+          showVideo={showVideo}
+          showImage={showImage}
+        />
       ) : null}
 
       <div id="body" className={styles.container}>
@@ -142,7 +154,7 @@ Layout.defaultProps = {
   description: "Truly Free, Fanatically Safe!",
   keywords: "matrimony, jeevansathi, wouldbee",
   img: {
-    wideImg: "/Images/landing-page-landscape.png",
+    wideImg: "landing-page-landscape",
     portraitImg: "/Images/landing-page-phone-portrait.png",
   },
 };

@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        phone,
+        phone: `+91${phone}`,
         password,
       }),
     });
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     const res = await axios
       .post(`${NEXT_URL}/api/signup`, {
         email: email,
-        phone: `${phone}`,
+        phone: `+91${phone}`,
         otp: `${otp}`,
         password: password,
         appLanguage: 1,

@@ -46,13 +46,15 @@ const ProfileCreation = ({ query: { token } }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (!data?.profile?.profileCreationScreen) {
-        setActivePage(2);
+      if (!loading) {
+        if (!data?.profile?.profileCreationScreen) {
+          setActivePage(2);
+        }
       }
     }, 2300);
 
     return clearTimeout();
-  }, []);
+  }, [loading]);
 
   useEffect(async () => {
     if (!userToken) {
@@ -102,10 +104,10 @@ const ProfileCreation = ({ query: { token } }) => {
           {activePage && (
             <StepWizard initialStep={activePage}>
               <div></div>
-              <Form2 />
-              <Form3 />
-              <Form4 />
-              <Form5 />
+              <Form2 activePage={activePage} />
+              <Form3 activePage={activePage} />
+              <Form4 activePage={activePage} />
+              <Form5 activePage={activePage} />
             </StepWizard>
           )}
         </div>
