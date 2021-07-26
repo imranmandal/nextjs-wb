@@ -12,16 +12,13 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
 
   useEffect(() => {
     if (imgName) {
-      const url = buildUrl(imgName, {
+      const url = buildUrl(`${imgName}.jpg`, {
         cloud: {
           cloudName: "ddcqufse9",
         },
       });
-      setTimeout(() => {
-        setImgUrl(url);
-      }, 1000);
 
-      const urlBlurred = buildUrl(imgName, {
+      const urlBlurred = buildUrl(`${imgName}.jpg`, {
         cloud: {
           cloudName: "ddcqufse9",
         },
@@ -31,9 +28,9 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
         },
       });
 
+      setImgUrl(url);
       setBlurredImgUrl(urlBlurred);
     }
-    return clearTimeout();
   }, [imgName]);
 
   return (
@@ -54,7 +51,7 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
                 src={imgUrl || "/Images/landing-page-landscape.png"}
                 layout="fill"
                 objectFit="cover"
-                quality={75}
+                // quality={75}
                 unoptimized={true}
               />
               // <div></div>
