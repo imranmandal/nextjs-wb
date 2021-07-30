@@ -4,7 +4,7 @@ import styles from "@/styles/Modal.module.css";
 import ReactDOM from "react-dom";
 import SignUp from "./SignUp/SignUp";
 import Login from "./Login/Login";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 
 // import logo from "../../Images/wouldbee1.png";
 
@@ -55,7 +55,7 @@ const SignUpModal = ({
             </div>
           </div>
         ) : null}
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <div className={styles.overlay} /*className="modal-dialog"*/>
           <div className={styles.modal} /*className="modal-content"*/>
             <FaTimes className={styles.closeBtn} onClick={handleClose} />

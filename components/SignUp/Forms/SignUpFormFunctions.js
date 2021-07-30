@@ -33,9 +33,11 @@ export const schema = yup.object().shape({
 });
 
 // ------- CHECK NUMBER ALREADY EXISTS
-const CheckPhoneExists = async (phone, uuId) => {
+const CheckPhoneExists = async (countryCode, phone, uuId) => {
   const result = await axios
-    .get(`${API_URL}/auth/check-phone/${phone}/?sessionId=${uuId}`)
+    .get(
+      `${API_URL}/auth/v2/check-phone/+${countryCode}${phone}/?sessionId=${uuId}`
+    )
     .then((res) => {
       // console.log(res.data.exists);
       return res.data.exists;
@@ -51,6 +53,7 @@ export const generateOtp = (
   event,
   uuId,
   data,
+  countryData,
   formType,
   setShowRecaptcha,
   setRecaptchaResult,
@@ -61,13 +64,15 @@ export const generateOtp = (
   event.preventDefault();
 
   const phone = data.phone;
+  const countryCode = countryData.code;
 
-  if (phone.length === 10) {
+  if (phone.length <= 18) {
     if (formType === "signup") {
-      CheckPhoneExists(phone, uuId).then((res) => {
+      CheckPhoneExists(countryCode, phone, uuId).then((res) => {
         if (!res) {
           generate(
             phone,
+            countryCode,
             setRecaptchaResult,
             setShowOtpInput,
             setDisablePhoneInput,
@@ -82,11 +87,11 @@ export const generateOtp = (
       });
     }
     if (formType === "recovery") {
-      CheckPhoneExists(phone, uuId).then((res) => {
-        // console.log(res);
+      CheckPhoneExists(countryCode, phone, uuId).then((res) => {
         if (res) {
           generate(
             phone,
+            countryCode,
             setRecaptchaResult,
             setShowOtpInput,
             setDisablePhoneInput,
@@ -95,17 +100,20 @@ export const generateOtp = (
           );
         } else {
           setDisableVerifyBtn(false);
+          setDisablePhoneInput(false);
           toast.error("Account with this phone number does not exists.");
         }
       });
     }
   } else {
+    setDisableVerifyBtn(false);
     setShowRecaptcha(false);
   }
 };
 
 const generate = (
   phone,
+  countryCode,
   setRecaptchaResult,
   setShowOtpInput,
   setDisablePhoneInput,
@@ -114,8 +122,7 @@ const generate = (
 ) => {
   setDisableVerifyBtn(false);
   const captcha = new firebase.auth.RecaptchaVerifier("recaptcha");
-
-  const number = `+91${phone}`;
+  const number = `+${countryCode}${phone}`;
 
   firebase
     .auth()
@@ -128,7 +135,10 @@ const generate = (
     })
     .catch((error) => {
       setShowRecaptcha(false);
-      toast.error("Something went wrong. Please try again later.");
+      setDisablePhoneInput(false);
+      error.code === "auth/invalid-phone-number"
+        ? toast.error("Invalid phone number")
+        : toast.error("Something went wrong. Please try again later.");
     });
 };
 
@@ -136,6 +146,7 @@ const generate = (
 export const verifyOtp = (
   uuId,
   data,
+  countryData,
   setData,
   setDisableVerifyBtn,
   setShowOtpInput,
@@ -144,7 +155,9 @@ export const verifyOtp = (
 ) => {
   const captchaResult = recaptchaResult;
   const otp = data.otp;
-  const phone = data.phone;
+  const countryCode = countryData.code;
+  const phone = `+${countryCode}${data.phone}`;
+  console.log(uuId);
 
   if (!otp) {
     sendReport(uuId, phone, "false");
@@ -155,20 +168,17 @@ export const verifyOtp = (
     .then(function (result) {
       // Set disable false
       setShowOtpInput(false);
-
       setDisablePhoneInput(true);
 
       toast.success(`${result.user.phoneNumber} number verified.`);
       new firebase.auth().currentUser
         .getIdToken(true)
         .then(function (idToken) {
-          // console.log(idToken);
           setData((prevValue) => ({
             ...prevValue,
             phoneAuthToken: idToken,
           }));
 
-          // setPhoneAuthToken(idToken);
           setDisableVerifyBtn(true);
           return idToken;
         })
@@ -185,9 +195,7 @@ export const verifyOtp = (
 
 //---------------------------- Send report
 const sendReport = async (uuId, phone, phoneVerified) => {
-  // console.log(phone, phoneVerified);
-
-  const res = await fetch(`${API_URL}/auth/update-session/`, {
+  const res = await fetch(`${API_URL}/auth/v2/update-session/`, {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/json",
@@ -196,7 +204,6 @@ const sendReport = async (uuId, phone, phoneVerified) => {
   });
 
   if (res.ok) {
-    // console.log({ phone, phoneVerified });
   } else {
     return { status: 400, error: "failed to update session" };
   }

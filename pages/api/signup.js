@@ -3,10 +3,10 @@ import { API_URL } from "@/config/index";
 
 export default async (req, res) => {
   if (req.method === "POST") {
-    const { email, phone, otp, password, phoneAuthToken, userSource } =
+    const { email, phone, iso, otp, password, phoneAuthToken, userSource } =
       req.body;
 
-    const fetchRes = await fetch(`${API_URL}/auth/signup`, {
+    const fetchRes = await fetch(`${API_URL}/auth/v2/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,6 +14,7 @@ export default async (req, res) => {
       body: JSON.stringify({
         email: email,
         phone: phone,
+        iso2: iso,
         otp: otp,
         password: password,
         appLanguage: 1,

@@ -12,52 +12,50 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
 
   useEffect(() => {
     if (imgName) {
-      const url = buildUrl(`${imgName}.jpg`, {
-        cloud: {
-          cloudName: "ddcqufse9",
-        },
-      });
+      // const url = buildUrl(`${imgName}.jpg`, {
+      //   cloud: {
+      //     cloudName: "ddcqufse9",
+      //   },
+      // });
 
-      const urlBlurred = buildUrl(`${imgName}.jpg`, {
-        cloud: {
-          cloudName: "ddcqufse9",
-        },
-        transformations: {
-          effect: "blur:1000",
-          quality: 1,
-        },
-      });
+      // const urlBlurred = buildUrl(`${imgName}.jpg`, {
+      //   cloud: {
+      //     cloudName: "ddcqufse9",
+      //   },
+      //   transformations: {
+      //     effect: "blur:1000",
+      //     quality: 1,
+      //   },
+      // });
 
-      setImgUrl(url);
-      setBlurredImgUrl(urlBlurred);
+      setImgUrl(`${NEXT_URL}/Images/${imgName}.png`);
+      setBlurredImgUrl(`${NEXT_URL}/ImagePlaceholders/${imgName}.webp`);
+      // setImgUrl(url);
+      // setBlurredImgUrl(urlBlurred);
     }
   }, [imgName]);
 
   return (
     <section className={styles.welcome}>
       <div className={styles.container}>
-        {showImage && (
-          <div
-            className={styles.bgWrap}
-            style={{
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundImage: `url(${blurredImgUrl})`,
-            }}
-          >
-            {imgUrl && (
-              <Image
-                src={imgUrl || "/Images/landing-page-landscape.png"}
-                layout="fill"
-                objectFit="cover"
-                // quality={75}
-                unoptimized={true}
-              />
-              // <div></div>
-            )}
-          </div>
-        )}
+        <div
+          className={styles.bgWrap}
+          style={{
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundImage: `url(${blurredImgUrl})`,
+          }}
+        >
+          {/* {imgUrl && ( */}
+          <Image
+            src={imgUrl || "/Images/landing-page-landscape.png"}
+            layout="fill"
+            objectFit="cover"
+            unoptimized={true}
+          />
+          {/* )} */}
+        </div>
 
         {showVideo && (
           <div className={styles.bgWrap}>
@@ -73,7 +71,6 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
             </video>
           </div>
         )}
-
         <div className={styles.bgText}>
           <div className="header-content text-capitalize">
             <div>
@@ -104,7 +101,7 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
 
 Welcome.defaultProps = {
   showImage: true,
-  imgName: "/Images/landing-page-landscape.png",
+  imgName: "landing-page-landscape",
 };
 
 export default Welcome;

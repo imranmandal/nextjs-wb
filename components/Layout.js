@@ -140,7 +140,7 @@ const Layout = ({
         {children}
       </div>
 
-      {router.pathname === "/" || router.pathname.includes("/landing/") ? (
+      {router.pathname === "/" || router.pathname.includes("/landing") ? (
         <DownloadApp />
       ) : null}
       <Footer />

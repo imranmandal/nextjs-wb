@@ -30,15 +30,14 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   //   Login User
-  const login = async ({ phone, password }) => {
-    // console.log(phone);
+  const login = async ({ phone, countryCode, password }) => {
     const res = await fetch(`${NEXT_URL}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        phone: `+91${phone}`,
+        phone: `+${countryCode}${phone}`,
         password,
       }),
     });
@@ -58,6 +57,7 @@ export const AuthProvider = ({ children }) => {
   const signUp = async ({
     email,
     phone,
+    countryData,
     otp,
     password,
     userSource,
@@ -68,7 +68,8 @@ export const AuthProvider = ({ children }) => {
     const res = await axios
       .post(`${NEXT_URL}/api/signup`, {
         email: email,
-        phone: `+91${phone}`,
+        phone: `+${countryData.code}${phone}`,
+        iso: countryData.iso.toUpperCase(),
         otp: `${otp}`,
         password: password,
         appLanguage: 1,
@@ -124,7 +125,6 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (logoutRes.ok) {
-        setUuId(null);
         setUserToken(null);
         setServerLoading(false);
       } else {
@@ -140,6 +140,7 @@ export const AuthProvider = ({ children }) => {
     if (status) {
       return;
     }
+    console.log("crossed");
     axios
       .post(`${NEXT_URL}/api/createUuid`, {
         uuid: uuid,
@@ -158,7 +159,6 @@ export const AuthProvider = ({ children }) => {
       method: "GET",
     });
     const data = await res.json();
-
     if (res.ok) {
       setUuId(data.uuid);
       return true;

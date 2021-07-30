@@ -1,23 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Signup.module.css";
 import AuthContext from "context/AuthContext";
-import { useQuery } from "@apollo/client";
-import { GET_PROFILE_CREATION_SCREEN } from "../Graphql/query/query";
-import { parseJwt } from "../Profile-creation/ParseJwt";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import NumberFormat from "react-number-format";
+import IntlTelInput from "react-intl-tel-input";
+import "react-intl-tel-input/dist/main.css";
 import Link from "next/link";
 import * as yup from "yup";
 
 const Login = ({ setPageLoading, queryData, setShowModal }) => {
-  const { login, userToken } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [countryCode, setCountryCode] = useState("91");
   const router = useRouter();
-  const uid = parseJwt(userToken);
+
+  useEffect(() => {
+    router.prefetch("/profile-creation");
+  }, []);
+
+  useEffect(() => {
+    if (queryData) {
+      console.log(queryData);
+      setPhone(queryData);
+      setValue("phone", queryData, {
+        shouldValidate: true,
+      });
+    }
+  }, [queryData]);
 
   const schema = yup.object().shape({
     phone: yup
@@ -45,27 +57,20 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     resolver: yupResolver(schema),
   });
 
-  const { data, error, loading } = useQuery(GET_PROFILE_CREATION_SCREEN, {
-    variables: {
-      id: uid,
-    },
-  });
-
   const handleLogin = async () => {
     setPageLoading(true);
 
-    if (phone.length > 10 || phone.length < 10) {
+    if (phone.length < 8) {
       toast.error("Please check the phone number");
       setPageLoading(false);
       return;
     }
 
-    const response = await login({ phone, password });
+    const response = await login({ phone, countryCode, password });
 
     if (response) {
       setPageLoading(false);
       setShowModal(false);
-      // console.log(response);
 
       router.push(
         `/profile-creation/?token=${response.token}`,
@@ -78,23 +83,15 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     }
   };
 
-  useEffect(() => {
-    if (queryData) {
-      setPhone(queryData);
-      setValue("phone", queryData, {
-        shouldValidate: true,
-      });
-    }
-  }, [queryData]);
-
-  useEffect(() => {
-    router.prefetch("/profile-creation");
-  }, []);
-
-  console.log(phone);
-
-  const MAX_VAL = 9999999999;
-  const withValueLimit = ({ value }) => value <= MAX_VAL;
+  const handlePhoneChange = (value) => {
+    setValue("phone", value);
+    setPhone((prevValue) => {
+      if (value.length === 19) {
+        return prevValue;
+      }
+      return value;
+    });
+  };
 
   return (
     <>
@@ -102,37 +99,43 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
         <div className="col mx-auto my-5 text-capitalize">
           <form
             className={styles.login}
-            action="#"
             onSubmit={handleSubmit(handleLogin)}
+            noValidate
+            autoComplete="new-off"
           >
             <h2 className="text-center p-3 text-pink">Sign in</h2>
 
             <div className="my-3 mx-1 mx-sm-3 w-100">
               <div className="d-flex flex-column my-2 w-100">
                 <div className={styles.phoneInput}>
-                  <label value="+91" disabled>
-                    +91
-                  </label>
-                  <NumberFormat
-                    name="phone"
-                    value={phone}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setValue("phone", value);
-                      // setPhone((prevValue) =>
-                      //   prevValue.length === 10 ? prevValue : value
-                      // );
-                    }}
-                    onValueChange={({ value }) => {
-                      setPhone(() => value);
-                    }}
-                    isAllowed={withValueLimit}
-                    className="form-control"
+                  <IntlTelInput
+                    preferredCountries={["in"]}
+                    fieldName="phone"
                     placeholder="Phone"
-                    type="tel"
+                    value={phone}
+                    onPhoneNumberChange={(isMaxDigit, phone) => {
+                      handlePhoneChange(phone);
+                    }}
+                    onSelectFlag={(index, countryData) => {
+                      setCountryCode(countryData.dialCode);
+                    }}
+                    formatOnInit={false}
+                    containerClassName="intl-tel-input w-100"
+                    inputClassName="form-control w-100"
                     autoComplete="new-off"
                   />
                 </div>
+                {/* For autoComplete */}
+                <input
+                  type="text"
+                  id="disabled"
+                  name="disabled"
+                  className="form-control"
+                  placeholder="First Name"
+                  autoComplete="off"
+                  // disabled={isFirstScreenSaved}
+                  style={{ display: "none" }}
+                />
                 <p className="error-message">{errors.phone?.message}</p>
               </div>
 

@@ -1,28 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { generateOtp, schema, verifyOtp } from "./SignUpFormFunctions";
-import Form1Content from "./SignUpFormContent";
 import styles from "@/styles/Signup.module.css";
 import AuthContext from "context/AuthContext";
 import { UserSource } from "@/components/FormComponent/FormData";
 import { convertedValue } from "@/components/FormComponent/FormFunctions";
 import { toast } from "react-toastify";
-import Link from "next/link";
-import { ToastContainer } from "react-toastify";
 import NumberFormat from "react-number-format";
-import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import IntlTelInput from "react-intl-tel-input";
+import "react-intl-tel-input/dist/main.css";
 
 function SignUpForm(props) {
   const { data, setData, setShowModal } = props;
   const formType = "signup";
   const router = useRouter();
+  const [countryData, setCountryData] = useState({ iso: "in", code: "91" });
 
   // ---- CONTEXT
-  const { signUp, userToken, uuId, error } = useContext(AuthContext);
+  const { signUp, uuId, error } = useContext(AuthContext);
 
   const {
     register,
@@ -64,7 +62,8 @@ function SignUpForm(props) {
   }, [data.phoneAuthToken]);
 
   useEffect(() => {
-    // console.log(deviceInfo);
+    router.prefetch("/profile-creation");
+
     setDeviceInfo({
       device: {
         deviceId: uuId,
@@ -94,7 +93,6 @@ function SignUpForm(props) {
     if (nextTimer <= 0) {
       setShowOtpInput(false);
       setTimer(60);
-      // setData((prevValue) => ({ ...prevValue, otp: "" }));
       setDisablePhoneInput(false);
       setDisableVerifyBtn(false);
     }
@@ -108,32 +106,45 @@ function SignUpForm(props) {
   // ------- HANDLE CHANGE
   const handleChange = (elem) => {
     const { name, value } = elem.target;
-    if (name === "phone") {
-      if (value.length === 10) {
-        setDisableVerifyBtn(false);
-        setShowRecaptcha(true);
-      } else {
-        setDisableVerifyBtn(true);
-      }
-      setWordCount(() => value.length);
-    }
     setValue(name, value, { shouldValidate: true });
     setData((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
+  const handlePhoneChange = (value) => {
+    if (value.length >= 10) {
+      setDisableVerifyBtn(false);
+      setShowRecaptcha(true);
+    } else {
+      setDisableVerifyBtn(true);
+      setShowRecaptcha(false);
+    }
+
+    setValue("phone", value);
+    setData((prevValue) => {
+      if (value.length === 19) {
+        setWordCount(18);
+        return { ...prevValue, phone: prevValue.phone };
+      }
+      setWordCount(() => value.length);
+      return {
+        ...prevValue,
+        phone: value,
+      };
+    });
+  };
+
   // ---- SUBMIT
   const submitForm = async () => {
-    console.log("sokdlf");
     if (!data.phoneAuthToken) {
       return toast.error("Please verify Phone Number");
     }
     const { email, phone, otp, password, phoneAuthToken, userSource } = data;
-    errors && console.log(errors);
     props.setPageLoading(true);
 
     const response = await signUp({
       email,
       phone,
+      countryData,
       otp,
       password,
       phoneAuthToken,
@@ -152,19 +163,36 @@ function SignUpForm(props) {
 
     if (response.status > 400 && response.status < 500) {
       if (response.status === 409) {
-        console.log(response);
         return toast.error("Email already exists.");
       }
       toast.error("Something went wrong. Please try again later");
     }
   };
 
+  const sendOtp = () => {
+    generateOtp(
+      e,
+      uuId,
+      data,
+      countryData,
+      formType,
+      setShowRecaptcha,
+      setRecaptchaResult,
+      setShowOtpInput,
+      setDisablePhoneInput,
+      setDisableVerifyBtn
+    );
+    setShowRecaptcha(true);
+    setDisableVerifyBtn(true);
+    setDisablePhoneInput(true);
+  };
+
   const otpVerify = (e) => {
     e.preventDefault();
-    // console.log(recaptchaResult);
     verifyOtp(
       uuId,
       data,
+      countryData,
       setData,
       setDisableVerifyBtn,
       setShowOtpInput,
@@ -173,14 +201,6 @@ function SignUpForm(props) {
     );
   };
 
-  useEffect(() => {
-    router.prefetch("/profile-creation");
-  }, []);
-
-  // console.log(errors);
-
-  const MAX_VAL = 9999999999;
-  const withValueLimit = ({ value }) => value <= MAX_VAL;
   const MAX_OTP_VAL = 999999;
   const withOtpLimit = ({ value }) => value <= MAX_OTP_VAL;
 
@@ -197,20 +217,23 @@ function SignUpForm(props) {
               <h2 className="text-center p-3 text-pink">Sign Up</h2>
               <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
-                  <label value="+91" disabled>
-                    +91
-                  </label>
-
-                  <NumberFormat
-                    name="phone"
-                    value={data.phone}
-                    onChange={handleChange}
-                    isAllowed={withValueLimit}
-                    className="form-control"
+                  <IntlTelInput
+                    preferredCountries={["in"]}
+                    fieldName="phone"
                     placeholder="Phone"
-                    type="tel"
+                    value={data.phone}
+                    onPhoneNumberChange={(isMaxDigit, phone) => {
+                      handlePhoneChange(phone);
+                    }}
+                    onSelectFlag={(index, countryData) => {
+                      setCountryData({
+                        iso: countryData.iso2,
+                        code: countryData.dialCode,
+                      });
+                    }}
+                    containerClassName="intl-tel-input"
+                    inputClassName="form-control"
                     disabled={disablePhoneInput}
-                    autoComplete="off"
                   />
 
                   {/* For autoComplete */}
@@ -230,22 +253,7 @@ function SignUpForm(props) {
                       !data.phoneAuthToken ? (
                         <button
                           className="btn btn-pink px-0 sign_up_btn"
-                          onClick={(e) => {
-                            generateOtp(
-                              e,
-                              uuId,
-                              data,
-                              formType,
-                              setShowRecaptcha,
-                              setRecaptchaResult,
-                              setShowOtpInput,
-                              setDisablePhoneInput,
-                              setDisableVerifyBtn
-                            );
-                            setShowRecaptcha(true);
-                            setDisableVerifyBtn(true);
-                            setDisablePhoneInput(true);
-                          }}
+                          onClick={sendOtp}
                           disabled={disableVerifyBtn}
                         >
                           <span className="sign_up_btn">Send Otp</span>
@@ -262,7 +270,9 @@ function SignUpForm(props) {
                   <p className="error-message m-0">
                     {errors.phone && errors.phone.message}
                   </p>
-                  {`${wordCount}/10`}
+                  <p className="text-secondary py-0 m-0">
+                    {`${wordCount}`} digits
+                  </p>
                 </span>
 
                 {/* ============ re-captcha */}

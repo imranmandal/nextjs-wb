@@ -331,11 +331,12 @@
   .overlay_left,
   .overlay_right {
     flex-direction: row;
+    padding: 0;
     /* position: fixed; */
   }
 
   .overlay_right {
-    top: -10px;
+    /* top: -10px; */
     width: 50%;
     left: auto;
     right: 0;

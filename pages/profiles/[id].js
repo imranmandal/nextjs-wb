@@ -80,7 +80,7 @@ const Profile = ({
           property="og:image"
           itemProp="image"
           content={
-            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
+            displayPictureUrl || `${NEXT_URL}/Images/landing-page-landscape.jpg`
           }
         />
         <meta
@@ -88,21 +88,21 @@ const Profile = ({
           itemProp="image"
           content={
             displayPictureUrl ||
-            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+            `${NEXT_URL}/ImagePlaceholders/landing-page-landscape.jpg`
           }
         />
 
         <meta
           property="og:image:secure_url"
           content={
-            displayPictureUrl || `${NEXT_URL}/Images/bg-landscape-desktop.jpg`
+            displayPictureUrl || `${NEXT_URL}/Images/landing-page-landscape.jpg`
           }
         />
         <meta
           property="og:image:secure_url"
           content={
             displayPictureUrl ||
-            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+            `${NEXT_URL}/ImagePlaceholders/landing-page-landscape.jpg`
           }
         />
         <meta property="og:image:type" content="image/jpeg" />
@@ -115,7 +115,7 @@ const Profile = ({
           rel="image_src"
           href={
             displayPictureUrl ||
-            `${NEXT_URL}/thumbnail/bg-landscape-desktop.jpg`
+            `${NEXT_URL}/ImagePlaceholders/landing-page-landscape.jpg`
           }
         />
         <link

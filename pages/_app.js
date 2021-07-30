@@ -6,8 +6,11 @@ import { AuthProvider } from "context/AuthContext";
 import "../styles/globals.css";
 
 import TagManager from "react-gtm-module";
+
 import { useEffect } from "react";
 import { TAG_MANAGER_ID } from "@/config/index";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { useEffect } from "react";
 // import ReactGA from 'react-ga';
 
@@ -41,6 +44,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthProvider>
+      <ToastContainer />
       <Component {...pageProps} />
     </AuthProvider>
   );

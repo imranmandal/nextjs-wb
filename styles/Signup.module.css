@@ -133,6 +133,7 @@
 
 .phoneInput {
   display: flex;
+  justify-content: space-between;
   border: 1px solid #e11c74;
   border-radius: 5px;
   min-width: 230px;

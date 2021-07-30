@@ -14,8 +14,8 @@ import Head from "next/head";
 import { GET_PROFILE_CREATION_SCREEN } from "@/components/Graphql/query/query";
 import { parseJwt } from "@/components/Profile-creation/ParseJwt";
 import { useRouter } from "next/router";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const ProfileCreation = ({ query: { token } }) => {
   const [userToken, setUserToken] = useState(token);
@@ -78,7 +78,7 @@ const ProfileCreation = ({ query: { token } }) => {
       <Head>
         <title>Profile Creation</title>
       </Head>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {userToken && (
         <div className={styles.profileCreation}>
           <div className={styles.logo_lg}>

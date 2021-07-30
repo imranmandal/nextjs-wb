@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Head from "next/head";
 import styles from "@/styles/Recovery.module.css";
-import { useRouter, withRouter } from "next/router";
+import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -12,15 +12,17 @@ import {
   verifyOtp,
 } from "@/components/SignUp/Forms/SignUpFormFunctions";
 import { FaCheckCircle } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { API_URL } from "@/config/index";
+import IntlTelInput from "react-intl-tel-input";
+import "react-intl-tel-input/dist/main.css";
 
 const Recovery = () => {
   const router = useRouter();
   const {
     query: { phone },
   } = router;
+
+  const [countryData, setCountryData] = useState({ iso: "in", code: "91" });
 
   const formType = "recovery";
   const [data, setData] = useState({
@@ -78,17 +80,9 @@ const Recovery = () => {
     resolver: yupResolver(schema),
   });
 
-  const [deviceInfo, setDeviceInfo] = useState({
-    os: {},
-    browser: {},
-    screen: {},
-  });
-
   useEffect(() => {
     error && toast.error(error);
   });
-
-  errors && console.groupCollapsed(errors);
 
   useEffect(() => {
     if (phone) {
@@ -97,46 +91,12 @@ const Recovery = () => {
     }
   }, [phone]);
 
-  useEffect(() => {
-    if (data.phone.length === 10) {
-      setDisableVerifyBtn(false);
-      setShowRecaptcha(true);
-      return;
-    }
-    setDisableVerifyBtn(true);
-  }, [data.phone]);
-
-  useEffect(() => {
-    // console.log(deviceInfo);
-    setDeviceInfo({
-      device: {
-        deviceId: uuId,
-      },
-      os: {
-        name: navigator.platform,
-        language: navigator.language,
-      },
-      screen: {
-        width: screen.width,
-        height: screen.height,
-      },
-      browser: {
-        name: navigator.appName,
-        appCodeName: navigator.appCodeName,
-        product: navigator.product,
-        appVersion: navigator.appVersion,
-        userAgent: navigator.userAgent,
-      },
-    });
-  }, []);
-
   const setTime = () => {
     const nextTimer = timer - 1;
     setTimer((prevValue) => (prevValue > 0 ? nextTimer : prevValue));
     if (nextTimer <= 0) {
       setShowOtpInput(false);
       setTimer(60);
-      // setData((prevValue) => ({ ...prevValue, otp: "" }));
       setDisablePhoneInput(false);
     }
   };
@@ -148,18 +108,31 @@ const Recovery = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "phone") {
-      setValue("phone", e.target.value, {
-        shouldValidate: true,
-      });
-      setData((prevValue) => ({ ...prevValue, [name]: value }));
-      setWordCount(() => {
-        return value.length;
-      });
-      return;
-    }
     setValue(name, e.target.value, { shouldValidate: true });
     setData((prevVal) => ({ ...prevVal, [name]: value }));
+  };
+
+  const handlePhoneChange = (value) => {
+    if (value.length >= 10) {
+      setDisableVerifyBtn(false);
+      setShowRecaptcha(true);
+    } else {
+      setDisableVerifyBtn(true);
+      setShowRecaptcha(false);
+    }
+
+    setValue("phone", value);
+    setData((prevValue) => {
+      if (value.length === 19) {
+        setWordCount(18);
+        return { ...prevValue, phone: prevValue.phone };
+      }
+      setWordCount(() => value.length);
+      return {
+        ...prevValue,
+        phone: value,
+      };
+    });
   };
 
   const sendOtp = (e) => {
@@ -167,6 +140,7 @@ const Recovery = () => {
       e,
       uuId,
       data,
+      countryData,
       formType,
       setShowRecaptcha,
       setRecaptchaResult,
@@ -176,17 +150,31 @@ const Recovery = () => {
     );
     setShowRecaptcha(true);
     setDisableVerifyBtn(true);
+    setDisablePhoneInput(true);
   };
 
-  const submitHandler = async (verifiedData) => {
-    // console.log({ verifiedData });
-    const res = await fetch(`${API_URL}/auth/reset-password-with-firebase`, {
+  const otpVerify = (e) => {
+    e.preventDefault();
+    verifyOtp(
+      uuId,
+      data,
+      countryData,
+      setData,
+      setDisableVerifyBtn,
+      setShowOtpInput,
+      setDisablePhoneInput,
+      recaptchaResult
+    );
+  };
+
+  const submitHandler = async () => {
+    const res = await fetch(`${API_URL}/auth/v2/reset-password-with-firebase`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        phone: data.phone,
+        phone: `+${countryData.code}${data.phone}`,
         newPassword: data.password,
         phoneAuthToken: data.phoneAuthToken,
       }),
@@ -210,29 +198,50 @@ const Recovery = () => {
         <title>Password Recovery</title>
       </Head>
       <div className="container my-4 mx-auto text-left">
-        <ToastContainer />
         <div className="col mx-auto my-5">
           <form
             className={styles.container}
             onSubmit={handleSubmit(submitHandler)}
+            noValidate
+            autoComplete="new-off"
           >
             <h2 className="text-center p-3 text-pink">Forgot Password</h2>
 
             <div className="d-flex flex-column my-3 w-100">
               <div className="d-flex flex-column my-2 mx-auto w-100">
                 <div className={styles.phoneInput}>
-                  <label value="+91" disabled>
-                    +91
-                  </label>
+                  <IntlTelInput
+                    preferredCountries={["in"]}
+                    fieldName="phone"
+                    placeholder="Phone"
+                    value={data.phone}
+                    onPhoneNumberChange={(isMaxDigit, phone) => {
+                      handlePhoneChange(phone);
+                    }}
+                    onSelectFlag={(index, countryData) => {
+                      setCountryData({
+                        iso: countryData.iso2,
+                        code: countryData.dialCode,
+                      });
+                    }}
+                    containerClassName="intl-tel-input"
+                    inputClassName="form-control"
+                    disabled={disablePhoneInput}
+                    autoComplete="new-off"
+                  />
+
+                  {/* For autoComplete */}
                   <input
                     type="text"
-                    name="phone"
-                    value={data.phone}
-                    onChange={handleChange}
+                    id="disabled"
+                    name="disabled"
                     className="form-control"
-                    placeholder="Phone"
-                    disabled={disablePhoneInput}
+                    placeholder="First Name"
+                    autoComplete="off"
+                    // disabled={isFirstScreenSaved}
+                    style={{ display: "none" }}
                   />
+
                   <div className="d-flex">
                     {!showOtpInput ? (
                       !data.phoneAuthToken ? (
@@ -273,25 +282,12 @@ const Recovery = () => {
                       placeholder="OTP"
                     />
                     <div className="d-flex">
-                      {
-                        <button
-                          className="btn btn-pink px-0 sign_up_btn"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            verifyOtp(
-                              uuId,
-                              data,
-                              setData,
-                              setDisableVerifyBtn,
-                              setShowOtpInput,
-                              setDisablePhoneInput,
-                              recaptchaResult
-                            );
-                          }}
-                        >
-                          <span className="sign_up_btn">Verify OTP</span>
-                        </button>
-                      }
+                      <button
+                        className="btn btn-pink px-0 sign_up_btn"
+                        onClick={otpVerify}
+                      >
+                        <span className="sign_up_btn">Verify OTP</span>
+                      </button>
                     </div>
                   </div>
                   <p className="error-message">{errors.otp?.message}</p>
