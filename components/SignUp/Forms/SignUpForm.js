@@ -169,7 +169,7 @@ function SignUpForm(props) {
     }
   };
 
-  const sendOtp = () => {
+  const sendOtp = (e) => {
     generateOtp(
       e,
       uuId,
@@ -219,6 +219,7 @@ function SignUpForm(props) {
                 <div className={styles.phoneInput}>
                   <IntlTelInput
                     preferredCountries={["in"]}
+                    onlyCountries={["in", "us", "gb", "ca"]}
                     fieldName="phone"
                     placeholder="Phone"
                     value={data.phone}
@@ -226,6 +227,7 @@ function SignUpForm(props) {
                       handlePhoneChange(phone);
                     }}
                     onSelectFlag={(index, countryData) => {
+                      console.log(countryData);
                       setCountryData({
                         iso: countryData.iso2,
                         code: countryData.dialCode,
@@ -253,7 +255,7 @@ function SignUpForm(props) {
                       !data.phoneAuthToken ? (
                         <button
                           className="btn btn-pink px-0 sign_up_btn"
-                          onClick={sendOtp}
+                          onClick={(e) => sendOtp(e)}
                           disabled={disableVerifyBtn}
                         >
                           <span className="sign_up_btn">Send Otp</span>

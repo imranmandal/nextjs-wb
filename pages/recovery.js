@@ -212,6 +212,7 @@ const Recovery = () => {
                 <div className={styles.phoneInput}>
                   <IntlTelInput
                     preferredCountries={["in"]}
+                    onlyCountries={["in", "us", "gb", "ca"]}
                     fieldName="phone"
                     placeholder="Phone"
                     value={data.phone}

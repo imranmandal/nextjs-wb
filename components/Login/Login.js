@@ -122,6 +122,7 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
                 <div className={styles.phoneInput}>
                   <IntlTelInput
                     preferredCountries={["in"]}
+                    onlyCountries={["in", "us", "gb", "ca"]}
                     fieldName="phone"
                     placeholder="Phone"
                     value={phone}
