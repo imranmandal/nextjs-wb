@@ -101,8 +101,20 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
             className={styles.login}
             onSubmit={handleSubmit(handleLogin)}
             noValidate
-            autoComplete="new-off"
+            autoComplete="off"
           >
+            {/* For autoComplete */}
+            <input
+              type="text"
+              id="disabled"
+              name="disabled"
+              className="form-control"
+              placeholder="First Name"
+              autoComplete="new-off"
+              // disabled={isFirstScreenSaved}
+              style={{ display: "none" }}
+            />
+
             <h2 className="text-center p-3 text-pink">Sign in</h2>
 
             <div className="my-3 mx-1 mx-sm-3 w-100">
@@ -120,22 +132,12 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
                       setCountryCode(countryData.dialCode);
                     }}
                     formatOnInit={false}
-                    containerClassName="intl-tel-input w-100"
+                    containerClassName="intl-tel-input w-100 tel-input"
                     inputClassName="form-control w-100"
-                    autoComplete="new-off"
+                    autoComplete="off"
                   />
                 </div>
-                {/* For autoComplete */}
-                <input
-                  type="text"
-                  id="disabled"
-                  name="disabled"
-                  className="form-control"
-                  placeholder="First Name"
-                  autoComplete="off"
-                  // disabled={isFirstScreenSaved}
-                  style={{ display: "none" }}
-                />
+
                 <p className="error-message">{errors.phone?.message}</p>
               </div>
 
