@@ -19,7 +19,7 @@ const SignUp = (props) => {
 
   return (
     <div className=" container my-4 mx-auto text-left">
-      <div className="col mx-auto my-5 text-capitalize">
+      <div className="col mx-auto my-5 ">
         <div className={styles.body}>
           {/* <div className={styles.sign_up}>
             <div className={styles.logo}>

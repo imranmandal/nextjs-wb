@@ -415,4 +415,7 @@
   .login_container form {
     padding: 0 1rem;
   }
+  .overlay_right {
+    top: -10px;
+  }
 }

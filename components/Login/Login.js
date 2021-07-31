@@ -96,7 +96,7 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
   return (
     <>
       <div className="container my-4 mx-auto text-left">
-        <div className="col mx-auto my-5 text-capitalize">
+        <div className="col mx-auto my-5">
           <form
             className={styles.login}
             onSubmit={handleSubmit(handleLogin)}
