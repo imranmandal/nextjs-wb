@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.containerInner {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  background-color: #fff1f7ab;
+  box-shadow: 0 0 10px #ddd;
+  overflow: hidden;
+  border-radius: 15px;
+  height: 80vh;
+  min-height: fit-content;
+  width: 60vw;
+  min-width: fit-content;
+}
+
+.logo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 2rem;
+  width: auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logo img {
+  height: inherit;
+}
+
+.pictureContainer {
+  height: 100%;
+  min-width: 50%;
+  overflow: hidden;
+}
+
+.pictureContainer img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.detailsContainer {
+  padding: 5%;
+  width: 100%;
+}
+
+/* single data container */
+.detailContainer {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.2;
+  font-size: smaller;
+  font-weight: 600;
+}
+
+.detailContainer label {
+  /* color: #003; */
+}
+
+.detail {
+  width: 50%;
+  text-align: left;
+  color: #003;
+}
+
+.heading {
+  line-height: 2;
+  color: #003;
+  border-bottom: 0.5px solid #eeee;
+}
+
+.footer {
+  line-height: 3;
+  color: #ccc;
+  font-size: small;
+}

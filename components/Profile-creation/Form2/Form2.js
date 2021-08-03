@@ -234,9 +234,6 @@ function Form2(props) {
   //   setShowModal(false);
   // };
 
-  // TODO: Handle foreign languages
-  // TODO: show options in height like 4'0" or less 7'0" or more
-
   return (
     <>
       <div className={styles.container}>

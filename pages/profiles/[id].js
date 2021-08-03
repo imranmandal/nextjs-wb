@@ -1,11 +1,13 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import styles from "@/styles/ProfilesSharing.module.css";
 import { API_URL, NEXT_URL } from "@/config/index";
 import {
   AnnualIncome,
   Degrees,
   gender as Gender,
   MaritalStatus,
+  MotherTongue,
   Occupation,
   Religion,
 } from "@/components/FormComponent/FormData";
@@ -39,26 +41,45 @@ const Profile = ({
   country,
   displayPictureUrl,
 }) => {
-  // TODO: commit profilesharing page and sitemap
-  const details = [
-    Gender[gender - 1],
-    age ? `Age ${age}` : null,
-    convertedHeight(height),
-    convertedCapitalizeValue(Religion[religion - 1]),
-    convertedCapitalizeValue(MaritalStatus[maritalStatus - 1]),
-    convertedValue(degrees),
-    convertedCapitalizeValue(AnnualIncome[income - 1]),
-    convertedValue(Occupation[occupation]),
-    city,
-    state,
-    country,
-  ];
+  const details = {
+    title: `${id} | ${lastName}`,
+    picture: displayPictureUrl,
+    description: {
+      gender: { value: Gender[gender - 1], label: "Gender" },
+      age: { value: age ? `${age} Yrs` : null, label: "Age" },
+      height: { value: convertedHeight(height), label: "Hieght (in feet)" },
+      motherTongue: {
+        value: convertedCapitalizeValue(MotherTongue[motherTongue - 1]),
+        label: "Mother Tongue",
+      },
+      religion: {
+        value: convertedCapitalizeValue(Religion[religion - 1]),
+        label: "Religion",
+      },
+      maritalStatus: {
+        value: convertedCapitalizeValue(MaritalStatus[maritalStatus - 1]),
+        label: "Marital Status",
+      },
+      degrees: { value: convertedValue(degrees), label: "Degrees" },
+      income: {
+        value: convertedCapitalizeValue(AnnualIncome[income - 1]),
+        label: "Annual Income",
+      },
+      occupation: {
+        value: convertedValue(Occupation[occupation]),
+        label: "Occupation",
+      },
+      city: { value: city, label: "City" },
+      state: { value: state, label: "State" },
+      country: { value: country, label: "Country" },
+    },
+  };
 
   const [description, setDescription] = useState(
-    details
+    Object.keys(details.description)
       .filter((detail) => {
-        if (detail) {
-          return detail;
+        if (details.description[detail].value) {
+          return details.description[detail].value;
         }
       })
       .join(" | ")
@@ -172,17 +193,34 @@ const Profile = ({
           href={NEXT_URL + "/favicon-17.png"}
         />
       </Head>
-      <div className="d-flex justify-content-around mx-auto">
-        <div className="page my-5 py-5 text-center bg-light shadow-lg rounded w-75 w-sm-50">
-          {Object.keys(details).map((data, index) => {
-            return <p key={index}>{details[data]}</p>;
-          })}
-          {/* <h1>{id}</h1>
+      <div className={styles.container}>
+        <div className={styles.containerInner}>
+          <div className={styles.logo}>
+            <img src={`${NEXT_URL}/Logos/logoWb.png`} alt="Logo" />
+          </div>
+          <div className={styles.pictureContainer}>
+            <img src={details.picture} alt="Profile Picture" />
+          </div>
+          <div className={styles.detailsContainer}>
+            <h2 className={styles.heading}>{details.title}</h2>
+            {Object.keys(details.description).map((data, index) => {
+              return (
+                <div key={index} className={styles.detailContainer}>
+                  <label>{details.description[data].label}: </label>
+                  <p className={styles.detail}>
+                    {details.description[data].value || "-"}
+                  </p>
+                </div>
+              );
+            })}
+            {/* <h1>{id}</h1>
           <h3>{lastName}</h3>
           <p>{city}</p>
           <p>{state}</p>
           <p>{country}</p> */}
+          </div>
         </div>
+        <span className={styles.footer}>Copyright © wouldbee.com 2021</span>
       </div>
     </>
   );
@@ -221,7 +259,7 @@ export async function getServerSideProps({ params: { id } }) {
   const res = await fetch(`${API_URL}/profiles/${id}`);
 
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
 
   return {
     props: {
