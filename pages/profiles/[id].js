@@ -32,7 +32,6 @@ const Profile = ({
   maritalStatus,
   height,
   religion,
-  degree,
   degrees,
   occupation,
   income,
@@ -41,6 +40,14 @@ const Profile = ({
   country,
   displayPictureUrl,
 }) => {
+  const degreesValue = [
+    ...degrees
+      .map((degreeIndex) => {
+        return convertedValue(Degrees[degreeIndex]);
+      })
+      .join(", "),
+  ];
+
   const details = {
     title: `${id} | ${lastName}`,
     picture: displayPictureUrl,
@@ -60,7 +67,7 @@ const Profile = ({
         value: convertedCapitalizeValue(MaritalStatus[maritalStatus - 1]),
         label: "Marital Status",
       },
-      degrees: { value: convertedValue(degrees), label: "Degrees" },
+      degrees: { value: degreesValue, label: "Degrees" },
       income: {
         value: convertedCapitalizeValue(AnnualIncome[income - 1]),
         label: "Annual Income",
@@ -272,7 +279,7 @@ export async function getServerSideProps({ params: { id } }) {
       maritalStatus: data.maritalStatus,
       height: data.height,
       religion: data.religion,
-      degree: data.degree,
+      degrees: data.degrees,
       occupation: data.occupation,
       income: data.income,
       city: data.city,

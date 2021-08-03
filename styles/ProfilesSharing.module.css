@@ -12,14 +12,15 @@
   display: flex;
   justify-content: space-between;
   position: relative;
-  background-color: #fff1f7ab;
+  background: #fff;
   box-shadow: 0 0 10px #ddd;
   overflow: hidden;
   border-radius: 15px;
-  height: 80vh;
-  min-height: fit-content;
-  width: 60vw;
+  height: 85vh;
+  min-height: max-content;
+  width: 80vw;
   min-width: fit-content;
+  z-index: 2;
 }
 
 .logo {
@@ -37,6 +38,8 @@
 
 .pictureContainer {
   height: 100%;
+  min-height: 50%;
+  width: 100%;
   min-width: 50%;
   overflow: hidden;
 }
@@ -48,8 +51,10 @@
 }
 
 .detailsContainer {
-  padding: 5%;
+  padding: 3% 5%;
   width: 100%;
+  z-index: 2;
+  height: fit-content;
 }
 
 /* single data container */
@@ -61,10 +66,6 @@
   font-weight: 600;
 }
 
-.detailContainer label {
-  /* color: #003; */
-}
-
 .detail {
   width: 50%;
   text-align: left;
@@ -72,13 +73,56 @@
 }
 
 .heading {
-  line-height: 2;
+  line-height: 1.5;
+  margin-bottom: 15px;
   color: #003;
   border-bottom: 0.5px solid #eeee;
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
   line-height: 3;
   color: #ccc;
   font-size: small;
+  z-index: 1;
+}
+
+@media (max-width: 1200px) {
+  .heading {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .heading {
+    font-size: 25px;
+  }
+  .containerInner {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: 100%;
+  }
+  .containerInner {
+    flex-direction: column;
+    margin: 10% 5%;
+    height: fit-content;
+  }
+
+  .heading {
+    font-size: 1.7rem;
+    line-height: 2.5;
+  }
+
+  .detailsContainer {
+    height: fit-content;
+  }
+  .pictureContainer {
+    height: 300px;
+    width: 100%;
+  }
 }
