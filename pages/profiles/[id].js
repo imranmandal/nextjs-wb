@@ -41,11 +41,15 @@ const Profile = ({
   displayPictureUrl,
 }) => {
   const degreesValue = [
-    ...degrees
-      .map((degreeIndex) => {
-        return convertedValue(Degrees[degreeIndex]);
-      })
-      .join(", "),
+    ...[
+      degrees?.length > 0
+        ? degrees
+            .map((degreeIndex) => {
+              return convertedValue(Degrees[degreeIndex]);
+            })
+            .join(", ")
+        : "-",
+    ],
   ];
 
   const [details, setDetails] = useState({
