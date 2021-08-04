@@ -101,7 +101,9 @@ const Profile = ({
       })
       .join(" | ");
 
+    // if (notNullValues) {
     setDescription(notNullValues);
+    // }
   });
 
   return (
