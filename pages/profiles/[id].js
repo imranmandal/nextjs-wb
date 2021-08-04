@@ -52,7 +52,7 @@ const Profile = ({
     ],
   ];
 
-  const [details, setDetails] = useState({
+  const details = {
     title: `${id} | ${lastName}`,
     picture: displayPictureUrl,
     description: {
@@ -84,7 +84,7 @@ const Profile = ({
       state: { value: state, label: "State" },
       country: { value: country, label: "Country" },
     },
-  });
+  };
 
   const notNullDetail = Object.keys(details?.description).filter((detail) => {
     if (details?.description[detail]?.value) {
