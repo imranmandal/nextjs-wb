@@ -86,17 +86,11 @@ const Profile = ({
     },
   };
 
-  const notNullDetail = Object.keys(details?.description).filter((detail) => {
+  const description = Object.keys(details?.description).map((detail) => {
     if (details?.description[detail]?.value) {
-      return details?.description[detail]?.value;
+      return details?.description[detail]?.value.join(" | ");
     }
   });
-
-  const description = notNullDetail
-    .map((detail) => {
-      return details?.description[detail]?.value;
-    })
-    .join(" | ");
 
   return (
     <>
