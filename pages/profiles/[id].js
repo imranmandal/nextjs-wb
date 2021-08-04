@@ -48,7 +48,7 @@ const Profile = ({
       .join(", "),
   ];
 
-  const details = {
+  const [details, setDetails] = useState({
     title: `${id} | ${lastName}`,
     picture: displayPictureUrl,
     description: {
@@ -80,19 +80,25 @@ const Profile = ({
       state: { value: state, label: "State" },
       country: { value: country, label: "Country" },
     },
-  };
+  });
 
-  const [description, setDescription] = useState(
-    Object.keys(details.description)
-      .filter((detail) => {
-        if (details.description[detail].value) {
-          return details.description[detail].value;
-        }
+  const [description, setDescription] = useState([]);
+
+  useEffect(() => {
+    const notNullDetail = Object.keys(details.description).filter((detail) => {
+      if (details.description[detail].value) {
+        return details.description[detail].value;
+      }
+    });
+
+    const notNullValues = notNullDetail
+      .map((detail) => {
+        return details.description[detail].value;
       })
-      .join(" | ")
-  );
+      .join(" | ");
 
-  // useEffect(() => console.log(id));
+    setDescription(notNullValues);
+  }, [details]);
 
   return (
     <>
@@ -220,11 +226,6 @@ const Profile = ({
                 </div>
               );
             })}
-            {/* <h1>{id}</h1>
-          <h3>{lastName}</h3>
-          <p>{city}</p>
-          <p>{state}</p>
-          <p>{country}</p> */}
           </div>
         </div>
         <span className={styles.footer}>Copyright © wouldbee.com 2021</span>
