@@ -86,25 +86,17 @@ const Profile = ({
     },
   });
 
-  const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    const notNullDetail = Object.keys(details.description).filter((detail) => {
-      if (details.description[detail].value) {
-        return details.description[detail].value;
-      }
-    });
-
-    const notNullValues = notNullDetail
-      .map((detail) => {
-        return details.description[detail].value;
-      })
-      .join(" | ");
-
-    // if (notNullValues) {
-    setDescription(notNullValues);
-    // }
+  const notNullDetail = Object.keys(details?.description).filter((detail) => {
+    if (details?.description[detail]?.value) {
+      return details?.description[detail]?.value;
+    }
   });
+
+  const description = notNullDetail
+    .map((detail) => {
+      return details?.description[detail]?.value;
+    })
+    .join(" | ");
 
   return (
     <>
