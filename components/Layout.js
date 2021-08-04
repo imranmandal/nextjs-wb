@@ -48,20 +48,20 @@ const Layout = ({
         <meta
           property="og:image"
           itemProp="image"
-          content={NEXT_URL + `Images/${img.wideImg}.png`}
+          content={NEXT_URL + `/Images/${img.wideImg}.png`}
         />
         <meta
           property="og:image"
           itemProp="image"
-          content={NEXT_URL + `Images/${img.wideImg}.png`}
+          content={NEXT_URL + `/Images/${img.wideImg}.png`}
         />
         <meta
           property="og:image:secure_url"
-          content={NEXT_URL + `Images/${img.wideImg}.png`}
+          content={NEXT_URL + `/Images/${img.wideImg}.png`}
         />
         <meta
           property="og:image:secure_url"
-          content={NEXT_URL + `Images/${img.wideImg}.png`}
+          content={NEXT_URL + `/Images/${img.wideImg}.png`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="256" />
