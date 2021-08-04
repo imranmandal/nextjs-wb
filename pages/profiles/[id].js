@@ -86,7 +86,7 @@ const Profile = ({
     },
   });
 
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     const notNullDetail = Object.keys(details.description).filter((detail) => {
