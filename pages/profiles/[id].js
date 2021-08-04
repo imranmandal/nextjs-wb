@@ -86,14 +86,11 @@ const Profile = ({
     },
   };
 
-  const description = Object.keys(details?.description)
+  const description = Object.values(details?.description)
     .map((detail) => {
-      if (details?.description[detail]?.value) {
-        return details?.description[detail]?.value;
+      if (detail.value) {
+        return detail.value;
       }
-    })
-    .map((detail) => {
-      return details?.description[detail]?.value;
     })
     .join(" | ");
 
