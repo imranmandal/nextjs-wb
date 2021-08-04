@@ -102,7 +102,7 @@ const Profile = ({
       .join(" | ");
 
     setDescription(notNullValues);
-  }, [details]);
+  });
 
   return (
     <>
