@@ -25,7 +25,6 @@ const Layout = ({
   const [vdoPath, setVdoPath] = useState(null);
 
   useEffect(() => {
-    // console.log(NEXT_URL + img.wideImg);
     if (window.innerWidth < 768) {
       setImgName(img.portraitImg);
       setVdoPath("/Images/wouldbee.mp4");
@@ -49,15 +48,21 @@ const Layout = ({
         <meta
           property="og:image"
           itemProp="image"
-          content={NEXT_URL + img.wideImg}
+          content={NEXT_URL + `Images/${img.wideImg}.png`}
         />
         <meta
           property="og:image"
           itemProp="image"
-          content={NEXT_URL + img.wideImg}
+          content={NEXT_URL + `Images/${img.wideImg}.png`}
         />
-        <meta property="og:image:secure_url" content={NEXT_URL + img.wideImg} />
-        <meta property="og:image:secure_url" content={NEXT_URL + img.wideImg} />
+        <meta
+          property="og:image:secure_url"
+          content={NEXT_URL + `Images/${img.wideImg}.png`}
+        />
+        <meta
+          property="og:image:secure_url"
+          content={NEXT_URL + `Images/${img.wideImg}.png`}
+        />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="256" />
         <meta property="og:image:height" content="256" />
