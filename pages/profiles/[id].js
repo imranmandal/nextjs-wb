@@ -40,6 +40,7 @@ const Profile = ({
   state,
   country,
   displayPictureUrl,
+  picturePrivacy,
 }) => {
   const degreesValue =
     degrees?.length > 0
@@ -73,8 +74,7 @@ const Profile = ({
       },
       degrees: { value: degreesValue, label: "Degrees" },
       income: {
-        //convertedCapitalizeValue(AnnualIncome[income - 1])
-        value: null,
+        value: convertedCapitalizeValue(AnnualIncome[income - 1]),
         label: "Annual Income",
       },
       occupation: {
@@ -205,7 +205,11 @@ const Profile = ({
           </div>
           <div className={styles.pictureContainer}>
             <img src={details.picture.url} alt="Profile Picture" />
-            <div>{signInToViewBtn}</div>
+            {picturePrivacy && (
+              <div className={styles.signInToViewBtn}>
+                <SignInToViewBtn label="Picture" />
+              </div>
+            )}
           </div>
           <div className={styles.detailsContainer}>
             <h2 className={styles.heading}>{details.title}</h2>
@@ -214,9 +218,11 @@ const Profile = ({
                 <div key={index} className={styles.detailContainer}>
                   <label>{details.description[data].label}: </label>
                   <p className={styles.detail}>
-                    {data === "income" && !details.description[data].value
-                      ? signInToViewBtn
-                      : details.description[data].value || "-"}
+                    {data === "income" && !details.description[data].value ? (
+                      <SignInToViewBtn label="Annual Income" />
+                    ) : (
+                      details.description[data].value || "-"
+                    )}
                   </p>
                 </div>
               );
@@ -243,11 +249,17 @@ Profile.defaultProps = {
 
 export default Profile;
 
-const signInToViewBtn = (
-  <Link href="/login">
-    <a className={styles.signInToViewBtnLink}>Sign In to view</a>
-  </Link>
-);
+const SignInToViewBtn = ({ label }) => {
+  return (
+    <Link href="/login">
+      <a className={styles.signInToViewBtnLink}>
+        View {label} on interest acceptance.{" "}
+        <span style={{ textDecoration: "underline" }}>Login</span> to send
+        interest.
+      </a>
+    </Link>
+  );
+};
 
 // export async function getStaticPaths() {
 //   const res = await fetch(`${API_URL}/profiles/${id}`);
@@ -269,7 +281,7 @@ export async function getServerSideProps({ params: { id } }) {
 
   const data = await res.json();
 
-  console.log(data);
+  // console.log(data);
   return {
     props: {
       uid: id,
@@ -288,6 +300,7 @@ export async function getServerSideProps({ params: { id } }) {
       state: data.state,
       country: data.country,
       displayPictureUrl: data.displayPictureUrl,
+      picturePrivacy: data.picturePrivacy,
     },
   };
 }
