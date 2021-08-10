@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import styles from "@/styles/ProfilesSharing.module.css";
 import { API_URL, NEXT_URL } from "@/config/index";
+import { FaLock } from "react-icons/fa";
+
 import {
   AnnualIncome,
   Degrees,
@@ -74,6 +76,7 @@ const Profile = ({
       },
       degrees: { value: degreesValue, label: "Degrees" },
       income: {
+        //
         value: convertedCapitalizeValue(AnnualIncome[income - 1]),
         label: "Annual Income",
       },
@@ -205,11 +208,12 @@ const Profile = ({
           </div>
           <div className={styles.pictureContainer}>
             <img src={details.picture.url} alt="Profile Picture" />
-            {picturePrivacy && (
-              <div className={styles.signInToViewBtn}>
-                <SignInToViewBtn label="Picture" />
-              </div>
-            )}
+            {/* {picturePrivacy && ( */}
+            <div className={styles.signInToViewBtn}>
+              <FaLock className={styles.lockIcon} />
+              <SignInToViewBtn label="Picture" />
+            </div>
+            {/* )} */}
           </div>
           <div className={styles.detailsContainer}>
             <h2 className={styles.heading}>{details.title}</h2>
@@ -251,13 +255,16 @@ export default Profile;
 
 const SignInToViewBtn = ({ label }) => {
   return (
-    <Link href="/login">
-      <a className={styles.signInToViewBtnLink}>
-        View {label} on interest acceptance.{" "}
-        <span style={{ textDecoration: "underline" }}>Login</span> to send
-        interest.
-      </a>
-    </Link>
+    <>
+      <Link href="/login">
+        <a className={styles.signInToViewBtnLink}>
+          View {label} on interest acceptance.
+          <br />
+          <span style={{ textDecoration: "underline" }}>Login</span> to send
+          interest.
+        </a>
+      </Link>
+    </>
   );
 };
 

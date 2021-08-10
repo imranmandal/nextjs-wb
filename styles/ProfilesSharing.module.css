@@ -56,9 +56,15 @@
   top: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px) brightness(0.5);
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+.lockIcon {
+  font-size: 3rem;
 }
 
 .pictureContainer .signInToViewBtnLink,
