@@ -29,6 +29,7 @@ const SignUpModal = ({
       setSlideClass(null);
     }
   }, [queryData]);
+
   useEffect(() => {
     if (show) {
       document.body.style.overflowY = "hidden";

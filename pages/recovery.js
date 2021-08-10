@@ -184,7 +184,10 @@ const Recovery = () => {
 
     if (res.ok) {
       // console.log(res);
-      router.replace({ pathname: "/", query: { phone: data.phone } });
+      router.replace(
+        { pathname: "/login", query: { phone: data.phone } },
+        "/login"
+      );
       toast.success("Password changed successfully");
     } else {
       // console.log(res);
@@ -202,7 +205,7 @@ const Recovery = () => {
           <form
             className={styles.container}
             onSubmit={handleSubmit(submitHandler)}
-            noValidate
+            formNoValidate
             autoComplete="new-off"
           >
             <h2 className="text-center p-3 text-pink">Forgot Password</h2>
@@ -324,10 +327,10 @@ const Recovery = () => {
 
               <div className="d-flex flex-column">
                 <input
-                  formnovalidate
+                  formNoValidate
                   type="submit"
                   value="Reset Password"
-                  className="btn btn-pink w-100 "
+                  className="btn btn-pink w-100 my-3"
                 />
               </div>
             </div>

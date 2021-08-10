@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/Signup.module.css";
+import modalStyle from "@/styles/Modal.module.css";
+import loginFormStyle from "@/styles/Login.module.css";
+import { AiOutlineDoubleLeft } from "react-icons/ai";
 import AuthContext from "context/AuthContext";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -10,11 +13,13 @@ import "react-intl-tel-input/dist/main.css";
 import Link from "next/link";
 import * as yup from "yup";
 
-const Login = ({ setPageLoading, queryData, setShowModal }) => {
+const Login = () => {
   const { login } = useContext(AuthContext);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [countryCode, setCountryCode] = useState("91");
+  const [pageLoading, setPageLoading] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -22,14 +27,13 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
   }, []);
 
   useEffect(() => {
-    if (queryData) {
-      console.log(queryData);
-      setPhone(queryData);
-      setValue("phone", queryData, {
+    if (router.query.phone) {
+      setPhone(router.query.phone);
+      setValue("phone", router.query.phone, {
         shouldValidate: true,
       });
     }
-  }, [queryData]);
+  }, [router.query.phone]);
 
   const schema = yup.object().shape({
     phone: yup
@@ -70,7 +74,6 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
 
     if (response) {
       setPageLoading(false);
-      setShowModal(false);
 
       router.push(
         `/profile-creation/?token=${response.token}`,
@@ -96,7 +99,7 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
   return (
     <>
       <div className="container my-4 mx-auto text-left">
-        <div className="col mx-auto my-5">
+        <div className={loginFormStyle.containerInner}>
           <form
             className={styles.login}
             onSubmit={handleSubmit(handleLogin)}
@@ -117,8 +120,8 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
 
             <h2 className="text-center p-3 text-pink">Sign in</h2>
 
-            <div className="my-3 mx-1 mx-sm-3 w-100">
-              <div className="d-flex flex-column my-2 w-100">
+            <div className="w-100">
+              <div className="d-flex flex-column my-3 w-100">
                 <div className={styles.phoneInput}>
                   <IntlTelInput
                     preferredCountries={["in"]}
@@ -154,18 +157,15 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
               />
               <p className="error-message">{errors.password?.message}</p>
 
-              <div className="d-flex flex-column align-items-center">
+              <div className="d-flex flex-column my-3 align-items-center">
                 <Link
                   href={{
                     pathname: "/recovery",
                     query: { phone: phone || "" },
+                    as: "/recovery",
                   }}
-                  as="/recovery"
                 >
-                  <a
-                    className={styles.forgotPassTxt}
-                    onClick={() => setShowModal(false)}
-                  >
+                  <a className={styles.forgotPassTxt}>
                     Forgot{" "}
                     <span className="text-lowercase">your password? </span>
                   </a>
@@ -173,15 +173,39 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
                 <input
                   type="submit"
                   value="Sign In"
-                  className="btn btn-pink w-100 "
-                >
-                  {/* <span className={styles.submitBtn}>Sign In</span> */}
-                </input>
+                  className="btn btn-pink w-100 my-3"
+                />
+
+                <p className="my-2 text-center">
+                  Don't have an account?{" "}
+                  <Link
+                    href={{
+                      pathname: "/signup",
+                      query: { phone: phone || "" },
+                    }}
+                    as="/signup"
+                  >
+                    <a className="text-pink ">Sign up</a>
+                  </Link>
+                </p>
+                <Link href="/">
+                  <a className="text-pink">
+                    <AiOutlineDoubleLeft />
+                    Go back home
+                  </a>
+                </Link>
               </div>
             </div>
           </form>
         </div>
       </div>
+      {pageLoading && (
+        <div className={modalStyle.loading_container}>
+          <div className="spinner-border text-pink m-auto" role="status">
+            <span className="visually-hidden h-100 w-100"></span>
+          </div>
+        </div>
+      )}
     </>
   );
 };

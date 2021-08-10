@@ -218,10 +218,12 @@ function SignUpForm(props) {
               <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
                   <IntlTelInput
+                    style={{ width: "100%" }}
                     preferredCountries={["in"]}
                     onlyCountries={["in", "us", "gb", "ca"]}
                     fieldName="phone"
                     placeholder="Phone"
+                    formatOnInit={false}
                     value={data.phone}
                     onPhoneNumberChange={(isMaxDigit, phone) => {
                       handlePhoneChange(phone);
@@ -400,7 +402,7 @@ function SignUpForm(props) {
                 </a>
               </p>
 
-              <div className="d-flex w-100 mx-1 mx-sm-3 ">
+              <div className="d-flex w-100 ">
                 <input
                   className="btn btn-pink w-100"
                   type="submit"

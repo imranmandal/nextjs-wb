@@ -16,6 +16,7 @@ import {
   convertedHeight,
   convertedValue,
 } from "@/components/FormComponent/FormFunctions";
+import Link from "next/link";
 
 const Profile = ({
   title,
@@ -40,21 +41,20 @@ const Profile = ({
   country,
   displayPictureUrl,
 }) => {
-  const degreesValue = [
-    ...[
-      degrees?.length > 0
-        ? degrees
+  const degreesValue =
+    degrees?.length > 0
+      ? [
+          ...degrees
             .map((degreeIndex) => {
               return convertedValue(Degrees[degreeIndex]);
             })
-            .join(", ")
-        : "-",
-    ],
-  ];
+            .join(", "),
+        ]
+      : "";
 
   const details = {
     title: `${id} | ${lastName}`,
-    picture: displayPictureUrl,
+    picture: { url: displayPictureUrl, blurred: true },
     description: {
       gender: { value: Gender[gender - 1], label: "Gender" },
       age: { value: age ? `${age} Yrs` : null, label: "Age" },
@@ -73,7 +73,8 @@ const Profile = ({
       },
       degrees: { value: degreesValue, label: "Degrees" },
       income: {
-        value: convertedCapitalizeValue(AnnualIncome[income - 1]),
+        //convertedCapitalizeValue(AnnualIncome[income - 1])
+        value: null,
         label: "Annual Income",
       },
       occupation: {
@@ -87,12 +88,9 @@ const Profile = ({
   };
 
   const description = Object.values(details?.description)
-    .map((detail) => {
-      if (detail.value) {
-        return detail.value;
-      }
-    })
-    .join(" | ");
+    .map((detail) => detail.value)
+    .join(" | ")
+    .replace("  |", "");
 
   return (
     <>
@@ -206,7 +204,8 @@ const Profile = ({
             <img src={`${NEXT_URL}/Logos/logoWb.png`} alt="Logo" />
           </div>
           <div className={styles.pictureContainer}>
-            <img src={details.picture} alt="Profile Picture" />
+            <img src={details.picture.url} alt="Profile Picture" />
+            <div>{signInToViewBtn}</div>
           </div>
           <div className={styles.detailsContainer}>
             <h2 className={styles.heading}>{details.title}</h2>
@@ -215,7 +214,9 @@ const Profile = ({
                 <div key={index} className={styles.detailContainer}>
                   <label>{details.description[data].label}: </label>
                   <p className={styles.detail}>
-                    {details.description[data].value || "-"}
+                    {data === "income" && !details.description[data].value
+                      ? signInToViewBtn
+                      : details.description[data].value || "-"}
                   </p>
                 </div>
               );
@@ -242,6 +243,12 @@ Profile.defaultProps = {
 
 export default Profile;
 
+const signInToViewBtn = (
+  <Link href={"/"}>
+    <a className={styles.signInToViewBtnLink}>Sign In to view</a>
+  </Link>
+);
+
 // export async function getStaticPaths() {
 //   const res = await fetch(`${API_URL}/profiles/${id}`);
 
@@ -262,6 +269,7 @@ export async function getServerSideProps({ params: { id } }) {
 
   const data = await res.json();
 
+  console.log(data);
   return {
     props: {
       uid: id,

@@ -130,7 +130,6 @@ function Form2(props) {
 
   const handleChange = (elem) => {
     const { name, value } = elem.target;
-    // console.log(value);
     setData((prevValue) => ({
       ...prevValue,
       [name]: value.replace(/  +/g, " "),
@@ -144,8 +143,6 @@ function Form2(props) {
 
   // ---- GRAPHQL MUTATION
   const [saveFirstPage, SavedResponse] = useMutation(SAVE_FIRST_PAGE);
-
-  // SavedResponse?.error && console.log(SavedResponse.error);
 
   const SubmitForm = () => {
     if (data.dob > getFullDate(maxDate)) {
@@ -227,12 +224,6 @@ function Form2(props) {
       }
     }
   }, [SavedData]);
-
-  // const handleConfirm = (e) => {
-  //   e.preventDefault();
-  //   submitForm(data, uid, saveFirstPage, setIsFirstScreenSaved);
-  //   setShowModal(false);
-  // };
 
   return (
     <>
