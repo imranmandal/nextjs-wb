@@ -244,7 +244,7 @@ Profile.defaultProps = {
 export default Profile;
 
 const signInToViewBtn = (
-  <Link href={"/"}>
+  <Link href="/login">
     <a className={styles.signInToViewBtnLink}>Sign In to view</a>
   </Link>
 );
