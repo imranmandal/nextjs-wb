@@ -208,12 +208,12 @@ const Profile = ({
           </div>
           <div className={styles.pictureContainer}>
             <img src={details.picture.url} alt="Profile Picture" />
-            {/* {picturePrivacy && ( */}
-            <div className={styles.signInToViewBtn}>
-              <FaLock className={styles.lockIcon} />
-              <SignInToViewBtn label="Picture" />
-            </div>
-            {/* )} */}
+            {picturePrivacy && (
+              <div className={styles.signInToViewBtn}>
+                <FaLock className={styles.lockIcon} />
+                <SignInToViewBtn label="Picture" />
+              </div>
+            )}
           </div>
           <div className={styles.detailsContainer}>
             <h2 className={styles.heading}>{details.title}</h2>
