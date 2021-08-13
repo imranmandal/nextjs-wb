@@ -22,6 +22,7 @@ export async function getStaticPaths() {
     "/landing/south-matrimony",
     "/landing/muslim-matrimony",
     "/landing/christian-matrimony",
+    "/landing/bengali-matrimony",
   ];
 
   return {

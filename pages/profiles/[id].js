@@ -76,7 +76,6 @@ const Profile = ({
       },
       degrees: { value: degreesValue, label: "Degrees" },
       income: {
-        //
         value: convertedCapitalizeValue(AnnualIncome[income - 1]),
         label: "Annual Income",
       },

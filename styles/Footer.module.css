@@ -23,14 +23,11 @@
   font-size: 0.9rem;
 }
 
-.social_h5 {
-  margin-left: 4px;
-}
-
 .social {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   justify-content: space-between;
-  width: 200px;
   margin-left: 0;
   border-bottom: 0px !important;
 }
@@ -114,5 +111,8 @@
 
   .social {
     margin: auto auto 1rem;
+    display: flex;
+    flex-direction: row;
+    width: 200px;
   }
 }

@@ -8,11 +8,23 @@ import {
   GrTwitter,
   GrLinkedinOption,
 } from "react-icons/gr";
+import { convertedCapitalizeValue } from "./FormComponent/FormFunctions";
 
 function Footer() {
   const today = new Date();
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const previousYear = currentYear - 1;
+
+  const communinties = [
+    "jain-matrimony",
+    "baniya-matrimony",
+    "marathi-matrimony",
+    "muslim-matrimony",
+    "christian-matrimony",
+    "punjabi-matrimony",
+    "south-matrimony",
+    "bengali-matrimony",
+  ];
 
   return (
     <footer className={styles.footer}>
@@ -83,45 +95,19 @@ function Footer() {
         <div>
           <h5>Community</h5>
           <ul className={styles.ul}>
-            <li>
-              <a href="/landing/jain-matrimony" target="_blank">
-                Jain Matrimony
-              </a>
-            </li>
-            <li>
-              <a href="/landing/baniya-matrimony" target="_blank">
-                Baniya Matrimony
-              </a>
-            </li>
-            <li>
-              <a href="/landing/marathi-matrimony" target="_blank">
-                Marathi Matrimony
-              </a>
-            </li>
-            <li>
-              <a href="/landing/muslim-matrimony" target="_blank">
-                Muslim Matrimony
-              </a>
-            </li>
-            <li>
-              <a href="/landing/christian-matrimony" target="_blank">
-                Christian Matrimony
-              </a>
-            </li>
-            <li>
-              <a href="/landing/punjabi-matrimony" target="_blank">
-                Punjabi Matrimony
-              </a>
-            </li>
-            <li>
-              <a href="/landing/south-matrimony" target="_blank">
-                South Matrimony
-              </a>
-            </li>
+            {communinties.map((communinty) => {
+              return (
+                <li key={communinty}>
+                  <a href={`/landing/${communinty}`} target="_blank">
+                    {convertedCapitalizeValue(communinty).replace("-", " ")}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div>
-          <h5 className={styles.social_h5}>follow us</h5>
+          <h5>follow us</h5>
           <div className={styles.social}>
             <Link href="https://www.facebook.com/WouldBeeFB">
               <a className={styles.facebook}>
