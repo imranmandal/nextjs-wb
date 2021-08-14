@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import SignUpForm from "./Forms/SignUpForm";
 import styles from "@/styles/Signup.module.css";
-import modalStyle from "@/styles/Modal.module.css";
 
 const SignUp = (props) => {
   const [formData, setFormData] = useState({
@@ -16,7 +14,7 @@ const SignUp = (props) => {
   });
 
   return (
-    <div className=" container my-4 mx-auto text-left">
+    <div className="my-4 mx-auto text-left">
       <div className="col mx-auto my-5 ">
         <div className={styles.body}>
           <SignUpForm

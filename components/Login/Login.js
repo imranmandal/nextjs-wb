@@ -5,31 +5,16 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import IntlTelInput from "react-intl-tel-input";
-import "react-intl-tel-input/dist/main.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
 import Link from "next/link";
 import * as yup from "yup";
 
-const Login = ({ setPageLoading, queryData, setShowModal }) => {
+const Login = ({ setPageLoading, setShowModal, phoneValue }) => {
   const { login } = useContext(AuthContext);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [countryCode, setCountryCode] = useState("91");
   const router = useRouter();
-
-  useEffect(() => {
-    router.prefetch("/profile-creation");
-  }, []);
-
-  useEffect(() => {
-    if (queryData) {
-      console.log(queryData);
-      setPhone(queryData);
-      setValue("phone", queryData, {
-        shouldValidate: true,
-      });
-    }
-  }, [queryData]);
 
   const schema = yup.object().shape({
     phone: yup
@@ -57,6 +42,17 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    router.prefetch("/profile-creation");
+  }, []);
+
+  useEffect(() => {
+    if (phoneValue) {
+      setPhone(phoneValue);
+      setValue("phone", phoneValue);
+    }
+  }, [phoneValue]);
+
   const handleLogin = async () => {
     setPageLoading(true);
 
@@ -66,27 +62,25 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
       return;
     }
 
-    const response = await login({ phone, countryCode, password });
+    const response = await login({ phone, password });
 
     if (response) {
       setPageLoading(false);
-      setShowModal(false);
+      setShowModal && setShowModal(false);
 
       router.push(
         `/profile-creation/?token=${response.token}`,
-        `/profile-creation`,
-        { shallow: false }
+        `/profile-creation`
       );
     } else {
       setPageLoading(false);
-      console.log(response);
     }
   };
 
   const handlePhoneChange = (value) => {
-    setValue("phone", value);
+    setValue("phone", phone);
     setPhone((prevValue) => {
-      if (value.length === 19) {
+      if (phone.length === 19) {
         return prevValue;
       }
       return value;
@@ -94,95 +88,87 @@ const Login = ({ setPageLoading, queryData, setShowModal }) => {
   };
 
   return (
-    <>
-      <div className="container my-4 mx-auto text-left">
-        <div className="col mx-auto my-5">
-          <form
-            className={styles.login}
-            onSubmit={handleSubmit(handleLogin)}
-            noValidate
-            autoComplete="off"
-          >
-            {/* For autoComplete */}
-            <input
-              type="text"
-              id="disabled"
-              name="disabled"
-              className="form-control"
-              placeholder="First Name"
-              autoComplete="new-off"
-              // disabled={isFirstScreenSaved}
-              style={{ display: "none" }}
-            />
+    <div className={styles.login_form}>
+      <div className="login-form-container-inner w-100 mt-5">
+        <form
+          onSubmit={handleSubmit(handleLogin)}
+          noValidate
+          autoComplete="off"
+        >
+          {/* For autoComplete */}
+          <input
+            type="text"
+            id="disabled"
+            name="disabled"
+            className="form-control"
+            placeholder="First Name"
+            autoComplete="new-off"
+            style={{ display: "none" }}
+          />
 
-            <h2 className="text-center p-3 text-pink">Sign in</h2>
+          <h2 className="text-center p-3 text-pink">Sign In</h2>
 
-            <div className="my-3 mx-1 mx-sm-3 w-100">
-              <div className="d-flex flex-column my-2 w-100">
-                <div className={styles.phoneInput}>
-                  <IntlTelInput
-                    preferredCountries={["in"]}
-                    onlyCountries={["in", "us", "gb", "ca"]}
-                    fieldName="phone"
-                    placeholder="Phone"
-                    value={phone}
-                    onPhoneNumberChange={(isMaxDigit, phone) => {
-                      handlePhoneChange(phone);
-                    }}
-                    onSelectFlag={(index, countryData) => {
-                      setCountryCode(countryData.dialCode);
-                    }}
-                    formatOnInit={false}
-                    containerClassName="intl-tel-input w-100 tel-input"
-                    inputClassName="form-control w-100"
-                    autoComplete="off"
-                  />
-                </div>
-
-                <p className="error-message">{errors.phone?.message}</p>
-              </div>
-
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setValue("password", e.target.value);
-                  setPassword(e.target.value);
-                }}
-                className="form-control"
-                placeholder="Password"
-              />
-              <p className="error-message">{errors.password?.message}</p>
-
-              <div className="d-flex flex-column align-items-center">
-                <Link
-                  href={{
-                    pathname: "/recovery",
-                    query: { phone: phone || "" },
+          <div className=" mx-1 mx-sm-3 w-100">
+            <div className="d-flex flex-column my-3 w-100">
+              <div className={styles.phoneInput}>
+                <PhoneInput
+                  country={"in"}
+                  onlyCountries={["in", "us", "gb", "ca"]}
+                  preferredCountries={["in"]}
+                  countryCodeEditable={false}
+                  containerClass="w-100 tel-input"
+                  inputClass="form-control"
+                  inputProps={{
+                    style: { zIndex: "1" },
+                    name: "phone",
+                    required: true,
+                    variant: "standard",
                   }}
-                  as="/recovery"
-                >
-                  <a
-                    className={styles.forgotPassTxt}
-                    onClick={() => setShowModal(false)}
-                  >
-                    Forgot{" "}
-                    <span className="text-lowercase">your password? </span>
-                  </a>
-                </Link>
-                <input
-                  type="submit"
-                  value="Sign In"
-                  className="btn btn-pink w-100 "
-                >
-                  {/* <span className={styles.submitBtn}>Sign In</span> */}
-                </input>
+                  value={phone}
+                  onChange={(phone) => handlePhoneChange(phone)}
+                />
               </div>
+
+              <p className="error-message">{errors.phone?.message}</p>
             </div>
-          </form>
-        </div>
+
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setValue("password", e.target.value);
+                setPassword(e.target.value);
+              }}
+              className="form-control"
+              placeholder="Password"
+            />
+            <p className="error-message">{errors.password?.message}</p>
+
+            <div className="d-flex flex-column align-items-center">
+              <Link
+                href={{
+                  pathname: "/recovery",
+                  query: { phone: phone || "" },
+                }}
+                as="/recovery"
+              >
+                <a
+                  className={styles.forgotPassTxt}
+                  onClick={() => setShowModal && setShowModal(false)}
+                >
+                  Forgot <span className="text-lowercase">your password? </span>
+                </a>
+              </Link>
+              <input
+                type="submit"
+                value="Sign In"
+                className="btn btn-pink w-100"
+              />
+            </div>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

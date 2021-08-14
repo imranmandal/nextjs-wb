@@ -16,6 +16,7 @@ export default async (req, res) => {
     { url: "/landing/christian-matrimony", changefreq: "never", priority: 0.3 },
     { url: "/landing/marathi-matrimony", changefreq: "never", priority: 0.3 },
     { url: "/landing/south-matrimony", changefreq: "never", priority: 0.3 },
+    { url: "/landing/bengali-matrimony", changefreq: "never", priority: 0.3 },
   ];
 
   // Create a stream to write to

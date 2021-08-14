@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,14 +10,13 @@ import { convertedValue } from "@/components/FormComponent/FormFunctions";
 import { toast } from "react-toastify";
 import NumberFormat from "react-number-format";
 import { useRouter } from "next/router";
-import IntlTelInput from "react-intl-tel-input";
-import "react-intl-tel-input/dist/main.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
 
 function SignUpForm(props) {
   const { data, setData, setShowModal } = props;
   const formType = "signup";
   const router = useRouter();
-  const [countryData, setCountryData] = useState({ iso: "in", code: "91" });
 
   // ---- CONTEXT
   const { signUp, uuId, error } = useContext(AuthContext);
@@ -111,7 +110,7 @@ function SignUpForm(props) {
   };
 
   const handlePhoneChange = (value) => {
-    if (value.length >= 10) {
+    if (value.length >= 12) {
       setDisableVerifyBtn(false);
       setShowRecaptcha(true);
     } else {
@@ -144,7 +143,6 @@ function SignUpForm(props) {
     const response = await signUp({
       email,
       phone,
-      countryData,
       otp,
       password,
       phoneAuthToken,
@@ -163,7 +161,7 @@ function SignUpForm(props) {
 
     if (response.status > 400 && response.status < 500) {
       if (response.status === 409) {
-        return toast.error("Email already exists.");
+        return toast.error(response.data.message);
       }
       toast.error("Something went wrong. Please try again later");
     }
@@ -174,11 +172,9 @@ function SignUpForm(props) {
       e,
       uuId,
       data,
-      countryData,
       formType,
       setShowRecaptcha,
-      setRecaptchaResult,
-      setShowOtpInput,
+      handleGenerateOtp,
       setDisablePhoneInput,
       setDisableVerifyBtn
     );
@@ -187,12 +183,18 @@ function SignUpForm(props) {
     setDisablePhoneInput(true);
   };
 
+  function handleGenerateOtp(response) {
+    setRecaptchaResult(response);
+    setShowRecaptcha(false);
+    setShowOtpInput(true);
+    setDisablePhoneInput(true);
+  }
+
   const otpVerify = (e) => {
     e.preventDefault();
     verifyOtp(
       uuId,
       data,
-      countryData,
       setData,
       setDisableVerifyBtn,
       setShowOtpInput,
@@ -214,42 +216,38 @@ function SignUpForm(props) {
               noValidate
               autoComplete="new-off"
             >
+              {/* For autoComplete */}
+              <input
+                type="text"
+                id="disabled"
+                name="disabled"
+                className="form-control"
+                placeholder="First Name"
+                autoComplete="new-off"
+                // disabled={isFirstScreenSaved}
+                style={{ display: "none" }}
+              />
+
               <h2 className="text-center p-3 text-pink">Sign Up</h2>
               <div className="form-floating my-3 w-100">
                 <div className={styles.phoneInput}>
-                  <IntlTelInput
-                    style={{ width: "100%" }}
-                    preferredCountries={["in"]}
+                  <PhoneInput
+                    country={"in"}
                     onlyCountries={["in", "us", "gb", "ca"]}
-                    fieldName="phone"
-                    placeholder="Phone"
-                    formatOnInit={false}
+                    preferredCountries={["in"]}
+                    countryCodeEditable={false}
+                    inputProps={{
+                      style: { width: "100%" },
+                      name: "phone",
+                      required: true,
+                      autoFocus: true,
+                      variant: "standard",
+                      autoComplete: "off",
+                    }}
                     value={data.phone}
-                    onPhoneNumberChange={(isMaxDigit, phone) => {
-                      handlePhoneChange(phone);
-                    }}
-                    onSelectFlag={(index, countryData) => {
-                      console.log(countryData);
-                      setCountryData({
-                        iso: countryData.iso2,
-                        code: countryData.dialCode,
-                      });
-                    }}
-                    containerClassName="intl-tel-input"
-                    inputClassName="form-control"
-                    disabled={disablePhoneInput}
-                  />
-
-                  {/* For autoComplete */}
-                  <input
-                    type="text"
-                    id="disabled"
-                    name="disabled"
-                    className="form-control"
-                    placeholder="First Name"
+                    onChange={(phone) => handlePhoneChange(phone)}
                     autoComplete="off"
-                    // disabled={isFirstScreenSaved}
-                    style={{ display: "none" }}
+                    disabled={disablePhoneInput}
                   />
 
                   <div className="d-flex">

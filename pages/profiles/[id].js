@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
 import styles from "@/styles/ProfilesSharing.module.css";
 import { API_URL, NEXT_URL } from "@/config/index";
 import { FaLock } from "react-icons/fa";

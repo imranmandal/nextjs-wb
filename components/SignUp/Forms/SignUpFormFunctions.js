@@ -33,18 +33,15 @@ export const schema = yup.object().shape({
 });
 
 // ------- CHECK NUMBER ALREADY EXISTS
-const CheckPhoneExists = async (countryCode, phone, uuId) => {
+const CheckPhoneExists = async (phone, uuId) => {
   const result = await axios
-    .get(
-      `${API_URL}/auth/v2/check-phone/+${countryCode}${phone}/?sessionId=${uuId}`
-    )
+    .get(`${API_URL}/auth/v2/check-phone/+${phone}/?sessionId=${uuId}`)
     .then((res) => {
-      // console.log(res.data.exists);
       return res.data.exists;
     })
-    .catch((error) =>
-      toast.error("Something went wrong. Please try again later.")
-    );
+    .catch((error) => {
+      toast.error("Something went wrong. Please try again later.");
+    });
   return result;
 };
 
@@ -53,28 +50,22 @@ export const generateOtp = (
   event,
   uuId,
   data,
-  countryData,
   formType,
   setShowRecaptcha,
-  setRecaptchaResult,
-  setShowOtpInput,
+  handleGenerateOtp,
   setDisablePhoneInput,
   setDisableVerifyBtn
 ) => {
   event.preventDefault();
-
   const phone = data.phone;
-  const countryCode = countryData.code;
 
   if (phone.length <= 18) {
     if (formType === "signup") {
-      CheckPhoneExists(countryCode, phone, uuId).then((res) => {
+      CheckPhoneExists(phone, uuId).then((res) => {
         if (!res) {
           generate(
             phone,
-            countryCode,
-            setRecaptchaResult,
-            setShowOtpInput,
+            handleGenerateOtp,
             setDisablePhoneInput,
             setDisableVerifyBtn,
             setShowRecaptcha
@@ -87,13 +78,11 @@ export const generateOtp = (
       });
     }
     if (formType === "recovery") {
-      CheckPhoneExists(countryCode, phone, uuId).then((res) => {
+      CheckPhoneExists(phone, uuId).then((res) => {
         if (res) {
           generate(
             phone,
-            countryCode,
-            setRecaptchaResult,
-            setShowOtpInput,
+            handleGenerateOtp,
             setDisablePhoneInput,
             setDisableVerifyBtn,
             setShowRecaptcha
@@ -113,29 +102,25 @@ export const generateOtp = (
 
 const generate = (
   phone,
-  countryCode,
-  setRecaptchaResult,
-  setShowOtpInput,
+  handleGenerateOtp,
   setDisablePhoneInput,
   setDisableVerifyBtn,
   setShowRecaptcha
 ) => {
   setDisableVerifyBtn(false);
   const captcha = new firebase.auth.RecaptchaVerifier("recaptcha");
-  const number = `+${countryCode}${phone}`;
+  const number = `+${phone}`;
 
   firebase
     .auth()
     .signInWithPhoneNumber(number, captcha)
     .then((response) => {
-      setRecaptchaResult(response);
-      setShowRecaptcha(false);
-      setShowOtpInput(true);
-      setDisablePhoneInput(true);
+      handleGenerateOtp(response);
     })
     .catch((error) => {
       setShowRecaptcha(false);
       setDisablePhoneInput(false);
+      console.log(error);
       error.code === "auth/invalid-phone-number"
         ? toast.error("Invalid phone number")
         : toast.error("Something went wrong. Please try again later.");
@@ -146,7 +131,6 @@ const generate = (
 export const verifyOtp = (
   uuId,
   data,
-  countryData,
   setData,
   setDisableVerifyBtn,
   setShowOtpInput,
@@ -155,9 +139,7 @@ export const verifyOtp = (
 ) => {
   const captchaResult = recaptchaResult;
   const otp = data.otp;
-  const countryCode = countryData.code;
-  const phone = `+${countryCode}${data.phone}`;
-  console.log(uuId);
+  const phone = `+${data.phone}`;
 
   if (!otp) {
     sendReport(uuId, phone, "false");

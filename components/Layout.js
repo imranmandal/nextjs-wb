@@ -13,7 +13,6 @@ const Layout = ({
   keywords,
   description,
   children,
-  queryData,
   img,
   video,
   communityName,
@@ -129,7 +128,7 @@ const Layout = ({
         {/* <link rel="apple-touch-icon" href={NEXT_URL + "/favicon-17.png"} /> */}
       </Head>
 
-      <Header queryData={queryData} />
+      <Header />
 
       {router.pathname === "/" || router.pathname.includes("/landing") ? (
         <Welcome

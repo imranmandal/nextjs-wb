@@ -5,10 +5,14 @@ import styles from "@/styles/Header.module.css";
 import SignUpModal from "@/components/SignUpModal";
 import AuthContext from "context/AuthContext";
 
-function Header({ queryData }) {
-  const { userToken, logout } = useContext(AuthContext);
+function Header() {
+  const { userToken } = useContext(AuthContext);
   const router = useRouter();
   const [showSignUp, setShowSignUp] = useState(false);
+
+  useEffect(() => {
+    router.prefetch(`/profile-creation`);
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -20,15 +24,6 @@ function Header({ queryData }) {
           { shallow: true }
         );
   };
-  useEffect(() => {
-    if (queryData) {
-      setShowSignUp(true);
-    }
-  }, [queryData]);
-
-  useEffect(() => {
-    router.prefetch(`/profile-creation`);
-  }, []);
 
   return (
     <>
@@ -43,18 +38,8 @@ function Header({ queryData }) {
               />
             </a>
           </Link>
-          {/* navbar-nav flex-row ml-auto mb-auto mb-lg-0 */}
           <div id="navbarSupportedContent" className={styles.navbar}>
             <ul className={styles.navbar_nav}>
-              {/* {!userToken && (
-                <li className="text-light nav-i#profiles">
-                    View Profilestem">
-                  <a aria-current="page" href="
-                  </a>
-                </li>
-              )} */}
-
-              {/* {!userToken ? ( */}
               <li>
                 <Link href="#" scroll={false}>
                   <a
@@ -66,23 +51,6 @@ function Header({ queryData }) {
                   </a>
                 </Link>
               </li>
-
-              {/* <li>
-                <Link href="#" scroll={false}>
-                  <a
-                    className="nav-link text-dark bg-light rounded-pill shadow-lg"
-                    onClick={(e) => {
-                      e.preventDefault();
-
-                      // Logout
-                      logout();
-                    }}
-                    aria-current="page"
-                  >
-                    Logout
-                  </a>
-                </Link>
-              </li> */}
             </ul>
           </div>
         </div>
@@ -93,7 +61,6 @@ function Header({ queryData }) {
           setShowSignUp(false);
         }}
         setShow={setShowSignUp}
-        queryData={queryData}
       />
     </>
   );

@@ -29,8 +29,10 @@ export const GET_DESIGNATION_NAME = gql`
     designations(
       options: { q: $like, skip: $skip, take: $take, isApproved: { eq: true } }
     ) {
-      id
-      name
+      values {
+        id
+        name
+      }
     }
   }
 `;
@@ -40,8 +42,10 @@ export const GET_EMPLOYER_NAME = gql`
     employers(
       options: { q: $like, skip: $skip, take: $take, isApproved: { eq: true } }
     ) {
-      id
-      name
+      values {
+        id
+        name
+      }
     }
   }
 `;

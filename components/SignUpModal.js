@@ -4,31 +4,14 @@ import styles from "@/styles/Modal.module.css";
 import ReactDOM from "react-dom";
 import SignUp from "./SignUp/SignUp";
 import Login from "./Login/Login";
-// import { ToastContainer } from "react-toastify";
 
-// import logo from "../../Images/wouldbee1.png";
-
-const SignUpModal = ({
-  msg,
-  show,
-  setShow,
-  children,
-  handleClose,
-  queryData,
-}) => {
+const SignUpModal = ({ show, setShow, handleClose }) => {
   const [isBrowser, setIsBrowser] = useState(false);
   const [slideClass, setSlideClass] = useState(styles.right_panel_active);
-  // console.log(show);
 
   const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => setIsBrowser(true), []);
-  // useEffect(() => console.log(slideClass), [slideClass]);
-  useEffect(() => {
-    if (queryData) {
-      setSlideClass(null);
-    }
-  }, [queryData]);
 
   useEffect(() => {
     if (show) {
@@ -56,15 +39,13 @@ const SignUpModal = ({
             </div>
           </div>
         ) : null}
-        {/* <ToastContainer /> */}
-        <div className={styles.overlay} /*className="modal-dialog"*/>
-          <div className={styles.modal} /*className="modal-content"*/>
+        <div className={styles.overlay}>
+          <div className={styles.modal}>
             <FaTimes className={styles.closeBtn} onClick={handleClose} />
             <div className={styles.container} id="container">
               <div className={slideClass}>
                 <div className={styles.login_container}>
                   <Login
-                    queryData={queryData}
                     setPageLoading={setPageLoading}
                     setShowModal={setShow}
                   />
@@ -72,7 +53,6 @@ const SignUpModal = ({
                 <div className={styles.sign_up_container}>
                   <SignUp
                     setPageLoading={setPageLoading}
-                    msg={msg}
                     handleClose={handleClose}
                     setShowModal={setShow}
                   />

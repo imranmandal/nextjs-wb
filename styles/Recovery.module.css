@@ -1,8 +1,10 @@
 .container {
   width: 100%;
-  min-height: 100vh;
+  max-width: 400px;
+  min-width: 350px;
   max-height: 100%;
-  padding: 7% 15%;
+  margin: auto;
+  margin-top: 10%;
 }
 
 .container input[name="password"],
@@ -12,9 +14,7 @@
 .phoneInput {
   margin-right: auto;
   margin-left: auto;
-  width: 350px;
-  max-width: 350px;
-  /* min-width: 310px; */
+  width: 100%;
 }
 
 .container input[name="password"],
@@ -34,12 +34,6 @@
   border-radius: 5px;
 }
 
-.phoneInput input {
-  border: none;
-  background: #fff;
-  width: 100%;
-}
-
 .phoneInput label {
   margin: auto;
   padding: 0 5px;
@@ -49,12 +43,12 @@
     rgba(59, 59, 59, 0.3)
   );
 }
-
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .container {
-    padding: 7% 0;
+    padding: 5%;
   }
 }
+
 @media (max-width: 400px) {
   .container input[name="password"],
   .container input[name="cPassword"],

@@ -1,12 +1,9 @@
 // bootstrap css
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import { AuthProvider } from "context/AuthContext";
 import "../styles/globals.css";
-
 import TagManager from "react-gtm-module";
-
 import { useEffect } from "react";
 import { TAG_MANAGER_ID } from "@/config/index";
 import { ToastContainer } from "react-toastify";

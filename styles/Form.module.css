@@ -1,8 +1,5 @@
 .container {
-  padding-top: 4%;
-  padding-right: 15%;
-  padding-left: 15%;
-  padding-bottom: 7%;
+  padding: 4% 15% 7%;
   text-transform: capitalize;
   overflow-y: hidden;
   min-height: 100vh;
@@ -95,15 +92,6 @@
 .suggestion label {
   cursor: pointer;
 }
-
-/* -------------- HIDE SCROLL BAR */
-
-/* this will hide the scrollbar in webkit based browsers - safari, chrome, etc */
-/* .suggestion::-webkit-scrollbar,
-.options::-webkit-scrollbar {
-  width: 0 !important;
-  display: none;
-} */
 
 /* ------------- Form 3 ------------- */
 
@@ -255,13 +243,14 @@
   font-weight: bold;
   color: #fff;
   font-size: 1.2rem;
-  padding: 15px 20px;
+  padding: 15px 0;
   width: fit-content;
   margin: auto;
 }
 
 .downloadBtn a {
   text-decoration: none;
+  padding: 15px 20px;
   color: #fff;
 }
 
@@ -344,6 +333,12 @@
 }
 .form5_field_content .para2 {
   font-size: 1.2rem;
+}
+
+@media (max-width: 968px) {
+  .container {
+    padding: 4% 10% 7%;
+  }
 }
 
 @media (max-width: 768px) {

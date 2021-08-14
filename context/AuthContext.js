@@ -12,7 +12,6 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
-import { toast } from "node_modules/react-toastify/dist/index";
 
 const AuthContext = createContext();
 
@@ -30,14 +29,14 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   //   Login User
-  const login = async ({ phone, countryCode, password }) => {
+  const login = async ({ phone, password }) => {
     const res = await fetch(`${NEXT_URL}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        phone: `+${countryCode}${phone}`,
+        phone: `+${phone}`,
         password,
       }),
     });
@@ -57,8 +56,8 @@ export const AuthProvider = ({ children }) => {
   const signUp = async ({
     email,
     phone,
-    countryData,
     otp,
+    countryCode,
     password,
     userSource,
     deviceInfo,
@@ -68,8 +67,8 @@ export const AuthProvider = ({ children }) => {
     const res = await axios
       .post(`${NEXT_URL}/api/signup`, {
         email: email,
-        phone: `+${countryData.code}${phone}`,
-        iso: countryData.iso.toUpperCase(),
+        phone: `+${phone}`,
+        iso: countryCode,
         otp: `${otp}`,
         password: password,
         appLanguage: 1,
@@ -87,7 +86,7 @@ export const AuthProvider = ({ children }) => {
         return res;
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
         return error.response;
       });
 
@@ -140,14 +139,12 @@ export const AuthProvider = ({ children }) => {
     if (status) {
       return;
     }
-    console.log("crossed");
     axios
       .post(`${NEXT_URL}/api/createUuid`, {
         uuid: uuid,
       })
       .then((res) => {
         setUuId(res.data.uuid);
-        // router.push("/profile-creation");
       })
       .catch((error) => {
         console.log(error);

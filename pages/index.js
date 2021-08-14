@@ -1,8 +1,7 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Home.module.css";
 import AppOverview from "components/AppOverview";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Home({
   communityName,
@@ -10,10 +9,6 @@ export default function Home({
   portraitImg,
   showVideo,
 }) {
-  const router = useRouter();
-
-  const [queryData, setQueryData] = useState("");
-
   const [values, setValues] = useState({
     imgValues: {
       showImage: true,
@@ -26,17 +21,10 @@ export default function Home({
     },
   });
 
-  useEffect(() => {
-    if (router.query) {
-      setQueryData(router.query.phone);
-    }
-  });
-
   return (
     <Layout
       img={values.imgValues}
       video={values.vdoValues}
-      queryData={queryData}
       showImage={!showVideo}
       communityName={communityName}
       showVideo={showVideo}

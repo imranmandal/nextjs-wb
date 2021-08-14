@@ -16,6 +16,27 @@ const MultipleSelect = ({
 }) => {
   const [displayOptions, setDisplayOptions] = useState(false);
 
+  const buttonStyle = {
+    position: "absolute",
+    right: "5px",
+    textAlign: "right",
+    background: "none",
+    color: "#e11c74",
+    border: "none",
+    padding: "5px 5px 0",
+  };
+
+  const SelectComponentStyle = {
+    color: " #212529",
+    backgroundColor: "#fff",
+    border: "1px solid #e11c74",
+    borderRadius: "5px",
+    padding: "6px 10px",
+    margin: "0 !important",
+    width: "100%",
+    overflow: "hidden",
+  };
+
   useEffect(() => {
     var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
     var wordLength =

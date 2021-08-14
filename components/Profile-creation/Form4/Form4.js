@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Select from "@/components/FormComponent/Select";
 import { TypeOfIdProof } from "@/components/FormComponent/FormData";
-import { FaCamera, FaTimes } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 import { IoAttach } from "react-icons/io5";
-import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Compressor from "compressorjs";
 import {
@@ -441,7 +440,13 @@ function Form4(props) {
 
           <div className="form4-field-group d-flex">{IDProofSelector}</div>
 
-          {props.pageLoading ? <Spinner /> : null}
+          {props.pageLoading ? (
+            <div className={modalStyles.loading_container}>
+              <div className="spinner-border text-pink m-auto" role="status">
+                <span className="visually-hidden h-100 w-100"></span>
+              </div>
+            </div>
+          ) : null}
 
           <div className={styles.btn_grp}>
             <button

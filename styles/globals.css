@@ -87,8 +87,19 @@ textarea {
 }
 
 /* input[name="otp"]:focus */
-input[name="phone"]:focus {
-  border: none;
+
+input[type="tel"],
+input[type="tel"]:focus,
+input[type="tel"]:hover {
+  border: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 36px !important;
+  box-shadow: none !important;
+}
+
+.special-label {
+  z-index: 0 !important;
 }
 
 input[type="text"]:disabled,
@@ -123,6 +134,7 @@ img {
   width: max-content;
   font-size: 0.7rem;
   padding: 9px 5px !important;
+  min-height: 100%;
   margin: 0;
 }
 

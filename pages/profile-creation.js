@@ -11,7 +11,7 @@ import styles from "@/styles/Signup.module.css";
 import modalStyle from "@/styles/Modal.module.css";
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
-import { GET_PROFILE_CREATION_SCREEN } from "@/components/Graphql/query/query";
+import { GET_PROFILE_CREATION_SCREEN } from "@/graphql/query/query";
 import { parseJwt } from "@/components/Profile-creation/ParseJwt";
 import { useRouter } from "next/router";
 // import { ToastContainer } from "react-toastify";

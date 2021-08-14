@@ -14,11 +14,6 @@ import modalStyles from "@/styles/Modal.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  GET_CITY_NAME,
-  GET_FIRST_SCREEN,
-} from "@/components/Graphql/query/query";
-import { SAVE_FIRST_PAGE } from "@/components/Graphql/mutations/mutation";
 import MultipleSelect from "@/components/FormComponent/MultipleSelect";
 import {
   DietaryChoice,
@@ -35,6 +30,8 @@ import {
   formatDate,
   convertedCapitalizeValue,
 } from "@/components/FormComponent/FormFunctions";
+import { SAVE_FIRST_PAGE } from "@/graphql/mutations/mutation";
+import { GET_CITY_NAME, GET_FIRST_SCREEN } from "@/graphql/query/query";
 
 // Component start
 function Form2(props) {

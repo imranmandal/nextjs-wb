@@ -13,16 +13,14 @@ import {
 } from "@/components/SignUp/Forms/SignUpFormFunctions";
 import { FaCheckCircle } from "react-icons/fa";
 import { API_URL } from "@/config/index";
-import IntlTelInput from "react-intl-tel-input";
-import "react-intl-tel-input/dist/main.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/material.css";
 
 const Recovery = () => {
   const router = useRouter();
   const {
     query: { phone },
   } = router;
-
-  const [countryData, setCountryData] = useState({ iso: "in", code: "91" });
 
   const formType = "recovery";
   const [data, setData] = useState({
@@ -50,7 +48,7 @@ const Recovery = () => {
       .positive()
       .integer()
       .test("len", "Phone must be exactly 10 characters", (val) => {
-        return val.toString().length === 10;
+        return val.toString().length >= 10;
       })
       .required("Please enter phone number and verify"),
     otp: yup
@@ -86,7 +84,7 @@ const Recovery = () => {
 
   useEffect(() => {
     if (phone) {
-      setData((prevVal) => ({ ...prevVal, phone: phone }));
+      handlePhoneChange(phone);
       setValue("phone", phone);
     }
   }, [phone]);
@@ -113,7 +111,8 @@ const Recovery = () => {
   };
 
   const handlePhoneChange = (value) => {
-    if (value.length >= 10) {
+    const phone = value.slice(2, value.length);
+    if (phone.length >= 10) {
       setDisableVerifyBtn(false);
       setShowRecaptcha(true);
     } else {
@@ -121,13 +120,13 @@ const Recovery = () => {
       setShowRecaptcha(false);
     }
 
-    setValue("phone", value);
+    setValue("phone", phone);
     setData((prevValue) => {
-      if (value.length === 19) {
+      if (phone.length === 19) {
         setWordCount(18);
         return { ...prevValue, phone: prevValue.phone };
       }
-      setWordCount(() => value.length);
+      setWordCount(() => phone.length);
       return {
         ...prevValue,
         phone: value,
@@ -140,11 +139,9 @@ const Recovery = () => {
       e,
       uuId,
       data,
-      countryData,
       formType,
       setShowRecaptcha,
-      setRecaptchaResult,
-      setShowOtpInput,
+      handleGenerateOtp,
       setDisablePhoneInput,
       setDisableVerifyBtn
     );
@@ -153,12 +150,18 @@ const Recovery = () => {
     setDisablePhoneInput(true);
   };
 
+  function handleGenerateOtp(response) {
+    setRecaptchaResult(response);
+    setShowRecaptcha(false);
+    setShowOtpInput(true);
+    setDisablePhoneInput(true);
+  }
+
   const otpVerify = (e) => {
     e.preventDefault();
     verifyOtp(
       uuId,
       data,
-      countryData,
       setData,
       setDisableVerifyBtn,
       setShowOtpInput,
@@ -174,7 +177,7 @@ const Recovery = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        phone: `+${countryData.code}${data.phone}`,
+        phone: `+${data.phone}`,
         newPassword: data.password,
         phoneAuthToken: data.phoneAuthToken,
       }),
@@ -183,14 +186,12 @@ const Recovery = () => {
     const result = await res.json();
 
     if (res.ok) {
-      // console.log(res);
       router.replace(
         { pathname: "/login", query: { phone: data.phone } },
         "/login"
       );
       toast.success("Password changed successfully");
     } else {
-      // console.log(res);
       toast.error("Something went wrong, please try again later.");
     }
   };
@@ -200,7 +201,7 @@ const Recovery = () => {
       <Head>
         <title>Password Recovery</title>
       </Head>
-      <div className="container my-4 mx-auto text-left">
+      <div className="my-4 mx-auto text-left">
         <div className="col mx-auto my-5">
           <form
             className={styles.container}
@@ -208,42 +209,38 @@ const Recovery = () => {
             formNoValidate
             autoComplete="new-off"
           >
+            {/* For autoComplete */}
+            <input
+              type="text"
+              id="disabled"
+              name="disabled"
+              className="form-control"
+              placeholder="First Name"
+              autoComplete="new-off"
+              style={{ display: "none" }}
+            />
+
             <h2 className="text-center p-3 text-pink">Forgot Password</h2>
 
             <div className="d-flex flex-column my-3 w-100">
               <div className="d-flex flex-column my-2 mx-auto w-100">
                 <div className={styles.phoneInput}>
-                  <IntlTelInput
-                    preferredCountries={["in"]}
+                  <PhoneInput
+                    country={"in"}
                     onlyCountries={["in", "us", "gb", "ca"]}
-                    fieldName="phone"
-                    placeholder="Phone"
-                    value={data.phone}
-                    onPhoneNumberChange={(isMaxDigit, phone) => {
-                      handlePhoneChange(phone);
-                    }}
-                    onSelectFlag={(index, countryData) => {
-                      setCountryData({
-                        iso: countryData.iso2,
-                        code: countryData.dialCode,
-                      });
-                    }}
-                    containerClassName="intl-tel-input"
-                    inputClassName="form-control"
+                    preferredCountries={["in"]}
+                    countryCodeEditable={false}
                     disabled={disablePhoneInput}
-                    autoComplete="new-off"
-                  />
-
-                  {/* For autoComplete */}
-                  <input
-                    type="text"
-                    id="disabled"
-                    name="disabled"
-                    className="form-control"
-                    placeholder="First Name"
-                    autoComplete="off"
-                    // disabled={isFirstScreenSaved}
-                    style={{ display: "none" }}
+                    inputProps={{
+                      style: { width: "fit-content" },
+                      name: "phone",
+                      required: true,
+                      autoFocus: true,
+                      variant: "standard",
+                      autoComplete: "off",
+                    }}
+                    value={data.phone}
+                    onChange={(phone) => handlePhoneChange(phone)}
                   />
 
                   <div className="d-flex">
@@ -284,6 +281,7 @@ const Recovery = () => {
                       onChange={handleChange}
                       className="form-control"
                       placeholder="OTP"
+                      autoComplete="off"
                     />
                     <div className="d-flex">
                       <button

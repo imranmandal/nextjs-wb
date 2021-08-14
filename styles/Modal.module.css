@@ -299,16 +299,16 @@
 
   .container {
     height: 90vh;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     width: 400px;
   }
 
   .sign_up_container,
   .login_container {
     width: 100%;
+    height: 81%;
     top: 20%;
-    height: fit-content;
+    overflow-y: auto;
   }
 
   .sign_up_container form,
@@ -319,13 +319,11 @@
   .sign_up_container {
     transform: translateX(-100%);
     opacity: 1;
-    height: 81%;
-    overflow-y: auto;
   }
 
   .login_container {
     transform: translateX(0);
-    transform: translateY(-20%);
+    transform: translateY(-15%);
   }
 
   .overlay_left,

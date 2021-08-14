@@ -74,7 +74,7 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
         <div className={styles.bgText}>
           <div className="header-content text-capitalize">
             <div>
-              <h1> Would Bee Matrimony</h1>
+              <h1>Would Bee Matrimony</h1>
               <h4>Truly free, Fanatically safe!</h4>
               <p>
                 Join our rapidly growing{" "}

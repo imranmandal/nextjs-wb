@@ -17,7 +17,6 @@
   align-items: flex-start;
   margin: auto;
   padding-top: 10%;
-  /* display: flex; */
 }
 
 .containerInner .body {
@@ -141,7 +140,7 @@
 
 .sign_up_form input,
 .sign_up_form select,
-.login input {
+.login_form input {
   border: 1px solid #e11c74;
 }
 
@@ -177,14 +176,15 @@
 .sign_up_form input[type="email"],
 .sign_up_form input[type="password"],
 .sign_up_form select,
-.login input,
+.login_form input,
 .buttons {
-  /* width: 280.7px; */
   width: 100%;
 }
 
 .forgotPassTxt {
   width: max-content;
+  font-size: 14px;
+  margin: 15px 0;
 }
 
 @media (max-width: 960px) {
@@ -193,25 +193,13 @@
     width: 150px;
     height: 200px;
   }
-
-  /* .phoneInput {
-    width: 280.97px;
-  } */
-
-  /* .phoneInput,
-  .sign_up_form input[type="email"],
-  .sign_up_form input[type="password"],
-  .sign_up_form select,
-  .login input,
-  .buttons {
-    width: 280.7px;
-  } */
 }
 
 @media (max-width: 768px) {
-  /* .body {
-    max-width: 540px;
-  } */
+  .containerInner {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 
   .logo_lg {
     width: 150px;

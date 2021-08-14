@@ -32,10 +32,6 @@ const InputGql = (props) => {
     setQueryVariable((prevVal) => ({ ...prevVal, skip: 0 }));
   }, [queryVariable.like]);
 
-  // const handleClose = () => {
-  //   setDisplay(true);
-  // };
-
   const handleSelect = (e) => {
     const value = e.target.getAttribute("data-value");
     const innerText = e.target.innerHTML;
@@ -75,29 +71,22 @@ const InputGql = (props) => {
 
   const searchSuggestion = () => {
     if (Data.data) {
-      if (name === "city") {
-        return setSuggestions(() => [...Data.data[OUTPUT_OBJ_NAME].values]);
-      }
-      setSuggestions(() => [...Data.data[OUTPUT_OBJ_NAME]]);
+      return setSuggestions(() => [...Data.data[OUTPUT_OBJ_NAME].values]);
     }
   };
 
   const appendSuggestion = () => {
     if (Data.data) {
-      if (name === "city") {
-        return setSuggestions((prevVal) => [
-          ...prevVal,
-          ...Data.data[OUTPUT_OBJ_NAME].values,
-        ]);
-      }
-      setSuggestions((prevVal) => [...prevVal, ...Data.data[OUTPUT_OBJ_NAME]]);
+      return setSuggestions((prevVal) => [
+        ...prevVal,
+        ...Data.data[OUTPUT_OBJ_NAME].values,
+      ]);
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setQueryVariable((prevVal) => ({ ...prevVal, like: value }));
-    // setData((prevVal) => ({ ...prevVal, [name]: value }));
     setInputValue(value);
     searchSuggestion();
 

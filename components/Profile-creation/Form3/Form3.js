@@ -13,12 +13,6 @@ import {
   Occupation,
 } from "@/components/FormComponent/FormData";
 import { form3Schema, SubmitForm3 } from "./Form3Functions";
-import { SAVE_SECOND_SCREEN } from "@/components/Graphql/mutations/mutation";
-import {
-  GET_DESIGNATION_NAME,
-  GET_EMPLOYER_NAME,
-  GET_SECOND_SCREEN,
-} from "@/components/Graphql/query/query";
 import AuthContext from "context/AuthContext";
 import { parseJwt } from "../ParseJwt";
 import modalStyles from "@/styles/Modal.module.css";
@@ -26,6 +20,12 @@ import styles from "@/styles/Form.module.css";
 import MultipleSelect from "@/components/FormComponent/MultipleSelect";
 import { convertedValue } from "@/components/FormComponent/FormFunctions";
 import { toast } from "react-toastify";
+import { SAVE_SECOND_SCREEN } from "@/graphql/mutations/mutation";
+import {
+  GET_DESIGNATION_NAME,
+  GET_EMPLOYER_NAME,
+  GET_SECOND_SCREEN,
+} from "@/graphql/query/query";
 
 //  ------- COMPONENT
 
@@ -143,6 +143,16 @@ function Form3(props) {
   }, [SavedData.data]);
 
   const submitForm3 = () => {
+    if (data.employerName.name.length < 3) {
+      return toast.error(
+        "Company/Organization name must be greater than or eqaul to 3 characters"
+      );
+    }
+    if (data.designation.name.length < 3) {
+      return toast.error(
+        "Designation name must be greater than or eqaul to 3 characters"
+      );
+    }
     SubmitForm3(uid, data, props, saveSecondScreen);
   };
 
