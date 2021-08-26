@@ -26,9 +26,10 @@
 .logo {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
   height: 2rem;
   width: auto;
+  z-index: 1;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -49,6 +50,7 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
+  background-color: #ddd;
 }
 
 .pictureContainer .signInToViewBtn {
@@ -56,7 +58,7 @@
   top: 0;
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(8px) brightness(0.5);
+  backdrop-filter: brightness(0.5);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,6 +67,7 @@
 
 .lockIcon {
   font-size: 3rem;
+  color: #616a6b;
 }
 
 .pictureContainer .signInToViewBtnLink,

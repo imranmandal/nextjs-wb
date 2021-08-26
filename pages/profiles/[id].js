@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/ProfilesSharing.module.css";
 import { API_URL, NEXT_URL } from "@/config/index";
+import cookie from "cookie";
 import { FaLock } from "react-icons/fa";
 
 import {
@@ -22,9 +23,6 @@ import Link from "next/link";
 const Profile = ({
   title,
   ogTitle,
-  ogImage,
-  ogDescription,
-  // data,
   uid,
   id,
   lastName,
@@ -42,6 +40,7 @@ const Profile = ({
   country,
   displayPictureUrl,
   picturePrivacy,
+  isLoggedIn,
 }) => {
   const degreesValue =
     degrees?.length > 0
@@ -56,7 +55,13 @@ const Profile = ({
 
   const details = {
     title: `${id} | ${lastName}`,
-    picture: { url: displayPictureUrl, blurred: true },
+    picture: {
+      url: displayPictureUrl
+        ? displayPictureUrl
+        : Gender[gender - 1] === "Male"
+        ? `${NEXT_URL}/Images/MalePlaceholder.png`
+        : `${NEXT_URL}/Images/FemalePlaceholder.png`,
+    },
     description: {
       gender: { value: Gender[gender - 1], label: "Gender" },
       age: { value: age ? `${age} Yrs` : null, label: "Age" },
@@ -204,15 +209,25 @@ const Profile = ({
           <div className={styles.logo}>
             <img src={`${NEXT_URL}/Logos/logoWb.png`} alt="Logo" />
           </div>
+
           <div className={styles.pictureContainer}>
             <img src={details.picture.url} alt="Profile Picture" />
-            {picturePrivacy && (
+
+            {picturePrivacy ? (
               <div className={styles.signInToViewBtn}>
                 <FaLock className={styles.lockIcon} />
-                <SignInToViewBtn label="Picture" />
+                <DownloadAppBtn label="Profile Picture" color="#fff" />
               </div>
+            ) : (
+              !isLoggedIn && (
+                <div className={styles.signInToViewBtn}>
+                  <FaLock className={styles.lockIcon} />
+                  <SignInToViewBtn />
+                </div>
+              )
             )}
           </div>
+
           <div className={styles.detailsContainer}>
             <h2 className={styles.heading}>{details.title}</h2>
             {Object.keys(details.description).map((data, index) => {
@@ -221,7 +236,7 @@ const Profile = ({
                   <label>{details.description[data].label}: </label>
                   <p className={styles.detail}>
                     {data === "income" && !details.description[data].value ? (
-                      <SignInToViewBtn label="Annual Income" />
+                      <DownloadAppBtn label="Annual Income" color="#000" />
                     ) : (
                       details.description[data].value || "-"
                     )}
@@ -231,6 +246,7 @@ const Profile = ({
             })}
           </div>
         </div>
+
         <span className={styles.footer}>Copyright © wouldbee.com 2021</span>
       </div>
     </>
@@ -243,25 +259,40 @@ Profile.defaultProps = {
     "Would Bee - Free Matrimony & Match Making, Jeevansathi Search for Shaadi in Bharat",
   ogTitle:
     "Would Bee - Free Matrimony & Match Making, Jeevansathi Search for Shaadi in Bharat",
-
-  ogImage:
-    "https://beta.flywichita.com/wp-content/uploads/2017/12/1200x630.png",
-  ogDescription: "",
 };
 
 export default Profile;
 
-const SignInToViewBtn = ({ label }) => {
+const SignInToViewBtn = () => {
   return (
     <>
       <Link href="/login">
         <a className={styles.signInToViewBtnLink}>
-          View {label} on interest acceptance.
+          View Profile Picture on interest acceptance.
           <br />
           <span style={{ textDecoration: "underline" }}>Login</span> to send
           interest.
         </a>
       </Link>
+    </>
+  );
+};
+const DownloadAppBtn = ({ label, color }) => {
+  return (
+    <>
+      <span style={{ color, display: "block" }}>
+        Send Interest to see {label}.
+      </span>
+      <span style={{ color }}>
+        <a
+          style={{ color: "#e11c74", fontWeight: "bold" }}
+          target="_blank"
+          href="https://play.google.com/store/apps/details?id=apptivism.would_bee.app"
+        >
+          Download App
+        </a>{" "}
+        to send Interest
+      </span>
     </>
   );
 };
@@ -281,12 +312,24 @@ const SignInToViewBtn = ({ label }) => {
 //   };
 // }
 
-export async function getServerSideProps({ params: { id } }) {
-  const res = await fetch(`${API_URL}/profiles/${id}`);
+function parseCookies(req) {
+  return cookie.parse(req ? req.headers.cookie || "" : document.cookie);
+}
+
+export async function getServerSideProps({ req, params: { id } }) {
+  const { token } = parseCookies(req);
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  const res = await fetch(`${API_URL}/profiles/${id}`, {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  });
 
   const data = await res.json();
 
-  // console.log(data);
   return {
     props: {
       uid: id,
@@ -306,6 +349,7 @@ export async function getServerSideProps({ params: { id } }) {
       country: data.country,
       displayPictureUrl: data.displayPictureUrl,
       picturePrivacy: data.picturePrivacy,
+      isLoggedIn: token ? true : false,
     },
   };
 }
