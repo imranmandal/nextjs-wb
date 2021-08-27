@@ -320,7 +320,9 @@ export async function getServerSideProps({ req, params: { id } }) {
   const { token } = parseCookies(req);
 
   const myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${token}`);
+  if (token) {
+    myHeaders.append("Authorization", `Bearer ${token}`);
+  }
 
   const res = await fetch(`${API_URL}/profiles/${id}`, {
     method: "GET",
@@ -329,7 +331,6 @@ export async function getServerSideProps({ req, params: { id } }) {
   });
 
   const data = await res.json();
-
   return {
     props: {
       uid: id,
