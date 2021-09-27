@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import styles from "@/styles/ProfilesSharing.module.css";
 import { API_URL, NEXT_URL } from "@/config/index";
 import cookie from "cookie";
 import { FaLock } from "react-icons/fa";
-
 import {
   AnnualIncome,
   Degrees,
@@ -42,6 +42,11 @@ const Profile = ({
   picturePrivacy,
   isLoggedIn,
 }) => {
+  useEffect(() => {
+    if (window)
+      window.location.href = `https://wouldbee-web-app.netlify.app/profiles/${id}`;
+  }, [id]);
+
   const degreesValue =
     degrees?.length > 0
       ? [
@@ -335,7 +340,7 @@ export async function getServerSideProps({ req, params: { id } }) {
   });
 
   const data = await res.json();
-  // console.log(data);
+  console.log(token);
 
   return {
     props: {
