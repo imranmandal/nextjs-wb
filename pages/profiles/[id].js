@@ -103,7 +103,10 @@ const Profile = ({
       <Head>
         <title>{title}</title>
         <meta property="og:title" content={id + " " + lastName || ogTitle} />
-        <meta property="og:url" content={`${NEXT_URL}/profiles/${uid}`} />
+        <meta
+          property="og:url"
+          content={`https://wouldbee-web-app.netlify.app/profiles/${uid}`}
+        />
         <meta property="og:type" content="website" />
         <meta property="og:description" content={description} />
         <meta property="og:site_name" content="wouldbee.com" />
@@ -266,14 +269,15 @@ export default Profile;
 const SignInToViewBtn = () => {
   return (
     <>
-      <Link href="/login">
-        <a className={styles.signInToViewBtnLink}>
-          View Profile Picture on interest acceptance.
-          <br />
-          <span style={{ textDecoration: "underline" }}>Login</span> to send
-          interest.
-        </a>
-      </Link>
+      <a
+        href="https://wouldbee-web-app.netlify.app/login"
+        className={styles.signInToViewBtnLink}
+      >
+        View Profile Picture on interest acceptance.
+        <br />
+        <span style={{ textDecoration: "underline" }}>Login</span> to send
+        interest.
+      </a>
     </>
   );
 };
@@ -331,6 +335,8 @@ export async function getServerSideProps({ req, params: { id } }) {
   });
 
   const data = await res.json();
+  // console.log(data);
+
   return {
     props: {
       uid: id,
@@ -341,14 +347,13 @@ export async function getServerSideProps({ req, params: { id } }) {
       motherTongue: data.motherTongue,
       maritalStatus: data.maritalStatus,
       height: data.height,
-      religion: data.religion,
       degrees: data.degrees,
       occupation: data.occupation,
-      income: data.income,
+      income: data.income || null,
       city: data.city,
       state: data.state,
       country: data.country,
-      displayPictureUrl: data.displayPictureUrl,
+      displayPictureUrl: data.displayPictureUrl || null,
       picturePrivacy: data.picturePrivacy,
       isLoggedIn: token ? true : false,
     },

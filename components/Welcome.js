@@ -36,8 +36,12 @@ function Welcome({ showVideo, showImage, vdoPath, imgName, communityName }) {
   }, [imgName]);
 
   return (
-    <section className={styles.welcome}>
-      <div className={styles.container}>
+    <section
+    // className={styles.welcome}
+    >
+      <div
+      // className={styles.container}
+      >
         <div
           className={styles.bgWrap}
           style={{

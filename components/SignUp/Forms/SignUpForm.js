@@ -144,6 +144,7 @@ function SignUpForm(props) {
       email,
       phone,
       otp,
+
       password,
       phoneAuthToken,
       deviceInfo,

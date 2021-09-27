@@ -134,11 +134,12 @@ export const AuthProvider = ({ children }) => {
 
   //  Create and Save new uuid
   const createUuid = async () => {
-    const uuid = uuidv4();
     const status = await checkUuidExist();
     if (status) {
       return;
     }
+
+    const uuid = uuidv4();
     axios
       .post(`${NEXT_URL}/api/createUuid`, {
         uuid: uuid,
@@ -155,6 +156,7 @@ export const AuthProvider = ({ children }) => {
     const res = await fetch(`${NEXT_URL}/api/userId`, {
       method: "GET",
     });
+
     const data = await res.json();
     if (res.ok) {
       setUuId(data.uuid);
