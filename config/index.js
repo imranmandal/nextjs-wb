@@ -5,5 +5,8 @@ export const API_URL =
 export const NEXT_URL =
   process.env.NEXT_PUBLIC_FRONTEND_URL || "http://localhost:3000";
 
+export const WEB_APP_URL =
+  process.env.WEB_APP_PUBLIC_URL || "https://wouldbee-web-app.netlify.app";
+
 export const TAG_MANAGER_ID =
   process.env.NEXT_PUBLIC_TAG_MANAGER_ID || "GTM-KBJTVKT";

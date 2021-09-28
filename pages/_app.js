@@ -8,8 +8,6 @@ import { useEffect } from "react";
 import { TAG_MANAGER_ID } from "@/config/index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { useEffect } from "react";
-// import ReactGA from 'react-ga';
 
 // // set up google analytics
 // ReactGA.initialize('UA-189742362-1');

@@ -75,56 +75,57 @@ const Layout = ({
         <link
           rel="apple-touch-icon"
           sizes="32x32"
-          href={NEXT_URL + "/favicon-06.png"}
+          href={NEXT_URL + "/favicons/favicon-06.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="48x48"
-          href={NEXT_URL + "/favicon-09.png"}
+          href={NEXT_URL + "/favicons/favicon-09.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="72x72"
-          href={NEXT_URL + "/favicon-10.png"}
+          href={NEXT_URL + "/favicons/favicon-10.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="96x96"
-          href={NEXT_URL + "/favicon-11.png"}
+          href={NEXT_URL + "/favicons/favicon-11.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="192x192"
-          href={NEXT_URL + "/favicon-13.png"}
+          href={NEXT_URL + "/favicons/favicon-13.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={NEXT_URL + "/favicon-14.png"}
+          href={NEXT_URL + "/favicons/favicon-14.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="144x144"
-          href={NEXT_URL + "/favicon-15.png"}
+          href={NEXT_URL + "/favicons/favicon-15.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="196x196"
-          href={NEXT_URL + "/favicon-16.png"}
+          href={NEXT_URL + "/favicons/favicon-16.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="72x72"
-          href={NEXT_URL + "/favicon-17.png"}
+          href={NEXT_URL + "/favicons/favicon-17.png"}
         />
+        <link rel="shortcut icon" href="/favicon.ico" />
         {/* <link rel="apple-touch-icon" href={NEXT_URL + "/favicon-17.png"} /> */}
       </Head>
 

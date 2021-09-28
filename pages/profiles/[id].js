@@ -3,7 +3,6 @@ import Head from "next/head";
 import styles from "@/styles/ProfilesSharing.module.css";
 import { API_URL, NEXT_URL } from "@/config/index";
 import cookie from "cookie";
-import { FaLock } from "react-icons/fa";
 import {
   AnnualIncome,
   Degrees,
@@ -18,7 +17,6 @@ import {
   convertedHeight,
   convertedValue,
 } from "@/components/FormComponent/FormFunctions";
-import Link from "next/link";
 
 const Profile = ({
   title,
@@ -39,8 +37,6 @@ const Profile = ({
   state,
   country,
   displayPictureUrl,
-  picturePrivacy,
-  isLoggedIn,
 }) => {
   useEffect(() => {
     if (window)
@@ -161,61 +157,62 @@ const Profile = ({
         <link
           rel="apple-touch-icon"
           sizes="32x32"
-          href={NEXT_URL + "/favicon-06.png"}
+          href={NEXT_URL + "/favicons/favicon-06.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="48x48"
-          href={NEXT_URL + "/favicon-09.png"}
+          href={NEXT_URL + "/favicons/favicon-09.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="72x72"
-          href={NEXT_URL + "/favicon-10.png"}
+          href={NEXT_URL + "/favicons/favicon-10.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="96x96"
-          href={NEXT_URL + "/favicon-11.png"}
+          href={NEXT_URL + "/favicons/favicon-11.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="192x192"
-          href={NEXT_URL + "/favicon-13.png"}
+          href={NEXT_URL + "/favicons/favicon-13.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={NEXT_URL + "/favicon-14.png"}
+          href={NEXT_URL + "/favicons/favicon-14.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="144x144"
-          href={NEXT_URL + "/favicon-15.png"}
+          href={NEXT_URL + "/favicons/favicon-15.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="196x196"
-          href={NEXT_URL + "/favicon-16.png"}
+          href={NEXT_URL + "/favicons/favicon-16.png"}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="72x72"
-          href={NEXT_URL + "/favicon-17.png"}
+          href={NEXT_URL + "/favicons/favicon-17.png"}
         />
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <div className={styles.container}>
-        <div className={styles.containerInner}>
+        <img height="40" src={`${NEXT_URL}/Logos/wouldbee.png`} alt="Logo" />
+        {/* <div className={styles.containerInner}>
           <div className={styles.logo}>
-            <img src={`${NEXT_URL}/Logos/logoWb.png`} alt="Logo" />
           </div>
 
           <div className={styles.pictureContainer}>
@@ -255,7 +252,7 @@ const Profile = ({
           </div>
         </div>
 
-        <span className={styles.footer}>Copyright © wouldbee.com 2021</span>
+        <span className={styles.footer}>Copyright © wouldbee.com 2021</span> */}
       </div>
     </>
   );
