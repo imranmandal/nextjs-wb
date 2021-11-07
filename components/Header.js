@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "@/styles/Header.module.css";
-import { LANDING_PAGE_URL } from "@/config/index";
+import { WEB_APP_URL } from "@/config/index";
 
 function Header() {
   return (
@@ -20,7 +20,7 @@ function Header() {
             <ul className={styles.navbar_nav}>
               <li>
                 <a
-                  href={`${LANDING_PAGE_URL}/signup`}
+                  href={`${WEB_APP_URL}/signup`}
                   className="nav-link text-dark bg-light rounded-pill shadow-lg"
                   aria-current="page"
                 >
